@@ -1,0 +1,25 @@
+services:
+  # 🌐 웹 애플리케이션 (Express, Vite SSR 등)
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: lanime-web:latest
+    container_name: lanime-web
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    command: yarn server
+
+  # 🌐 Nginx 리버스 프록시
+  nginx:
+    image: nginx:stable-alpine
+    container_name: lanime-nginx
+    depends_on:
+      - web
+    volumes:
+      - ./package/lanime-web/dist/client/assets:/usr/share/nginx/html/assets:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+    restart: unless-stopped

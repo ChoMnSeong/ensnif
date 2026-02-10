@@ -1,4 +1,24 @@
 {
-  "name": "ensnif",
-  "packageManager": "yarn@4.7.0"
+    "name": "ensnif",
+    "private": true,
+    "type": "module",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "setup:mac": "sh setup.sh",
+        "dev:portfolio-web": "cd packages/portfolio-web && yarn dev",
+        "dev:lanime-web": "cd packages/lanime-web && yarn dev"
+    },
+    "devDependencies": {
+        "@swc/plugin-emotion": "^9.0.0",
+        "eslint": "^9.23.0",
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.2"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.28.4",
+        "axios": "^1.10.0"
+    },
+    "packageManager": "yarn@4.9.1"
 }

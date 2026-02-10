@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "dist",
+        "rootDir": "src",
+        "target": "ES2019",
+        "module": "ESNext", // ← CommonJS → ESM으로 변경
+        "moduleResolution": "Bundler", // ← Node → Bundler(권장)
+        "esModuleInterop": true,
+        "declaration": true,
+        "strict": true
+    },
+    "include": ["src/**/*"]
+}

@@ -1,0 +1,35 @@
+# Node.js 의존성 디렉토리
+node_modules/
+
+# 빌드 결과물
+dist/
+build/
+
+package/portfolio-web/
+
+# Git 관련 파일
+.git/
+.gitignore
+
+# Yarn 잠금 파일 (선택적으로 제외할 수 있음)
+yarn.lock
+package-lock.json
+
+# IDE 설정 파일 (예: Visual Studio Code)
+.vscode/
+.idea/
+
+# 테스트 및 로그 파일
+*.log
+tests/
+
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+
+node_modules
+
+.pnp.*
