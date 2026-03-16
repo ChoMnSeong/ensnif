@@ -5,7 +5,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite --mode development",
-        "build": "yarn build:client & yarn build:server",
+        "build": "pnpm build:client & pnpm build:server",
         "build:client": "vite build --outDir dist/client",
         "build:server": "vite build --ssr ./server/entry-server.tsx --outDir dist/server",
         "server": "cross-env NODE_ENV=production node ./server/index.js",
@@ -18,7 +18,7 @@
         "@emotion/react": "^11.14.0",
         "@emotion/server": "^11.11.0",
         "@emotion/styled": "^11.14.0",
-        "@ensnif/common": "*",
+        "@ensnif/common": "workspace:*",
         "@loadable/component": "^5.16.4",
         "@loadable/server": "^5.16.5",
         "@reduxjs/toolkit": "^2.6.1",

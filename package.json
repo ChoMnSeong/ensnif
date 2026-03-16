@@ -2,13 +2,9 @@
     "name": "ensnif",
     "private": true,
     "type": "module",
-    "workspaces": [
-        "packages/*"
-    ],
     "scripts": {
         "setup:mac": "sh setup.sh",
-        "dev:portfolio-web": "cd packages/portfolio-web && yarn dev",
-        "dev:lanime-web": "cd packages/lanime-web && yarn dev"
+        "dev:lanime-web": "pnpm --filter lanime-web dev"
     },
     "devDependencies": {
         "@swc/plugin-emotion": "^9.0.0",
@@ -20,5 +16,5 @@
         "@babel/runtime": "^7.28.4",
         "axios": "^1.10.0"
     },
-    "packageManager": "yarn@4.9.1"
+    "packageManager": "pnpm@9.1.0"
 }
