@@ -1,5 +1,6 @@
-export interface CommonResponse {
-  message: string;
-  result: string;
-  status: number;
+export interface IApiResponse<T> {
+  success: boolean;
+  message?: string;
+  data?: T;
+  timestamp: string;
 }

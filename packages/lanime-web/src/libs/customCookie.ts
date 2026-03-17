@@ -1,29 +1,52 @@
-import { Cookies } from "react-cookie";
+import { Cookies } from 'react-cookie'
 
-const cookies = new Cookies();
+const cookies = new Cookies()
 
 const customCookie = {
-  get: {
-    accessToken: () => cookies.get("access_token"),
-    refreshToken: () => cookies.get("refresh_token"),
-  },
-  set: {
-    token: (accessToken: string, refreshToken: string, expired_at: string) => {
-      const date = new Date();
-      date.setDate(date.getDate() + 5);
-
-      cookies.set("access_token", accessToken, {
-        expires: new Date(expired_at),
-      });
-      cookies.set("refresh_token", refreshToken, {
-        expires: date,
-      });
+    get: {
+        accessToken: () => cookies.get('access_token'),
+        refreshToken: () => cookies.get('refresh_token'),
+        profileToken: () => cookies.get('profile_token'),
     },
-  },
-  remove: {
-    accessToken: () => cookies.remove("access_token"),
-    refreshToken: () => cookies.remove("refresh_token"),
-  },
-} as const;
+    set: {
+        authToken: (
+            accessToken: string,
+            refreshToken: string | undefined,
+            expiresIn: number,
+        ) => {
+            const accessExpireDate = new Date()
+            accessExpireDate.setSeconds(
+                accessExpireDate.getSeconds() + expiresIn,
+            )
 
-export default customCookie;
+            cookies.set('access_token', accessToken, {
+                expires: accessExpireDate,
+                path: '/',
+            })
+
+            if (refreshToken) {
+                const refreshExpireDate = new Date()
+                refreshExpireDate.setDate(refreshExpireDate.getDate() + 5) // 5일 뒤
+
+                cookies.set('refresh_token', refreshToken, {
+                    expires: refreshExpireDate,
+                    path: '/',
+                })
+            }
+        },
+        profileToken: (profileToken: string | undefined) => {
+            if (profileToken) {
+                cookies.set('profile_token', profileToken, {
+                    path: '/',
+                })
+            }
+        },
+    },
+    remove: {
+        accessToken: () => cookies.remove('access_token', { path: '/' }),
+        refreshToken: () => cookies.remove('refresh_token', { path: '/' }),
+        profileToken: () => cookies.remove('profile_token', { path: '/' }),
+    },
+} as const
+
+export default customCookie
