@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                         다크화이트
                     </TextButton>
                     {userToken ? (
-                        <HeaderUserIcon picture="" />
+                        <HeaderUserIcon picture="https://blog.kakaocdn.net/dna/1o4Al/btq4p3Nwo83/AAAAAAAAAAAAAAAAAAAAAHn23fSLJEhL91CajhMUqvYwvey8hve_EOS5SlxKHlEV/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1774969199&allow_ip=&allow_referer=&signature=7H4CeviAhBHzkKX1vdvtEzc0vdo%3D" />
                     ) : (
                         <TextButton
                             sz="mdBt"
