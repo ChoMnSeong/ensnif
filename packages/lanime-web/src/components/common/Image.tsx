@@ -7,6 +7,8 @@ interface ImageProps {
     webpSrc?: string
     width?: string | number
     height?: string | number
+    borderRadius?: string
+    border?: string
 }
 
 const Image: React.FC<ImageProps> = (props) => {
@@ -22,11 +24,19 @@ const Image: React.FC<ImageProps> = (props) => {
 
 export default Image
 
-const Img = styled.img<{ width?: string | number; height?: string | number }>`
+// Omit의 제네릭 타입을 교정했습니다.
+const Img = styled.img<Omit<ImageProps, 'src' | 'alt' | 'webpSrc'>>`
     display: block;
-    height: auto;
     width: ${({ width }) =>
         typeof width === 'number' ? `${width}px` : width || '24px'};
+
     height: ${({ height }) =>
         typeof height === 'number' ? `${height}px` : height || '24px'};
+
+    border-radius: ${({ borderRadius }) => borderRadius || '0'};
+
+    border: ${({ border }) => border || 'none'};
+
+    object-fit: cover;
+    overflow: hidden;
 `

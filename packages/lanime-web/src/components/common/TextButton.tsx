@@ -70,7 +70,8 @@ const BorderBottomKeyFrame = keyframes`
 const TextButtonBlock = styled(Button)<OtherProps>`
     color: ${({ color }) => color || '#1a1a1a'};
     padding: 1px 2px;
-    font-size: ${({ sz }) => (sz === 'small' ? '14px' : '18px')};
+    font-size: ${({ sz }) =>
+        sz === 'small' ? '14px' : sz === 'large' ? '24px' : '18px'};
     font-weight: ${({ active }) => (active ? 600 : 400)};
     font-family: Roboto;
     line-height: 20px;

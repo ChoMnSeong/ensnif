@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
-interface TextProps {
+// ✨ React.HTMLAttributes<HTMLSpanElement>를 상속받아 style, className, onClick 등을 자동 지원합니다.
+interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
     sz:
         | 'lgTl'
         | 'mdTl'
@@ -13,7 +14,8 @@ interface TextProps {
         | 'mdBt'
         | 'smBt'
     color: string
-    children: React.ReactNode
+    hoverColor?: string
+    // children은 HTMLAttributes에 포함되어 있으므로 생략해도 됩니다. (명시적으로 적어두셔도 무방합니다)
 }
 
 const StyledText = styled.span<TextProps>`
@@ -56,12 +58,23 @@ const StyledText = styled.span<TextProps>`
         }
     }};
     color: ${(props) => props.color};
+    &:hover {
+        color: ${(props) => props.hoverColor || props.color};
+    }
 `
 
 const Text = forwardRef<HTMLSpanElement, TextProps>(
-    ({ sz, color, children, ...rest }, ref) => {
+    // ✨ style을 명시적으로 꺼내서 쓰거나, ...rest를 통해 한 번에 넘길 수 있습니다.
+    ({ sz, color, hoverColor, children, style, ...rest }, ref) => {
         return (
-            <StyledText sz={sz} color={color} ref={ref} {...rest}>
+            <StyledText
+                sz={sz}
+                color={color}
+                hoverColor={hoverColor}
+                ref={ref}
+                style={style} // 이렇게 직접 넘기거나
+                {...rest} // className 등 나머지 속성 처리
+            >
                 {children}
             </StyledText>
         )

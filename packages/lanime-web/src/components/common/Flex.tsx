@@ -1,31 +1,40 @@
+import React from 'react'
 import styled from '@emotion/styled'
 
-interface FlexProps {
-    children: React.ReactNode
-    direction?: 'row' | 'column' | 'revers-row' | 'reverse-column'
+interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode
+    width?: string
+    height?: string
+    direction?: React.CSSProperties['flexDirection'] // 'revers-row' 오타 방지
+    wrap?: React.CSSProperties['flexWrap']
     gap?: string
-    justifyItems?: string
-    justifyContent?: string
-    alignItems?: string
-    alignContent?: string
+    justifyItems?: React.CSSProperties['justifyItems']
+    justifyContent?: React.CSSProperties['justifyContent']
+    alignItems?: React.CSSProperties['alignItems']
+    alignContent?: React.CSSProperties['alignContent']
     margin?: string
     padding?: string
+    flex?: string
 }
 
-const Flex: React.FC<FlexProps> = (props) => {
-    return <StyledFlex {...props}>{props.children}</StyledFlex>
+const Flex: React.FC<FlexProps> = ({ children, ...props }) => {
+    return <StyledFlex {...props}>{children}</StyledFlex>
 }
 
 export default Flex
 
 const StyledFlex = styled.div<FlexProps>`
     display: flex;
-    flex-direction: ${(props) => props.direction || 'row'};
-    gap: ${(props) => props.gap || '0px'};
-    justify-items: ${(props) => props.justifyItems || 'center'};
-    justify-content: ${(props) => props.justifyContent || 'center'};
-    align-items: ${(props) => props.alignItems || 'center'};
-    align-content: ${(props) => props.alignContent || 'center'};
-    padding: ${(props) => props.padding || '0'};
-    margin: ${(props) => props.margin || '0'};
+    width: ${({ width }) => width || 'auto'};
+    height: ${({ height }) => height || 'auto'};
+    flex-direction: ${({ direction }) => direction || 'row'};
+    flex-wrap: ${({ wrap }) => wrap || 'nowrap'};
+    gap: ${({ gap }) => gap || '0px'};
+    justify-items: ${({ justifyItems }) => justifyItems || 'center'};
+    justify-content: ${({ justifyContent }) => justifyContent || 'center'};
+    align-items: ${({ alignItems }) => alignItems || 'center'};
+    align-content: ${({ alignContent }) => alignContent || 'center'};
+    padding: ${({ padding }) => padding || '0'};
+    margin: ${({ margin }) => margin || '0'};
+    flex: ${({ flex }) => flex || 'unset'};
 `

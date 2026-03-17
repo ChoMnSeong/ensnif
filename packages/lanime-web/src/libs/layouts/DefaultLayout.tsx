@@ -16,7 +16,6 @@ const DefaultLayout: React.FC = () => {
                 ? 'dark'
                 : 'light')
         setTheme(savedTheme)
-        console.log(savedTheme)
         document.body.setAttribute('data-theme', savedTheme)
     }, [theme])
 
