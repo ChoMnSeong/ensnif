@@ -8,7 +8,7 @@ export interface IUserProfile {
     userId: string
     pin?: string
     name: string
-    avatarUrl?: string
+    avatarUrl: string
     admin: boolean
     createdAt: string
     updatedAt: string
