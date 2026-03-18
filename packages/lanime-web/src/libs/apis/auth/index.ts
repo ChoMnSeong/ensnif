@@ -140,9 +140,9 @@ export const useProfilesQuery = () => {
 }
 
 // 프로필 진입 (PIN 체크 여부)
-export const useCheckProfileAccessMutation = (profileId: string) => {
+export const useCheckProfileAccessMutation = () => {
     return useMutation({
-        mutationFn: async () => {
+        mutationFn: async (profileId: string) => {
             const { data } = await instance.post<
                 IApiResponse<IProfileAccessResponse>
             >(`/profiles/${profileId}/access`)
@@ -152,9 +152,16 @@ export const useCheckProfileAccessMutation = (profileId: string) => {
 }
 
 // 프로필 PIN 검증
-export const useVerifyProfilePinMutation = (profileId: string) => {
+// 수정 후: profileId와 request(pin)를 객체로 묶어서 받음
+export const useVerifyProfilePinMutation = () => {
     return useMutation({
-        mutationFn: async (request: IProfilePinRequest) => {
+        mutationFn: async ({
+            profileId,
+            request,
+        }: {
+            profileId: string
+            request: IProfilePinRequest
+        }) => {
             const { data } = await instance.post<
                 IApiResponse<IProfileAccessResponse>
             >(`/profiles/${profileId}/verify`, request)
