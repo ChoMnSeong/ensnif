@@ -114,14 +114,14 @@ const PinBox = styled.input`
     width: 70px;
     height: 90px;
     background-color: ${themedPalette.bg_element2};
-    border: 1px solid ${themedPalette.border2};
+    border: 1px solid ${themedPalette.border1};
     border-radius: 4px;
     color: ${themedPalette.text1};
     font-size: 36px;
     text-align: center;
     outline: none;
     &:focus {
-        border-color: ${themedPalette.border1};
+        border-color: ${themedPalette.border2};
         background-color: ${themedPalette.bg_element3};
     }
 `

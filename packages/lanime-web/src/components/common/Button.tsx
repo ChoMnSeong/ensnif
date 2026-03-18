@@ -50,7 +50,7 @@ const ButtonBlock = styled.button<{ disabled: boolean }>`
     font-weight: 400;
     font-family: Roboto;
     line-height: 20px;
-    width: 100%;
+    width: inherit;
 `
 
 export default Button
