@@ -2,10 +2,12 @@ import HeaderLogo from './HeaderLogo'
 import HeaderRouter from './HeaderRouter'
 import styled from '@emotion/styled'
 import HeaderUserIcon from './HeaderUserIcon'
-import customCookie from '../../libs/customCookie'
 import { useLocation, useNavigate } from 'react-router-dom'
 import TextButton from '../common/TextButton'
 import { themedPalette } from '../../libs/style/theme'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../stores'
+import { useEffect } from 'react'
 
 export interface HeaderProps {
     theme: 'dark' | 'light'
@@ -13,7 +15,7 @@ export interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
-    const userToken = customCookie.get.accessToken()
+    const profile = useSelector((state: RootState) => state.userProfile)
     const { pathname } = useLocation()
     const navigate = useNavigate()
 
@@ -21,6 +23,10 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         // 로그인 페이지로 이동
         navigate('/auth/mail', { state: { from: pathname } })
     }
+
+    useEffect(() => {
+        console.log(profile)
+    }, [profile])
 
     return (
         <HeaderBlock url={pathname}>
@@ -41,8 +47,8 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                     >
                         다크화이트
                     </TextButton>
-                    {userToken ? (
-                        <HeaderUserIcon picture="https://blog.kakaocdn.net/dna/1o4Al/btq4p3Nwo83/AAAAAAAAAAAAAAAAAAAAAHn23fSLJEhL91CajhMUqvYwvey8hve_EOS5SlxKHlEV/img.png?credential=yqXZFxpELC7KVnFOS48ylbz2pIh7yKj8&expires=1774969199&allow_ip=&allow_referer=&signature=7H4CeviAhBHzkKX1vdvtEzc0vdo%3D" />
+                    {profile.avatarUrl ? (
+                        <HeaderUserIcon picture={profile.avatarUrl} />
                     ) : (
                         <TextButton
                             sz="mdBt"
