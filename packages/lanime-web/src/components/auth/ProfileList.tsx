@@ -9,7 +9,7 @@ import lock from '../../assets/lock.svg'
 
 interface ProfileListProps {
     profiles: IUserProfile[]
-    onProfileSelect: (id: string) => void
+    onProfileSelect: (profile: IUserProfile) => void
     onAddProfile: () => void
 }
 
@@ -23,7 +23,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
             {profiles.map((profile) => (
                 <UserProfileCard
                     key={profile.profileId}
-                    onClick={() => onProfileSelect(profile.profileId)}
+                    onClick={() => onProfileSelect(profile)}
                 >
                     <AvatarWrapper>
                         {profile.admin && <Badge>대표</Badge>}
