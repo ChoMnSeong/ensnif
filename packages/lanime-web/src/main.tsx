@@ -4,9 +4,8 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { store } from './stores'
 import { BrowserRouter } from 'react-router-dom'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+import { queryClient } from './libs/apis/queryClient' // 위에서 만든 파일 임포트
+import { QueryClientProvider } from '@tanstack/react-query'
 
 const rootElement = document.getElementById('root')
 
