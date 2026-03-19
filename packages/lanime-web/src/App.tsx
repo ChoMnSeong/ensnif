@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import GlobalStyles from './libs/style/GlobalStyles'
 import { Global } from '@emotion/react'
 import DefaultLayout from './libs/layouts/DefaultLayout'
@@ -51,7 +52,12 @@ const App: React.FC = () => {
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
-
+            <Toaster
+                position="top-center"
+                richColors
+                closeButton
+                expand={false}
+            />
             <AnimeEpisodeModal />
         </>
     )

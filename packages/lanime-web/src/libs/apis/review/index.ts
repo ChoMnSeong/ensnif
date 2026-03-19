@@ -1,7 +1,8 @@
 import { useQueryClient, useMutation, useQuery } from "@tanstack/react-query"
 import { instance } from "../axios"
 import { IReviewRequest } from "./type"
-import toast from "react-hot-toast"
+import { toast } from "sonner"
+
 
 export const useWriteReviewMutation = (id: string) => {
   const querykey = ["campingDetail", id] as const
