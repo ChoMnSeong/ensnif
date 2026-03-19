@@ -1,7 +1,6 @@
-import styled from '@emotion/styled'
 import React, { forwardRef } from 'react'
+import styled from '@emotion/styled'
 
-// ✨ React.HTMLAttributes<HTMLSpanElement>를 상속받아 style, className, onClick 등을 자동 지원합니다.
 interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
     sz:
         | 'lgTl'
@@ -15,65 +14,81 @@ interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
         | 'smBt'
     color: string
     hoverColor?: string
-    // children은 HTMLAttributes에 포함되어 있으므로 생략해도 됩니다. (명시적으로 적어두셔도 무방합니다)
+    margin?: string // ✨ 추가
+    padding?: string // ✨ 추가
+    display?: string // ✨ span은 inline이므로 margin/padding 적용을 위해 가끔 필요함
 }
 
 const StyledText = styled.span<TextProps>`
+    display: ${(props) =>
+        props.display ||
+        'inline-block'}; // margin/padding 적용을 위해 기본값 변경 가능
+    margin: ${(props) => props.margin || '0'};
+    padding: ${(props) => props.padding || '0'};
+
     font-size: ${(props) => {
         switch (props.sz) {
             case 'lgTl':
-                return '2em' // large title
+                return '2em'
             case 'mdTl':
-                return '1.5em' // medium title
+                return '1.5em'
             case 'smTl':
-                return '1em' // small title
+                return '1em'
             case 'lgCt':
-                return '1.25em' // large content
+                return '1.25em'
             case 'mdCt':
-                return '1em' // medium content
+                return '1em'
             case 'smCt':
-                return '0.875em' // small content
+                return '0.875em'
             case 'lgBt':
-                return '1.375em' // large button
+                return '1.375em'
             case 'mdBt':
-                return '1.125em' // medium button
+                return '1.125em'
             case 'smBt':
-                return '0.875em' // small button
+                return '0.875em'
             default:
-                return '1em' // default font-size
+                return '1em'
         }
     }};
+
     font-weight: ${(props) => {
         switch (props.sz) {
             case 'lgTl':
             case 'mdTl':
-                return 'bold' // bold for large titles
+                return 'bold'
             case 'lgCt':
             case 'mdCt':
-                return '400' // medium weight for content
+                return '400'
             case 'lgBt':
-                return '500' // bold for buttons
+                return '500'
             default:
-                return 'normal' // regular weight for other cases
+                return 'normal'
         }
     }};
+
     color: ${(props) => props.color};
+    transition: color 0.2s ease;
+
     &:hover {
         color: ${(props) => props.hoverColor || props.color};
     }
 `
 
 const Text = forwardRef<HTMLSpanElement, TextProps>(
-    // ✨ style을 명시적으로 꺼내서 쓰거나, ...rest를 통해 한 번에 넘길 수 있습니다.
-    ({ sz, color, hoverColor, children, style, ...rest }, ref) => {
+    (
+        { sz, color, hoverColor, margin, padding, display, children, ...rest },
+        ref,
+    ) => {
         return (
             <StyledText
                 sz={sz}
                 color={color}
                 hoverColor={hoverColor}
+                margin={margin}
+                padding={padding}
+                display={display}
                 ref={ref}
-                style={style} // 이렇게 직접 넘기거나
-                {...rest} // className 등 나머지 속성 처리
+                {...rest}
             >
                 {children}
             </StyledText>
