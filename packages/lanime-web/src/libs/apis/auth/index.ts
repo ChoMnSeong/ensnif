@@ -129,8 +129,9 @@ export const useSigninMutation = () => {
 export const useProfilesQuery = () => {
     const fetchProfiles = async () => {
         // 백엔드에서 Flux<UserProfile>를 바로 반환하므로 배열 형태
-        const { data } = await instance.get<IUserProfile[]>('/profiles')
-        return data
+        const { data } =
+            await instance.get<IApiResponse<IUserProfile[]>>('/profiles')
+        return data.data
     }
     return useQuery({
         queryKey: ['profiles'],
