@@ -13,7 +13,7 @@ import { IProfileCreateRequest } from '../../libs/apis/auth/type'
 import { toast } from 'sonner'
 
 const DEFAULT_AVATAR =
-    'http://localhost:8080/aedd1086-948a-4f8b-b0c6-243b88cadab7.jpg'
+    'http://localhost:8080/ec6acdc61ea087fbd502e95973af28e6768a56722ba45d69c84f95e26baff139.jpg'
 
 const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
     onClose,
