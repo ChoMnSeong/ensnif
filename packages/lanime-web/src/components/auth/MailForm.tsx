@@ -112,5 +112,5 @@ const StyledSubmitButton = styled(Button)`
     background-color: ${({ disabled }) =>
         disabled ? themedPalette.bg_element3 : themedPalette.primary1};
     color: ${({ disabled }) =>
-        disabled ? themedPalette.text4 : themedPalette.text1};
+        disabled ? themedPalette.text4 : themedPalette.white};
 `

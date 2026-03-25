@@ -93,7 +93,7 @@ const DropdownBlock = styled.div`
     min-width: 180px;
     background-color: ${themedPalette.bg_element5};
     border: 1px solid ${themedPalette.border2};
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     z-index: 9999;
@@ -118,9 +118,9 @@ const ActionButton = styled.div`
     align-items: center;
     padding: 12px 16px;
     cursor: pointer;
-    transition: background-color 0.15s ease;
 
-    &:hover {
-        background-color: ${themedPalette.bg_element3};
+    &:hover span {
+        color: ${themedPalette.primary1};
+        transition: color 0.15s ease;
     }
 `
