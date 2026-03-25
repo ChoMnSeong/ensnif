@@ -11,6 +11,7 @@ interface ProfileSwitchDropdownProps {
     avatarUrl: string | null
     anchorEl: HTMLElement | null
     onNavigateToProfile: () => void
+    onLogout: () => void
     onMouseEnter: () => void
 }
 
@@ -19,6 +20,7 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
     avatarUrl,
     anchorEl,
     onNavigateToProfile,
+    onLogout,
     onMouseEnter,
 }) => {
     const [position, setPosition] = useState({ top: 0, right: 0 })
@@ -61,6 +63,11 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
             <ActionButton onClick={onNavigateToProfile}>
                 <Text sz="smCt" color={themedPalette.text2}>
                     프로필 변경
+                </Text>
+            </ActionButton>
+            <ActionButton onClick={onLogout}>
+                <Text sz="smCt" color={themedPalette.text2}>
+                    로그아웃
                 </Text>
             </ActionButton>
         </DropdownBlock>,
