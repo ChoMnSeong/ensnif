@@ -4,7 +4,7 @@ import { statusLabelMap, typeLabelMap } from '../../libs/constants/anime'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
 import { openModal } from '../../stores/episodeModal/reducer'
-import { Animation } from '../../libs/apis/animation/type'
+import { Animation } from '../../libs/apis/animations/type'
 import { themedPalette } from '../../libs/style/theme'
 
 const AnimeCard: React.FC<Animation> = ({

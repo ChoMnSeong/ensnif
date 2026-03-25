@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import Text from '../common/Text'
 import { themedPalette } from '../../libs/style/theme'
-import { AnimationDetail } from '../../libs/apis/animation/type'
+import { AnimationDetail } from '../../libs/apis/animations/type'
 import Flex from '../common/Flex'
 
 const AnimePreview: React.FC<{ animation: AnimationDetail }> = ({

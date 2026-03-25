@@ -1,4 +1,4 @@
-import { Animation } from '../../libs/apis/animation/type'
+import { Animation } from '../../libs/apis/animations/type'
 import AnimeCard from './AnimeCard'
 import AnimeCardSkeleton from './AnimeCardSkeleton'
 import React from 'react'

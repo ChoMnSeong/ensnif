@@ -9,7 +9,7 @@ import {
 export const useWeeklyAnimationList = ({ airDay }: { airDay?: string }) => {
     const response = async () => {
         const { data } = await instance.get<WeeklyAnimationResponse>(
-            'animation/weekly',
+            'animations/weekly',
             {
                 params: { airDay },
             },
@@ -25,7 +25,7 @@ export const useWeeklyAnimationList = ({ airDay }: { airDay?: string }) => {
 export const useAnimationDetail = (animationId: string) => {
     const response = async () => {
         const { data } = await instance.get<AnimationDetailResponse>(
-            `animation/${animationId}`,
+            `animations/${animationId}`,
         )
         return data.data
     }
@@ -42,7 +42,7 @@ export const useInfiniteAnimationReview = (animationId: string) => {
 
     const response = async ({ pageParam = 0 }: { pageParam?: number }) => {
         const { data } = await instance.get<AnimationReviewRatingsResponse>(
-            `/animation/${animationId}/ratings`,
+            `/animations/${animationId}/ratings`,
             {
                 params: {
                     page: pageParam,

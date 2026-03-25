@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import styled from '@emotion/styled'
-import { useInfiniteAnimationReview } from '../../libs/apis/animation'
+import { useInfiniteAnimationReview } from '../../libs/apis/animations'
 import { themedPalette } from '../../libs/style/theme'
 import AnimationReviewGraph from '../../components/home/AnimationReviewGraph'
 import AnimationAverageRating from '../../components/home/AnimationAverageRating'
@@ -67,9 +67,7 @@ const AnimationReview: React.FC<AnimationReviewProps> = ({
                         <Header>
                             <LeftInfo>
                                 <Star percentage={(review.rating / 5) * 100}>
-                                    {Array.from({ length: 5 }).map(
-                                        () => '★',
-                                    )}
+                                    {Array.from({ length: 5 }).map(() => '★')}
                                 </Star>
                                 <RatingScore>
                                     {review.rating.toFixed(1)}

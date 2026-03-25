@@ -1,6 +1,6 @@
 import AnimeCardTrack from '../../components/home/AnimeCardTrack'
 import AnimeTrackLayout from '../../components/home/AnimeTrackLayout'
-import { Animation } from '../../libs/apis/animation/type'
+import { Animation } from '../../libs/apis/animations/type'
 import AnimeCardTrackContainer from './AnimeCardTrackContainer'
 
 const RankingAnimeContainer = () => {

@@ -4,7 +4,7 @@ import AnimePreview from '../../components/home/AnimePreview'
 import { RootState } from '../../stores'
 import AnimeEpisodeModalTab from './AnimeEpisodeModalTab'
 import { setModalVisibility } from '../../stores/episodeModal/reducer'
-import { useAnimationDetail } from '../../libs/apis/animation'
+import { useAnimationDetail } from '../../libs/apis/animations'
 import { useRef } from 'react'
 
 const AnimeEpisodeModal: React.FC = () => {
