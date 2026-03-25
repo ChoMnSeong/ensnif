@@ -12,21 +12,42 @@ import MailPage from './pages/MailPage'
 import SignUpPage from './pages/SignUpPage'
 import customCookie from './libs/customCookie'
 import ProfilePage from './pages/ProfilePage'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from './stores'
+import { setUserProfile } from './stores/auth/reducer'
+import { useMyProfileQuery } from './libs/apis/auth'
 
 const PlayerPage = loadable(() => import('./pages/PlayerPage'))
 
 const App: React.FC = () => {
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useDispatch()
+    const profileId = useSelector((state: RootState) => state.userProfile.profileId)
+
+    const hasProfileToken = !!customCookie.get.profileToken()
+
+    // 새로고침 시 Redux 상태 복구: profileToken은 있지만 Redux가 비어있는 경우에만 호출
+    const { data: myProfile } = useMyProfileQuery({
+        enabled: hasProfileToken && !profileId,
+    })
+
+    useEffect(() => {
+        if (!myProfile) return
+        dispatch(
+            setUserProfile({
+                nickname: myProfile.name,
+                avatarUrl: myProfile.avatarUrl,
+                profileId: myProfile.profileId,
+            }),
+        )
+    }, [myProfile, dispatch])
 
     useEffect(() => {
         const hasAccessToken = !!customCookie.get.accessToken()
-        const hasProfileToken = !!customCookie.get.profileToken()
 
-        // 현재 경로가 '/auth'인지 확인 (하위 경로까지 포함하려면 startsWith 사용)
         const isAuthPage = location.pathname.startsWith('/auth')
 
-        // accessToken은 있고 profileToken은 없으며, 현재 페이지가 auth가 아닐 때만 이동
         if (hasAccessToken && !hasProfileToken && !isAuthPage) {
             navigate('/profile')
         }
