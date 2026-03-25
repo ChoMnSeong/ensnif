@@ -82,3 +82,10 @@ export interface IProfileAccessResponse {
     passwordRequired: boolean
     profileToken?: string
 }
+
+export interface IMyProfileResponse {
+    profileId: string
+    name: string
+    avatarUrl: string
+    admin: boolean
+}
