@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import Flex from '../components/common/Flex'
 import HeaderLogo from '../components/header/HeaderLogo'
 import ProfileContainer from '../containers/auth/ProfileContainer'
 import { themedPalette } from '../libs/style/theme'
+import useTheme from '../libs/hooks/useTheme'
 
 const ProfilePage: React.FC = () => {
-    const [theme, setTheme] = useState<'light' | 'dark'>('dark')
-
-    useEffect(() => {
-        const savedTheme =
-            (localStorage.getItem('theme') as 'light' | 'dark') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light')
-        setTheme(savedTheme)
-        document.body.setAttribute('data-theme', savedTheme)
-    }, [])
+    const { theme } = useTheme()
 
     return (
         <PageWrapper

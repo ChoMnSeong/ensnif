@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import styled from '@emotion/styled'
 import Flex from '../components/common/Flex'
 import HeaderLogo from '../components/header/HeaderLogo'
 import MailContainer from '../containers/auth/MailContainer'
 import { themedPalette } from '../libs/style/theme'
+import useTheme from '../libs/hooks/useTheme'
 
 const MailPage: React.FC = () => {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-    useEffect(() => {
-        const savedTheme =
-            (localStorage.getItem('theme') as 'light' | 'dark') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light')
-        setTheme(savedTheme)
-        document.body.setAttribute('data-theme', savedTheme)
-    }, [])
+    const { theme } = useTheme()
 
     return (
         <PageWrapper

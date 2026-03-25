@@ -4,27 +4,10 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../../components/footer/Footer'
 import useScrollToTop from '../hooks/useScrollToTop'
 import FloatingHeader from '../../components/header/FloatingHeader'
-import { useEffect, useState } from 'react'
+import useTheme from '../hooks/useTheme'
 
 const DefaultLayout: React.FC = () => {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-    useEffect(() => {
-        const savedTheme =
-            (localStorage.getItem('theme') as 'light' | 'dark') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light')
-        setTheme(savedTheme)
-        document.body.setAttribute('data-theme', savedTheme)
-    }, [theme])
-
-    const toggleTheme = () => {
-        const newTheme = theme === 'light' ? 'dark' : 'light'
-        setTheme(newTheme)
-        localStorage.setItem('theme', newTheme)
-        document.body.setAttribute('data-theme', newTheme)
-    }
+    const { theme, toggleTheme } = useTheme()
 
     useScrollToTop()
 

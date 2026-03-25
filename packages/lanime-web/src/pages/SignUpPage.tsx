@@ -1,10 +1,11 @@
-import React, { useState, ChangeEvent, useEffect } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import styled from '@emotion/styled'
 import Text from '../components/common/Text'
 import Flex from '../components/common/Flex'
 import { themedPalette } from '../libs/style/theme'
 import HeaderLogo from '../components/header/HeaderLogo'
+import useTheme from '../libs/hooks/useTheme'
 import {
     useSendVerificationMutation,
     useVerifyCodeMutation,
@@ -23,7 +24,7 @@ const SignUpPage: React.FC = () => {
     const [password, setPassword] = useState<string>('')
     const [nickname, setNickname] = useState<string>('')
     const [error, setError] = useState<string>('')
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
+    const { theme } = useTheme()
 
     // 진행 단계 상태 관리
     const [isCodeSent, setIsCodeSent] = useState<boolean>(false)
@@ -35,17 +36,6 @@ const SignUpPage: React.FC = () => {
     const { mutate: verifyCode, isPending: isVerifying } =
         useVerifyCodeMutation()
     const { mutate: signup, isPending: isSigningUp } = useSignupMutation()
-
-    // 테마 설정
-    useEffect(() => {
-        const savedTheme =
-            (localStorage.getItem('theme') as 'light' | 'dark') ||
-            (window.matchMedia('(prefers-color-scheme: dark)').matches
-                ? 'dark'
-                : 'light')
-        setTheme(savedTheme)
-        document.body.setAttribute('data-theme', savedTheme)
-    }, [])
 
     // 이메일 정보 없이 접근 시 MailPage로 돌려보내기
     useEffect(() => {
