@@ -86,7 +86,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                             active={false}
                             onClick={handleLoginClick}
                         >
-                            로그인/회원가입
+                            로그인/가입
                         </TextButton>
                     )}
                 </Right>
