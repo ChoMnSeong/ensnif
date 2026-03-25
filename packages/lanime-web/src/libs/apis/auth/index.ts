@@ -15,6 +15,7 @@ import {
     IProfilePinRequest,
     IProfileUpdateRequest,
     IProfileAccessResponse,
+    IMyProfileResponse,
 } from './type'
 
 import { IApiResponse } from '../../types/type'
@@ -151,6 +152,22 @@ export const useCreateProfileMutation = () => {
             )
             return data
         },
+    })
+}
+
+// 현재 접속 중인 프로필 정보 조회 (새로고침 시 Redux 상태 복구용)
+export const useMyProfileQuery = (options?: { enabled?: boolean }) => {
+    return useQuery({
+        queryKey: ['myProfile'],
+        queryFn: async () => {
+            const { data } =
+                await instance.get<IApiResponse<IMyProfileResponse>>(
+                    '/profiles/self',
+                )
+            return data.data
+        },
+        enabled: options?.enabled ?? !!customCookie.get.profileToken(),
+        staleTime: Infinity,
     })
 }
 
