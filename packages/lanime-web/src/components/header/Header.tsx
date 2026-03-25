@@ -7,7 +7,9 @@ import TextButton from '../common/TextButton'
 import { themedPalette } from '../../libs/style/theme'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
-import { useEffect } from 'react'
+import { useRef, useState } from 'react'
+import HeaderProfileDropdownContainer from '../../containers/header/HeaderProfileDropdownContainer'
+import Text from '../common/Text'
 
 export interface HeaderProps {
     theme: 'dark' | 'light'
@@ -18,15 +20,22 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     const profile = useSelector((state: RootState) => state.userProfile)
     const { pathname } = useLocation()
     const navigate = useNavigate()
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const profileIconRef = useRef<HTMLDivElement>(null)
 
     const handleLoginClick = () => {
-        // 로그인 페이지로 이동
         navigate('/auth/mail', { state: { from: pathname } })
     }
 
-    useEffect(() => {
-        console.log(profile)
-    }, [profile])
+    const handleMouseEnter = () => {
+        console.log('123')
+        setIsDropdownOpen(true)
+    }
+
+    const handleMouseLeave = () => {
+        console.log('1234')
+        setIsDropdownOpen(false)
+    }
 
     return (
         <HeaderBlock url={pathname}>
@@ -48,7 +57,25 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                         다크화이트
                     </TextButton>
                     {profile.avatarUrl ? (
-                        <HeaderUserIcon picture={profile.avatarUrl} />
+                        <ProfileIconWrapper
+                            ref={profileIconRef}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <HeaderUserIcon picture={profile.avatarUrl} />
+                            {profile.nickname && (
+                                <Text sz="smCt" color={themedPalette.text1}>
+                                    {profile.nickname}
+                                </Text>
+                            )}
+                            {isDropdownOpen && (
+                                <HeaderProfileDropdownContainer
+                                    anchorEl={profileIconRef.current}
+                                    onClose={() => setIsDropdownOpen(false)}
+                                    onMouseEnter={handleMouseEnter}
+                                />
+                            )}
+                        </ProfileIconWrapper>
                     ) : (
                         <TextButton
                             sz="mdBt"
@@ -95,9 +122,17 @@ const Left = styled.div`
 
 const Right = styled.div`
     display: flex;
-    align-items: center;
+    align-items: stretch;
     position: relative;
     gap: 60px;
+`
+
+const ProfileIconWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 8px;
+    cursor: default;
 `
 
 export default Header
