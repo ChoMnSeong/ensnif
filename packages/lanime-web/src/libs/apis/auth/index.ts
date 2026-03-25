@@ -1,6 +1,5 @@
 // index.ts
 import customCookie from '../../customCookie'
-import axios from 'axios'
 import { instance } from '../axios' // Axios 인스턴스 (Base URL 포함되어 있다고 가정)
 import { useQuery, useMutation } from '@tanstack/react-query'
 import {
@@ -19,35 +18,6 @@ import {
 } from './type'
 
 import { IApiResponse } from '../../types/type'
-
-// ==========================================
-// 토큰 재발급 (기존 로직 유지)
-// ==========================================
-// packages/lanime-web/src/libs/apis/auth/index.ts
-
-export const useReissue = async (refreshToken: string): Promise<void> => {
-    try {
-        const e = await axios.put(
-            `${import.meta.env.VITE_BASE_URL}/auth/reissue`,
-            null,
-            {
-                headers: {
-                    'Refresh-Token': `Bearer ${refreshToken}`,
-                },
-            },
-        )
-
-        customCookie.set.authToken(
-            e.data.accessToken,
-            e.data.refreshToken,
-            e.data.expiresIn,
-        )
-    } catch (error) {
-        console.error('Token reissue failed:', error)
-        // 에러 발생 시 공통 로직에서 에러를 인지할 수 있도록 그대로 던집니다.
-        throw error
-    }
-}
 
 // ==========================================
 // Auth 관련 Mutations (AuthController.kt)

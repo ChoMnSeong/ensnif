@@ -1,6 +1,6 @@
 import customCookie from '../customCookie'
 import { env } from '../env'
-import { useReissue } from './auth'
+import { useReissue } from './auth/reisuue'
 import * as customAxios from '@ensnif/common'
 
 const jwtOptions: customAxios.JwtOptions = {
