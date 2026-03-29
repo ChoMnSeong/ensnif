@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
-import TextButton from '../common/TextButton'
+import { themedPalette } from '@libs/style/theme'
+import Icon from '@components/common/Icon'
 
 interface ProfileModalLayoutProps {
     children: ReactNode
@@ -14,17 +14,8 @@ const ProfileModalLayout: React.FC<ProfileModalLayoutProps> = ({
 }) => {
     return (
         <ModalOverlay onClick={onClose}>
-            <CloseButton>
-                <TextButton
-                    onClick={onClose}
-                    color={themedPalette.button_text}
-                    sz="large"
-                    disabled={false}
-                    type={'button'}
-                    active={false}
-                >
-                    ✕
-                </TextButton>
+            <CloseButton onClick={onClose}>
+                <Icon name="close" size={28} color={themedPalette.button_text} />
             </CloseButton>
             <ContentContainer onClick={(e) => e.stopPropagation()}>
                 {children}
@@ -46,12 +37,23 @@ const ModalOverlay = styled.div`
     align-items: center;
 `
 
-const CloseButton = styled.div`
+const CloseButton = styled.button`
     position: absolute;
     top: 40px;
     right: 40px;
     cursor: pointer;
     z-index: 2001;
+    background: none;
+    border: none;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+
+    &:hover {
+        opacity: 1;
+    }
 `
 
 const ContentContainer = styled.div`

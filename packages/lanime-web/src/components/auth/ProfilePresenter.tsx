@@ -1,12 +1,11 @@
-// src/components/auth/ProfilePresenter.tsx
 import React from 'react'
-import ProfileList from './ProfileList'
-import PinInputModal from './PinInputModal'
-import AddProfileModal from './AddProfileModal'
-import Text from '../common/Text'
-import Flex from '../common/Flex'
-import { themedPalette } from '../../libs/style/theme'
-import { IUserProfile, IProfileCreateRequest } from '../../libs/apis/auth/type'
+import ProfileList from '@components/auth/ProfileList'
+import PinInputModal from '@components/auth/PinInputModal'
+import AddProfileModal from '@components/auth/AddProfileModal'
+import Text from '@components/common/Text'
+import Flex from '@components/common/Flex'
+import { themedPalette } from '@libs/style/theme'
+import { IUserProfile, IProfileCreateRequest } from '@libs/apis/auth/type'
 
 interface ProfilePresenterProps {
     profiles: IUserProfile[]

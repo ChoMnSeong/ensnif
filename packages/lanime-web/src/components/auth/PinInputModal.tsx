@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { themedPalette } from '../../libs/style/theme'
-import Flex from '../common/Flex'
-import Text from '../common/Text'
-import PinInput from '../common/PinInput'
-import ProfileModalLayout from './ProfileModalLayout'
-import { ProfileModalProps } from '../../containers/auth/ProfileContainer'
+import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
+import Text from '@components/common/Text'
+import Button from '@components/common/Button'
+import PinInput from '@components/common/PinInput'
+import ProfileModalLayout from '@components/auth/ProfileModalLayout'
+import { ProfileModalProps } from '@containers/auth/ProfileContainer'
 
 const PinInputModal: React.FC<ProfileModalProps<string>> = ({
     onClose,
@@ -26,18 +27,9 @@ const PinInputModal: React.FC<ProfileModalProps<string>> = ({
                     size="lg"
                 />
 
-                <Text
-                    sz="smCt"
-                    color={themedPalette.text4}
-                    hoverColor={themedPalette.text2}
-                    margin="4rem 0 0 0"
-                    style={{
-                        cursor: 'pointer',
-                        borderBottom: `1px solid ${themedPalette.text4}`,
-                    }}
-                >
+                <Button variant="text" size="sm" type="button" style={{ marginTop: '4rem' }}>
                     프로필 비밀번호를 잊으셨나요? 〉
-                </Text>
+                </Button>
             </Flex>
         </ProfileModalLayout>
     )

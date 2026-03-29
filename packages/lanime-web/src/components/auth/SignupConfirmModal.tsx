@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import Text from '../common/Text'
-import Flex from '../common/Flex'
-import { themedPalette } from '../../libs/style/theme'
+import Text from '@components/common/Text'
+import Flex from '@components/common/Flex'
+import Button from '@components/common/Button'
+import { themedPalette } from '@libs/style/theme'
 
 interface SignupConfirmModalProps {
     onClose: () => void
@@ -40,10 +41,10 @@ const SignupConfirmModal: React.FC<SignupConfirmModalProps> = ({
                     회원가입을 진행하시겠습니까?
                 </Text>
                 <Flex width={'100%'} gap={'12px'}>
-                    <ModalButton onClick={onClose}>닫기</ModalButton>
-                    <ModalButton isPrimary={true} onClick={onConfirm}>
+                    <Button variant="secondary" style={{ flex: 1 }} onClick={onClose} type="button">닫기</Button>
+                    <Button variant="primary" style={{ flex: 1 }} onClick={onConfirm} type="button">
                         회원가입
-                    </ModalButton>
+                    </Button>
                 </Flex>
             </ModalContent>
         </ModalOverlay>
@@ -70,23 +71,4 @@ const ModalContent = styled(Flex)`
     border-radius: 12px;
     width: 320px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-`
-
-const ModalButton = styled.button<{ isPrimary?: boolean }>`
-    flex: 1;
-    padding: 12px 0;
-    border-radius: 6px;
-    border: none;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: ${({ isPrimary }) =>
-        isPrimary ? themedPalette.primary2 : themedPalette.bg_element3};
-    color: ${({ isPrimary }) =>
-        isPrimary ? themedPalette.text1 : themedPalette.text2};
-    transition: opacity 0.2s;
-
-    &:hover {
-        opacity: 0.8;
-    }
 `

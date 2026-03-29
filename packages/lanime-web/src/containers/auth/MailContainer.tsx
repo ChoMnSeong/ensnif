@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useCheckEmailMutation, useSigninMutation } from '../../libs/apis/auth'
-import MailForm from '../../components/auth/MailForm'
-import SignupConfirmModal from '../../components/auth/SignupConfirmModal'
+import { useCheckEmailMutation, useSigninMutation } from '@libs/apis/auth'
+import MailForm from '@components/auth/MailForm'
+import SignupConfirmModal from '@components/auth/SignupConfirmModal'
 import axios from 'axios'
 
 const MailContainer = () => {

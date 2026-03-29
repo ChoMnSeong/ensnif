@@ -1,4 +1,3 @@
-// src/containers/auth/ProfileContainer.tsx
 import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -8,12 +7,12 @@ import {
     useCheckProfileAccessMutation,
     useVerifyProfilePinMutation,
     useCreateProfileMutation,
-} from '../../libs/apis/auth'
-import { setUserProfile } from '../../stores/auth/reducer'
-import customCookie from '../../libs/customCookie'
-import { IUserProfile, IProfileCreateRequest } from '../../libs/apis/auth/type'
+} from '@libs/apis/auth'
+import { setUserProfile } from '@stores/auth/reducer'
+import customCookie from '@libs/customCookie'
+import { IUserProfile, IProfileCreateRequest } from '@libs/apis/auth/type'
 import { toast } from 'sonner'
-import ProfilePresenter from '../../components/auth/ProfilePresenter'
+import ProfilePresenter from '@components/auth/ProfilePresenter'
 
 export interface ProfileModalProps<T> {
     onClose: () => void

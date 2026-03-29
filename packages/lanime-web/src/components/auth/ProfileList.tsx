@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { IUserProfile } from '../../libs/apis/auth/type'
-import { themedPalette } from '../../libs/style/theme'
-import Flex from '../common/Flex'
-import Text from '../common/Text'
-import Image from '../common/Image'
-import lock from '../../assets/lock.svg'
+import { IUserProfile } from '@libs/apis/auth/type'
+import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
+import Text from '@components/common/Text'
+import Image from '@components/common/Image'
+import Icon from '@components/common/Icon'
 
 interface ProfileListProps {
     profiles: IUserProfile[]
@@ -37,7 +37,11 @@ const ProfileList: React.FC<ProfileListProps> = ({
                         />
                         {profile.pin && (
                             <LockIcon>
-                                <Image src={lock} alt={'lock'} />
+                                <Icon
+                                    name="lock"
+                                    size={16}
+                                    aria-label="PIN 잠금"
+                                />
                             </LockIcon>
                         )}
                     </AvatarWrapper>

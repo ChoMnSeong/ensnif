@@ -1,10 +1,11 @@
 import React, { ChangeEvent } from 'react'
 import styled from '@emotion/styled'
-import Text from '../common/Text'
-import Flex from '../common/Flex'
-import Button from '../common/Button'
-import Input from '../common/Input'
-import { themedPalette } from '../../libs/style/theme'
+import { useNavigate } from 'react-router-dom'
+import Text from '@components/common/Text'
+import Flex from '@components/common/Flex'
+import Button from '@components/common/Button'
+import Input from '@components/common/Input'
+import { themedPalette } from '@libs/style/theme'
 
 interface MailFormProps {
     mail: string
@@ -29,6 +30,8 @@ const MailForm: React.FC<MailFormProps> = ({
     onSubmit,
     isLoading,
 }) => {
+    const navigate = useNavigate()
+
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') onSubmit()
     }
@@ -67,22 +70,26 @@ const MailForm: React.FC<MailFormProps> = ({
                 {error && <ErrorMessage>{error}</ErrorMessage>}
             </Flex>
 
-            <Text
-                sz="smCt"
-                color={themedPalette.text4}
-                hoverColor={themedPalette.text3}
-                style={{ cursor: 'pointer' }}
+            <Button
+                variant="text"
+                size="sm"
+                type="button"
+                onClick={() => navigate('/auth/forgot-password')}
+                style={{ opacity: 0.7, padding: 0 }}
             >
-                로그인에 어려움을 겪고 계신가요?
-            </Text>
+                비밀번호를 잊으셨나요?
+            </Button>
 
-            <StyledSubmitButton
+            <Button
+                variant="primary"
+                fullWidth
                 disabled={isButtonDisabled}
                 onClick={onSubmit}
                 type="button"
+                style={{ marginTop: '1rem' }}
             >
                 {isLoading ? '처리 중...' : '다음'}
-            </StyledSubmitButton>
+            </Button>
         </FormCard>
     )
 }
@@ -103,14 +110,4 @@ const ErrorMessage = styled.div`
     font-size: 0.85rem;
     text-align: left;
     width: 100%;
-`
-
-const StyledSubmitButton = styled(Button)`
-    width: 100%;
-    padding: 14px 0;
-    margin-top: 1rem;
-    background-color: ${({ disabled }) =>
-        disabled ? themedPalette.bg_element3 : themedPalette.primary1};
-    color: ${({ disabled }) =>
-        disabled ? themedPalette.text4 : themedPalette.white};
 `
