@@ -1,6 +1,6 @@
 import React from 'react'
-import { useAnimeCardTrack } from '../../components/home/hook/useTrackMove'
-import AnimeCardTrackLayout from '../../components/home/AnimeCardTrackLayout'
+import { useAnimeCardTrack } from '@components/home/hook/useTrackMove'
+import AnimeCardTrackLayout from '@components/home/AnimeCardTrackLayout'
 
 interface AnimeCardTrackContainerProps {
     children: React.ReactNode

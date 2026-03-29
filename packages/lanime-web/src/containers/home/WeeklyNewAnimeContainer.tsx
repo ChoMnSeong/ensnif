@@ -1,8 +1,8 @@
-import WeeklyNewAnimeTag from '../../components/home/WeeklyNewAnimeTag'
-import AnimeCardTrack from '../../components/home/AnimeCardTrack'
-import AnimeTrackLayout from '../../components/home/AnimeTrackLayout'
-import AnimeCardTrackContainer from './AnimeCardTrackContainer'
-import { useWeeklyAnimationList } from '../../libs/apis/animations'
+import WeeklyNewAnimeTag from '@components/home/WeeklyNewAnimeTag'
+import AnimeCardTrack from '@components/home/AnimeCardTrack'
+import AnimeTrackLayout from '@components/home/AnimeTrackLayout'
+import AnimeCardTrackContainer from '@containers/home/AnimeCardTrackContainer'
+import { useWeeklyAnimationList } from '@libs/apis/animations'
 import { useState } from 'react'
 
 const WeeklyNewAnimeContainer = () => {

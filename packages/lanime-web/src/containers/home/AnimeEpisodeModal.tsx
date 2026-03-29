@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
-import AnimeEpisodeModalLayout from '../../components/home/AnimeEpisodeModalLayout'
-import AnimePreview from '../../components/home/AnimePreview'
-import { RootState } from '../../stores'
-import AnimeEpisodeModalTab from './AnimeEpisodeModalTab'
-import { setModalVisibility } from '../../stores/episodeModal/reducer'
-import { useAnimationDetail } from '../../libs/apis/animations'
+import AnimeEpisodeModalLayout from '@components/home/AnimeEpisodeModalLayout'
+import AnimePreview from '@components/home/AnimePreview'
+import { RootState } from '@stores/index'
+import AnimeEpisodeModalTab from '@containers/home/AnimeEpisodeModalTab'
+import { setModalVisibility } from '@stores/episodeModal/reducer'
+import { useAnimationDetail } from '@libs/apis/animations'
 import { useRef } from 'react'
 
 const AnimeEpisodeModal: React.FC = () => {
@@ -23,7 +23,7 @@ const AnimeEpisodeModal: React.FC = () => {
 
     return (
         <AnimeEpisodeModalLayout
-            ref={modalScrollRef} // ✅ 전달
+            ref={modalScrollRef}
             visible={visible}
             onClose={handleEpisodeModalClose}
         >

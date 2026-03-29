@@ -26,7 +26,7 @@ const customCookie = {
 
             if (refreshToken) {
                 const refreshExpireDate = new Date()
-                refreshExpireDate.setDate(refreshExpireDate.getDate() + 5) // 5일 뒤
+                refreshExpireDate.setDate(refreshExpireDate.getDate() + 5)
 
                 cookies.set('refresh_token', refreshToken, {
                     expires: refreshExpireDate,

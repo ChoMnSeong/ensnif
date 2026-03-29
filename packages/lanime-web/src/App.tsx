@@ -1,33 +1,36 @@
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import GlobalStyles from './libs/style/GlobalStyles'
+import GlobalStyles from '@libs/style/GlobalStyles'
 import { Global } from '@emotion/react'
-import DefaultLayout from './libs/layouts/DefaultLayout'
-import AnimeEpisodeModal from './containers/home/AnimeEpisodeModal'
+import DefaultLayout from '@libs/layouts/DefaultLayout'
 import React, { useEffect } from 'react'
-import HomePage from './pages/HomePage'
-import NotFoundPage from './pages/NotFoundPage'
+import HomePage from '@pages/HomePage'
+import NotFoundPage from '@pages/NotFoundPage'
 import loadable from '@loadable/component'
-import MailPage from './pages/MailPage'
-import SignUpPage from './pages/SignUpPage'
-import customCookie from './libs/customCookie'
-import ProfilePage from './pages/ProfilePage'
+import customCookie from '@libs/customCookie'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from './stores'
-import { setUserProfile } from './stores/auth/reducer'
-import { useMyProfileQuery } from './libs/apis/auth'
+import { RootState } from '@stores/index'
+import { setUserProfile } from '@stores/auth/reducer'
+import { useMyProfileQuery } from '@libs/apis/auth'
 
 const PlayerPage = loadable(() => import('./pages/PlayerPage'))
+const MailPage = loadable(() => import('./pages/MailPage'))
+const SignUpPage = loadable(() => import('./pages/SignUpPage'))
+const ProfilePage = loadable(() => import('./pages/ProfilePage'))
+const SettingsPage = loadable(() => import('./pages/SettingsPage'))
+const ForgotPasswordPage = loadable(() => import('./pages/ForgotPasswordPage'))
+const AnimeEpisodeModal = loadable(() => import('@containers/home/AnimeEpisodeModal'))
 
 const App: React.FC = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch = useDispatch()
-    const profileId = useSelector((state: RootState) => state.userProfile.profileId)
+    const profileId = useSelector(
+        (state: RootState) => state.userProfile.profileId,
+    )
 
     const hasProfileToken = !!customCookie.get.profileToken()
 
-    // 새로고침 시 Redux 상태 복구: profileToken은 있지만 Redux가 비어있는 경우에만 호출
     const { data: myProfile } = useMyProfileQuery({
         enabled: hasProfileToken && !profileId,
     })
@@ -48,10 +51,10 @@ const App: React.FC = () => {
 
         const isAuthPage = location.pathname.startsWith('/auth')
 
-        if (hasAccessToken && !hasProfileToken && !isAuthPage) {
+        if (hasAccessToken && isAuthPage) {
             navigate('/profile')
         }
-    }, [navigate, location.pathname])
+    }, [navigate, location.pathname, hasProfileToken])
 
     return (
         <>
@@ -68,8 +71,10 @@ const App: React.FC = () => {
 
                 <Route path="/auth/mail" element={<MailPage />} />
                 <Route path="/auth/signup" element={<SignUpPage />} />
+                <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
 
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/settings" element={<SettingsPage />} />
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>

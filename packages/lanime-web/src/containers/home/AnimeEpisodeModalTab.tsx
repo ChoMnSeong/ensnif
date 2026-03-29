@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import useTab from '../../components/home/hook/useTab'
-import { tabs } from '../../libs/constants/tabs'
-import AnimeEpisodeTrack from '../../components/home/AnimeEpisodeTrack'
+import useTab from '@components/home/hook/useTab'
+import { tabs } from '@libs/constants/tabs'
+import AnimeEpisodeTrack from '@components/home/AnimeEpisodeTrack'
 import { useSelector } from 'react-redux'
-import { RootState } from '../../stores'
-import AnimationReview from './AnimationReview'
-import { themedPalette } from '../../libs/style/theme'
+import { RootState } from '@stores/index'
+import AnimationReview from '@containers/home/AnimationReview'
+import { themedPalette } from '@libs/style/theme'
 
 interface AnimeEpisodeModalTabProps {
     onClose: () => void
@@ -22,14 +22,12 @@ const AnimeEpisodeModalTab: React.FC<AnimeEpisodeModalTabProps> = ({
 
     const [currentIndex, currentTab, setCurrentTab] = useTab(0, [
         <AnimeEpisodeTrack
-            isLoading={false}
             animationId={animationId!}
             handleEpisodeClick={onClose}
-            data={['']}
         />,
         <AnimationReview
             animationId={animationId!}
-            scrollContainerRef={scrollContainerRef} // ✅ 전달
+            scrollContainerRef={scrollContainerRef}
         />,
     ])
 
@@ -58,17 +56,22 @@ export default AnimeEpisodeModalTab
 const Container = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
 `
 
 const Card = styled.div`
     width: 100%;
-    padding: 0 8rem;
+    padding: 0 2rem;
+
+    @media (max-width: 480px) {
+        padding: 0 0.75rem;
+    }
 `
 
 const TabWrapper = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 4rem;
 `
 
 const TabButton = styled.button<{ active: boolean }>`
@@ -86,7 +89,6 @@ const TabButton = styled.button<{ active: boolean }>`
 
 const TabContent = styled.div`
     font-size: 16px;
-    text-align: center;
     padding: 16px 0;
     border-radius: 8px;
 `

@@ -1,9 +1,9 @@
-import Flex from '../components/common/Flex'
+import Flex from '@components/common/Flex'
 import styled from '@emotion/styled'
-import RankingAnimeContainer from '../containers/home/RankingAnimeContainer'
-import SlideContainer from '../containers/home/SlideContainer'
-import WeeklyNewAnimeContainer from '../containers/home/WeeklyNewAnimeContainer'
-import { themedPalette } from '../libs/style/theme'
+import RankingAnimeContainer from '@containers/home/RankingAnimeContainer'
+import SlideContainer from '@containers/home/SlideContainer'
+import WeeklyNewAnimeContainer from '@containers/home/WeeklyNewAnimeContainer'
+import { themedPalette } from '@libs/style/theme'
 
 const HomePage = () => {
     return (
@@ -21,5 +21,5 @@ const HomePage = () => {
 export default HomePage
 
 const ThemedFlex = styled(Flex)`
-    background-color: ${themedPalette.bg_page1}; // CSS 변수로 테마 적용
+    background-color: ${themedPalette.bg_page1};
 `

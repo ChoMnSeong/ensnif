@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
-import { instance } from '../axios'
-import { IApiResponse } from '../../types/type'
+import { instance } from '@libs/apis/axios'
+import { IApiResponse } from '@libs/types/type'
 
 export const useImageMutation = () => {
     const uploadImage = async (param: File) => {

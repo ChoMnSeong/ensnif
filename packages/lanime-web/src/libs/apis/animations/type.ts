@@ -1,16 +1,34 @@
-import { AnimeType } from '../../constants/anime'
-import { CommonResponse } from '../../types/type'
+import { AnimeStatus, AnimeType } from '@libs/constants/anime'
 
-export interface Animation {
+export interface AnimationResponse {
     id: string
     title: string
-    thumbnailURL: string
+    thumbnailUrl: string
     type: AnimeType
     ageRating: string
+    rank?: number
 }
 
-export interface WeeklyAnimationResponse extends CommonResponse {
-    data: Animation[]
+export type Animation = AnimationResponse
+
+export type RankingType =
+    | 'REALTIME'
+    | 'Q1'
+    | 'Q2'
+    | 'Q3'
+    | 'Q4'
+    | 'LAST_YEAR'
+    | 'ALL'
+
+export interface RankingAnimation {
+    rank: number
+    id: string
+    title: string
+    thumbnailUrl: string
+    type: string
+    ageRating: string
+    averageScore: number
+    reviewCount: number
 }
 
 export interface EpisodeDetail {
@@ -21,19 +39,15 @@ export interface EpisodeDetail {
     description: string
 }
 
-export interface AnimationDetail {
+export interface AnimationDetailResponse {
     id: string
     title: string
     description: string
-    thumbnailURL: string
-    type: string
+    thumbnailUrl: string
+    type: AnimeType
     genres: string[]
     ageRating: string
-    status: string
-}
-
-export interface AnimationDetailResponse extends CommonResponse {
-    data: AnimationDetail
+    status: AnimeStatus
 }
 
 export interface Review {
@@ -52,13 +66,21 @@ export interface RatingCount {
     count: number
 }
 
-export interface AnimationReviewRatingsData {
+export interface AnimationReviewRatingsResponse {
     averageRating: number
     ratingCounts: RatingCount[]
     reviews: Review[]
     totalCount: number
 }
 
-export interface AnimationReviewRatingsResponse extends CommonResponse {
-    data: AnimationReviewRatingsData
+export interface EpisodeResponse {
+    episodeId: string
+    episodeNumber: number
+    title: string
+    description: string
+    videoUrl: string
+    thumbnailUrl: string
+    duration: number | null
+    lastWatchedSecond: number
+    isFinished: boolean
 }

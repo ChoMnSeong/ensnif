@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import Flex from '../components/common/Flex'
-import HeaderLogo from '../components/header/HeaderLogo'
-import MailContainer from '../containers/auth/MailContainer'
-import { themedPalette } from '../libs/style/theme'
-import useTheme from '../libs/hooks/useTheme'
+import Flex from '@components/common/Flex'
+import HeaderLogo from '@components/header/HeaderLogo'
+import MailContainer from '@containers/auth/MailContainer'
+import { themedPalette } from '@libs/style/theme'
+import useTheme from '@hooks/useTheme'
 
 const MailPage: React.FC = () => {
     const { theme } = useTheme()
