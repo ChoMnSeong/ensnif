@@ -25,7 +25,19 @@
         "noFallthroughCasesInSwitch": true,
         "noUncheckedSideEffectImports": true,
 
-        "typeRoots": ["src/global.d.ts"]
+        "typeRoots": ["src/global.d.ts"],
+
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@components/*": ["src/components/*"],
+            "@containers/*": ["src/containers/*"],
+            "@hooks/*": ["src/libs/hooks/*"],
+            "@pages/*": ["src/pages/*"],
+            "@stores/*": ["src/stores/*"],
+            "@libs/*": ["src/libs/*"],
+            "@assets/*": ["src/assets/*"]
+        }
     },
     "include": ["src", "dist", "server"]
 }

@@ -24,6 +24,13 @@ if (!isProduction) {
   const compression = (await import("compression")).default;
   const sirv = (await import("sirv")).default;
   app.use(compression());
+  // Vite outputs hashed filenames under /assets/ → safe to cache forever
+  app.use((req, res, next) => {
+    if (req.path.startsWith("/assets/")) {
+      res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    }
+    next();
+  });
   app.use(base, sirv("./dist/client", { extensions: [] }));
 }
 
@@ -36,7 +43,7 @@ app.get(/^\/player\/[^/]+\/[^/]+$/, async (req, res) => {
         await fs.readFile("./index.html", "utf-8"),
       );
 
-  res.status(200).set({ "Content-Type": "text/html" }).send(html);
+  res.status(200).set({ "Content-Type": "text/html", "Cache-Control": "no-cache" }).send(html);
 });
 
 app.use("*all", async (req, res) => {
@@ -59,13 +66,11 @@ app.use("*all", async (req, res) => {
 
     const rendered = await render(url);
 
-    console.log(rendered.html);
-
     const html = template
       .replace(`<!--app-head-->`, rendered.head ?? "")
       .replace(`<!--app-html-->`, rendered.html ?? "");
 
-    res.status(200).set({ "Content-Type": "text/html" }).send(html);
+    res.status(200).set({ "Content-Type": "text/html", "Cache-Control": "no-cache" }).send(html);
   } catch (e) {
     if (e instanceof Error) {
       vite?.ssrFixStacktrace?.(e);

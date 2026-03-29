@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "setup:mac": "sh setup.sh",
-        "dev:lanime-web": "pnpm --filter lanime-web dev"
+        "dev:lanime-web": "pnpm --filter lanime-web dev",
+        "dev:ssr:lanime-web": "pnpm --filter lanime-web dev:ssr"
     },
     "devDependencies": {
         "@swc/plugin-emotion": "^9.0.0",

@@ -69,6 +69,7 @@ if [ "$project_type" == "web" ]; then
     echo "Updating root package.json for the web project..."
     # pnpm --filter 명령어로 루트 실행 스크립트 작성
     jq --arg proj "$project_name-$project_type" '.scripts["dev:\($proj)"] = "pnpm --filter \($proj) dev"' package.json > package.tmp && mv package.tmp package.json
+    jq --arg proj "$project_name-$project_type" '.scripts["dev:ssr:\($proj)"] = "pnpm --filter \($proj) dev:ssr"' package.json > package.tmp && mv package.tmp package.json
 
 elif [ "$project_type" == "mobile" ]; then
     echo "Setting up Mobile project..."
