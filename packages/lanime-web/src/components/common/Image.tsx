@@ -9,6 +9,9 @@ interface ImageProps {
     height?: string | number
     borderRadius?: string
     border?: string
+    loading?: 'lazy' | 'eager'
+    fetchPriority?: 'high' | 'low' | 'auto'
+    $aspectRatio?: string
 }
 
 const Image: React.FC<ImageProps> = (props) => {
@@ -24,7 +27,6 @@ const Image: React.FC<ImageProps> = (props) => {
 
 export default Image
 
-// Omit의 제네릭 타입을 교정했습니다.
 const Img = styled.img<Omit<ImageProps, 'src' | 'alt' | 'webpSrc'>>`
     display: block;
     width: ${({ width }) =>
@@ -36,6 +38,8 @@ const Img = styled.img<Omit<ImageProps, 'src' | 'alt' | 'webpSrc'>>`
     border-radius: ${({ borderRadius }) => borderRadius || '0'};
 
     border: ${({ border }) => border || 'none'};
+
+    aspect-ratio: ${({ $aspectRatio }) => $aspectRatio ?? 'auto'};
 
     object-fit: cover;
     overflow: hidden;

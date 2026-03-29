@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const useAnimeCardTrack = (length: number) => {
   const [state, setState] = useState(0);
   const maxIndex = Math.ceil(length);
+
+  useEffect(() => {
+    setState(0);
+  }, [maxIndex]);
 
   const onNext = () => {
     setState((prev) => (prev < maxIndex ? prev + 1 : prev));

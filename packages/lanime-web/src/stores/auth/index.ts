@@ -1,3 +1,3 @@
-export { default as userProfileReducer } from './reducer'
-export * from './actions'
-export * from './types'
+export { default as userProfileReducer } from '@stores/auth/reducer'
+export * from '@stores/auth/actions'
+export * from '@stores/auth/types'

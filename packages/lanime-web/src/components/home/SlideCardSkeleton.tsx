@@ -1,4 +1,4 @@
-import Skeleton from '../common/Skeleton'
+import Skeleton from '@components/common/Skeleton'
 
 interface SlideCardSkeletonProps {
     index: number

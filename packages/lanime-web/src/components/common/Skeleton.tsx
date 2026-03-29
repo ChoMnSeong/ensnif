@@ -1,6 +1,6 @@
 import { keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 
 interface SkeletonProps {
     wt: string

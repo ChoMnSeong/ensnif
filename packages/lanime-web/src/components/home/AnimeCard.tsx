@@ -1,18 +1,20 @@
-import Text from '../common/Text'
-import Image from '../common/Image'
-import { statusLabelMap, typeLabelMap } from '../../libs/constants/anime'
+import Text from '@components/common/Text'
+import Image from '@components/common/Image'
+import Flex from '@components/common/Flex'
+import { statusLabelMap, typeLabelMap } from '@libs/constants/anime'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
-import { openModal } from '../../stores/episodeModal/reducer'
-import { Animation } from '../../libs/apis/animations/type'
-import { themedPalette } from '../../libs/style/theme'
+import { openModal } from '@stores/episodeModal/reducer'
+import { Animation } from '@libs/apis/animations/type'
+import { themedPalette } from '@libs/style/theme'
 
 const AnimeCard: React.FC<Animation> = ({
     id,
     title,
-    thumbnailURL,
+    thumbnailUrl,
     type,
     ageRating,
+    rank,
 }) => {
     const dispatch = useDispatch()
 
@@ -27,12 +29,33 @@ const AnimeCard: React.FC<Animation> = ({
 
     return (
         <AnimeCardBlock onClick={handleCardClick}>
-            <StyledImage
-                src={thumbnailURL}
-                alt={title}
-                height={'55.7047%'}
-                width={'100%'}
-            />
+            <ImageWrapper>
+                <Image
+                    src={thumbnailUrl}
+                    alt={title}
+                    height={'auto'}
+                    width={'100%'}
+                    $aspectRatio="100/55.7047"
+                    borderRadius="0.5rem"
+                    loading="lazy"
+                />
+                {rank !== undefined && (
+                    <RankBadge
+                        alignItems="baseline"
+                        justifyContent="flex-start"
+                        gap="0.15rem"
+                    >
+                        <RankNumber>{rank}</RankNumber>
+                        <Text
+                            sz="smCt"
+                            color="rgba(255,255,255,0.85)"
+                            weight={700}
+                        >
+                            위
+                        </Text>
+                    </RankBadge>
+                )}
+            </ImageWrapper>
             <AnimeCardContentBlock>
                 <AnimeTitleBlock>
                     <Text color={themedPalette.text1} sz="mdCt">
@@ -59,9 +82,31 @@ const AnimeSubTiltBlock = styled.div`
     transition: opacity 0.3s ease;
 `
 
-const StyledImage = styled(Image)`
-    object-fit: cover;
-    border-radius: 0.5rem;
+const ImageWrapper = styled.div`
+    position: relative;
+`
+
+const RankBadge = styled(Flex)`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem 0.5rem 0.4rem;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.75) 0%,
+        transparent 100%
+    );
+    border-radius: 0 0 0.5rem 0.5rem;
+    pointer-events: none;
+`
+
+const RankNumber = styled.span`
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 `
 
 const AnimeCardContentBlock = styled.div`
@@ -71,8 +116,8 @@ const AnimeCardContentBlock = styled.div`
 
 const AnimeCardBlock = styled.li`
     gap: 3%;
-    flex: 0 0 18.625em;
-    width: 18.625em;
+    flex: 0 0 var(--card-w);
+    width: var(--card-w);
     scroll-snap-align: start;
     position: relative;
     cursor: pointer;
@@ -87,12 +132,18 @@ const AnimeCardBlock = styled.li`
         transform: scale(1.25);
     }
 
+    @media (max-width: 1023px) {
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
     &:hover ${AnimeSubTiltBlock} {
         opacity: 1;
         display: block;
     }
 
-    &:hover ${StyledImage} {
+    &:hover ${ImageWrapper} Image {
         border-radius: 0.5rem 0.5rem 0 0;
     }
 

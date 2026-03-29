@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { action } from './actions'
-import { UserProfileState } from './types'
+import { action } from '@stores/auth/actions'
+import { UserProfileState } from '@stores/auth/types'
 
 const initialState: UserProfileState = {
     nickname: null,

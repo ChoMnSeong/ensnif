@@ -1,46 +1,31 @@
 type ThemeVariables = {
-    // ==========================
-    // 페이지 배경
-    // ==========================
-    bg_page1: string // 메인 페이지 배경
-    bg_page2: string // 서브 페이지 / 섹션 배경
+    bg_page1: string
+    bg_page2: string
 
-    // ==========================
-    // UI 요소 배경
-    // ==========================
-    bg_element1: string // 카드, 박스, 컨테이너 배경
-    bg_element2: string // 버튼, 태그 배경
-    bg_element3: string // 강조 요소 / hover 영역 배경
-    bg_element4: string // 입력 필드, 폼 배경
-    bg_element5: string // 모달 / 팝업 배경
-    bg_element6: string // 툴팁 / 라벨 / 배지 배경
+    bg_element1: string
+    bg_element2: string
+    bg_element3: string
+    bg_element4: string
+    bg_element5: string
+    bg_element6: string
 
-    // ==========================
-    // 텍스트
-    // ==========================
-    text1: string // 메인 텍스트 / 중요한 제목, 본문
-    text2: string // 부제목 / 중요하지만 서브 텍스트
-    text3: string // 설명 / 세부 텍스트 / 서브 정보
-    text4: string // 보조 텍스트 / 힌트 / 상태 / 날짜
+    text1: string
+    text2: string
+    text3: string
+    text4: string
 
-    // ==========================
-    // 테두리
-    // ==========================
-    border1: string // 주요 테두리 (카드, 박스 등)
-    border2: string // 부가 테두리 (입력 필드, 버튼 등)
+    border1: string
+    border2: string
 
-    // ==========================
-    // 포인트 / 버튼 / 상태
-    // ==========================
-    primary1: string // 메인 포인트 색상 (버튼, 강조 요소)
-    primary2: string // 보조 포인트 / 밝은 보라 (#d2a9ff)
-    success1: string // 성공 상태 기본 색상 (파란색)
-    success_hover: string // 성공 상태 hover 색상
-    success_disabled: string // 성공 상태 disabled 색상
-    destructive1: string // 실패 상태 기본 색상 (빨강)
-    destructive_hover: string // 실패 상태 hover 색상
-    destructive_disabled: string // 실패 상태 disabled 색상
-    disabled: string // 일반 비활성화 색상
+    primary1: string
+    primary2: string
+    success1: string
+    success_hover: string
+    success_disabled: string
+    destructive1: string
+    destructive_hover: string
+    destructive_disabled: string
+    disabled: string
     button_text: string
     white: string
     black: string
@@ -69,7 +54,7 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
         text1: '#1A1A1A',
         text2: '#222222',
         text3: '#3B3B3B',
-        text4: '#6E6E6E',
+        text4: '#595959',
 
         border1: '#2C2C2C',
         border2: '#ADB5BD',
@@ -100,18 +85,18 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     },
     dark: {
         bg_page1: '#1A1A1A',
-        bg_page2: '#2C2C2C',
+        bg_page2: '#222222',
         bg_element1: '#1E1E1E',
         bg_element2: '#252525',
         bg_element3: '#2E2E2E',
-        bg_element4: '#2C2C2C',
+        bg_element4: '#222222',
         bg_element5: '#252525',
         bg_element6: '#0c0c0c',
 
         text1: '#FAFAF8',
         text2: '#ECEAE4',
         text3: '#ACACAC',
-        text4: '#595959',
+        text4: '#848484',
 
         border1: '#2C2C2C',
         border2: '#4D4D4D',
@@ -141,9 +126,6 @@ const themeVariableSets: Record<Theme, ThemeVariables> = {
     },
 }
 
-// ==========================
-// CSS 변수 생성 함수
-// ==========================
 const buildCssVariables = (variables: ThemeVariables) => {
     const keys = Object.keys(variables) as (keyof ThemeVariables)[]
     return keys.reduce(
@@ -153,17 +135,11 @@ const buildCssVariables = (variables: ThemeVariables) => {
     )
 }
 
-// ==========================
-// Emotion / CSS용 테마
-// ==========================
 export const themes = {
     light: buildCssVariables(themeVariableSets.light),
     dark: buildCssVariables(themeVariableSets.dark),
 }
 
-// ==========================
-// CSS var() 형태 팔레트
-// ==========================
 const cssVar = (name: string) => `var(--${name.replace(/_/g, '-')})`
 
 const variableKeys = Object.keys(themeVariableSets.light) as VariableKey[]

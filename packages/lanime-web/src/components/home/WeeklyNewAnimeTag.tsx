@@ -1,6 +1,7 @@
-import { weeks } from '../../libs/constants/weeks'
-import CircleTag from '../common/CircleTag'
-import Flex from '../common/Flex'
+import { weeks } from '@libs/constants/weeks'
+import Tag from '@components/common/Tag'
+import Flex from '@components/common/Flex'
+import styled from '@emotion/styled'
 
 interface WeeklyNewAnimeTagProps {
     currentDay: number
@@ -12,22 +13,33 @@ const WeeklyNewAnimeTag: React.FC<WeeklyNewAnimeTagProps> = ({
     onWeekTagClick,
 }) => {
     return (
-        <Flex gap="1rem" justifyContent="flex-start" padding="0 0 1.5em 0">
+        <DayTagRow justifyContent="flex-start" padding="0 0 1.5em 0">
             {weeks.map((el, index) => {
                 const isToday =
                     index === (currentDay === 0 ? 6 : currentDay - 1)
                 return (
-                    <CircleTag
+                    <Tag
                         key={el}
+                        shape="circle"
+                        variant="primary"
+                        size="md"
                         active={isToday}
                         onClick={() => onWeekTagClick(index + 1)}
                     >
                         {el}
-                    </CircleTag>
+                    </Tag>
                 )
             })}
-        </Flex>
+        </DayTagRow>
     )
 }
 
 export default WeeklyNewAnimeTag
+
+const DayTagRow = styled(Flex)`
+    gap: 1rem;
+
+    @media (max-width: 767px) {
+        gap: 0.5rem;
+    }
+`

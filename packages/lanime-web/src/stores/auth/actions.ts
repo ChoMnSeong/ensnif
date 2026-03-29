@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { UserProfileState } from './types'
+import { UserProfileState } from '@stores/auth/types'
 
 export const action = {
     setUserProfile: (

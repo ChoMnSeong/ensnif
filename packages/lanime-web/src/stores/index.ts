@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { episodeModalReducer } from "./episodeModal";
-import { userProfileReducer } from "./auth";
+import { episodeModalReducer } from '@stores/episodeModal';
+import { userProfileReducer } from '@stores/auth';
 
 export const store = configureStore({
   reducer: {

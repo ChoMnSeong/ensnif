@@ -1,26 +1,18 @@
 import { css } from '@emotion/react'
-import { themes } from './theme'
+import { themes } from '@libs/style/theme'
 const GlobalStyles = css`
     body {
-        margin: 0;
-        padding: 0;
-        font-family:
-            Roboto, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans',
-            'Helvetica Neue', sans-serif, 'Helvetica Neue',
-            'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', 나눔고딕,
-            'Nanum Gothic', 'Noto Sans KR', 'Noto Sans CJK KR', arial, 돋움,
-            Dotum, Tahoma, Geneva, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
         -webkit-touch-callout: none;
-        user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
-        -webkit-user-select: none;
+        /* 추가 폰트 폴백: 한글 및 확장 시스템 폰트 */
+        font-family:
+            Roboto, 'Segoe UI', Oxygen, Ubuntu, Cantarell,
+            'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', 나눔고딕,
+            'Nanum Gothic', 'Noto Sans KR', 'Noto Sans CJK KR', Dotum, sans-serif;
     }
 
     * {
-        box-sizing: border-box;
         font-family: inherit;
     }
 
@@ -30,36 +22,26 @@ const GlobalStyles = css`
             'Courier New', monospace;
     }
 
-    html,
-    body,
-    #root {
-        height: 100%;
-    }
-
-    body {
-    }
-
-    li,
-    ol {
-        margin: 0;
-        padding: 0;
-    }
     body {
         ${themes.light}
+        background-color: var(--bg-page1);
     }
 
     @media (prefers-color-scheme: dark) {
         body {
             ${themes.dark}
+            background-color: var(--bg-page1);
         }
     }
 
     body[data-theme='light'] {
         ${themes.light};
+        background-color: var(--bg-page1);
     }
 
     body[data-theme='dark'] {
         ${themes.dark};
+        background-color: var(--bg-page1);
     }
 `
 

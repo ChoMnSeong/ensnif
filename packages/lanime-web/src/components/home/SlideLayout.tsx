@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
-import Image from '../common/Image'
+import Icon from '@components/common/Icon'
 
 interface SlideLayoutProps {
     children: React.ReactNode
     onPrev: () => void
     onNext: () => void
+    hasPrev: boolean
+    hasNext: boolean
     isLoading: boolean
 }
 
@@ -12,45 +14,49 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
     children,
     onPrev,
     onNext,
+    hasPrev,
+    hasNext,
     isLoading,
 }) => {
     return (
         <Container>
-            <PrevButton onClick={onPrev} disabled={isLoading}>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 -960 960 960"
-                    width="24px"
-                    fill="#1f1f1f"
-                >
-                    <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
-                </svg>
-            </PrevButton>
+            {hasPrev && (
+                <SlideArrowButton onClick={onPrev} disabled={isLoading} isPrev>
+                    <Icon name="chevronLeft" size={32} color="white" />
+                </SlideArrowButton>
+            )}
             <ContentContainer>{children}</ContentContainer>
-            <NextButton onClick={onNext} disabled={isLoading}>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    width="24px"
-                    viewBox="0 -960 960 960"
-                    fill="#1f1f1f"
-                    style={{ transform: 'rotate(180deg)' }}
-                >
-                    <path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z" />
-                </svg>
-            </NextButton>
+            {hasNext && (
+                <SlideArrowButton onClick={onNext} disabled={isLoading}>
+                    <Icon name="chevronRight" size={32} color="white" />
+                </SlideArrowButton>
+            )}
         </Container>
     )
 }
 
 export default SlideLayout
 
-const Container = styled.div`
-    position: relative;
-    display: block;
-    font-size: calc(16vw / (1920 + 16) * 100);
-    height: 51.375em;
+const SlideArrowButton = styled.div<{ disabled: boolean; isPrev?: boolean }>`
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+    pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+    opacity: 0;
+    transition: opacity 250ms ease-in-out;
+
+    ${({ isPrev }) => (isPrev ? 'left: 0;' : 'right: 0;')}
+
+    &:hover {
+        opacity: 1;
+    }
 `
 
 const ContentContainer = styled.div`
@@ -60,36 +66,9 @@ const ContentContainer = styled.div`
     position: relative;
 `
 
-const PrevButton = styled.div<{ disabled: boolean }>`
-    z-index: 1;
-    position: absolute;
-    top: 0px;
-    font-size: 2em;
-    bottom: 0px;
-    width: 3.125em;
-    display: flex;
-    align-items: center;
-    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-    left: 0px;
-    padding-left: 0.5em;
-    justify-content: flex-start;
-    color: ${(props) => (props.disabled ? 'gray' : 'black')};
-    pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
-`
-
-const NextButton = styled.div<{ disabled: boolean }>`
-    z-index: 1;
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    width: 3.125em;
-    display: flex;
-    font-size: 2em;
-    align-items: center;
-    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-    right: 0px;
-    padding-right: 0.5em;
-    justify-content: flex-end;
-    color: ${(props) => (props.disabled ? 'gray' : 'black')};
-    pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};
+const Container = styled.div`
+    position: relative;
+    display: block;
+    font-size: calc(16vw / (1920 + 16) * 100);
+    height: 51.375em;
 `

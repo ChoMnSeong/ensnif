@@ -14,15 +14,16 @@ interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
         | 'smBt'
     color: string
     hoverColor?: string
-    margin?: string // ✨ 추가
-    padding?: string // ✨ 추가
-    display?: string // ✨ span은 inline이므로 margin/padding 적용을 위해 가끔 필요함
+    weight?: React.CSSProperties['fontWeight']
+    margin?: string
+    padding?: string
+    display?: string
 }
 
 const StyledText = styled.span<TextProps>`
     display: ${(props) =>
         props.display ||
-        'inline-block'}; // margin/padding 적용을 위해 기본값 변경 가능
+        'inline-block'};
     margin: ${(props) => props.margin || '0'};
     padding: ${(props) => props.padding || '0'};
 
@@ -52,6 +53,7 @@ const StyledText = styled.span<TextProps>`
     }};
 
     font-weight: ${(props) => {
+        if (props.weight !== undefined) return props.weight
         switch (props.sz) {
             case 'lgTl':
             case 'mdTl':
@@ -76,7 +78,7 @@ const StyledText = styled.span<TextProps>`
 
 const Text = forwardRef<HTMLSpanElement, TextProps>(
     (
-        { sz, color, hoverColor, margin, padding, display, children, ...rest },
+        { sz, color, hoverColor, weight, margin, padding, display, children, ...rest },
         ref,
     ) => {
         return (
@@ -84,6 +86,7 @@ const Text = forwardRef<HTMLSpanElement, TextProps>(
                 sz={sz}
                 color={color}
                 hoverColor={hoverColor}
+                weight={weight}
                 margin={margin}
                 padding={padding}
                 display={display}

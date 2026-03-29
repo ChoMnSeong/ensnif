@@ -1,6 +1,6 @@
 import React, { forwardRef, InputHTMLAttributes } from 'react'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string

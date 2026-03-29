@@ -1,6 +1,6 @@
-import { Animation } from '../../libs/apis/animations/type'
-import AnimeCard from './AnimeCard'
-import AnimeCardSkeleton from './AnimeCardSkeleton'
+import { Animation } from '@libs/apis/animations/type'
+import AnimeCard from '@components/home/AnimeCard'
+import AnimeCardSkeleton from '@components/home/AnimeCardSkeleton'
 import React from 'react'
 
 interface AnimeCardTrackProps {

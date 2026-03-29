@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
-import SlideCard from './SlideCard'
-import SlideCardSkeleton from './SlideCardSkeleton'
-import { AdData } from '../../libs/apis/ad/type'
+import SlideCard from '@components/home/SlideCard'
+import SlideCardSkeleton from '@components/home/SlideCardSkeleton'
+import { AdData } from '@libs/apis/ad/type'
 
 interface SlideCardTrackProps {
     isImageLoading: boolean

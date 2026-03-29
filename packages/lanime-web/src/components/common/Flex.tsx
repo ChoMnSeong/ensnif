@@ -5,7 +5,7 @@ interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode
     width?: string
     height?: string
-    direction?: React.CSSProperties['flexDirection'] // 'revers-row' 오타 방지
+    direction?: React.CSSProperties['flexDirection']
     wrap?: React.CSSProperties['flexWrap']
     gap?: string
     justifyItems?: React.CSSProperties['justifyItems']

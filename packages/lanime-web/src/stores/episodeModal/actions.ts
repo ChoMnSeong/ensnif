@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { ModalState } from "./types";
+import { ModalState } from '@stores/episodeModal/types';
 
 export const action = {
   openModal: (

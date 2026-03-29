@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
-import Flex from './Flex'
+import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
 
 type PinSize = 'sm' | 'md' | 'lg'
 
@@ -22,7 +22,6 @@ const PinInput: React.FC<PinInputProps> = ({
 }) => {
     const inputRefs = useRef<HTMLInputElement[]>([])
 
-    // 모든 칸이 채워지면 onComplete 호출
     useEffect(() => {
         if (value.every((v) => v !== '') && onComplete) {
             onComplete(value.join(''))
@@ -30,15 +29,13 @@ const PinInput: React.FC<PinInputProps> = ({
     }, [value, onComplete])
 
     const handleChange = (val: string, idx: number) => {
-        // 숫자만 허용 (빈 문자열은 지우기 위해 허용)
         if (val !== '' && !/^\d+$/.test(val)) return
 
         const newPins = [...value]
-        const digit = val.slice(-1) // 마지막으로 입력한 한 글자만 취함
+        const digit = val.slice(-1)
         newPins[idx] = digit
         onChange(newPins)
 
-        // 값을 입력했다면 다음 칸으로 포커스 이동
         if (digit !== '' && idx < 3) {
             inputRefs.current[idx + 1]?.focus()
         }
@@ -49,13 +46,11 @@ const PinInput: React.FC<PinInputProps> = ({
         idx: number,
     ) => {
         if (e.key === 'Backspace') {
-            // 1. 현재 칸에 값이 있는 경우 -> 현재 칸만 지움
             if (value[idx] !== '') {
                 const newPins = [...value]
                 newPins[idx] = ''
                 onChange(newPins)
             }
-            // 2. 현재 칸이 이미 비어있는 경우 -> 앞 칸으로 이동하며 앞 칸 지움
             else if (idx > 0) {
                 const newPins = [...value]
                 newPins[idx - 1] = ''
@@ -127,7 +122,7 @@ const UnderlinePin = styled.input<{ pinSize: PinSize; isActive: boolean }>`
                     font-size: 3rem;
                     padding-bottom: 8px;
                 `
-            default: // md
+            default:
                 return `
                     width: 36px;
                     font-size: 1.8rem;
@@ -140,7 +135,6 @@ const UnderlinePin = styled.input<{ pinSize: PinSize; isActive: boolean }>`
         border-bottom-color: ${themedPalette.primary1};
     }
 
-    /* 패스워드 모드일 때 점 크기 조절을 위한 팁 */
     &[type='password'] {
         font-family: caption;
     }

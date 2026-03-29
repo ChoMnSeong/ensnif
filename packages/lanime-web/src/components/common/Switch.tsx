@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
-import Flex from './Flex'
-import Text from './Text'
+import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
+import Text from '@components/common/Text'
 
 interface SwitchProps {
     label?: string

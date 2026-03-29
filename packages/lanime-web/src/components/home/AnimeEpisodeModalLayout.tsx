@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 import { forwardRef } from 'react'
 
 interface AnimeEpisodeModalLayoutProps {
@@ -8,7 +8,6 @@ interface AnimeEpisodeModalLayoutProps {
     onClose: () => void
 }
 
-// ✅ forwardRef로 ModalContainer의 ref를 외부에서 사용할 수 있게 함
 const AnimeEpisodeModalLayout = forwardRef<
     HTMLDivElement,
     AnimeEpisodeModalLayoutProps

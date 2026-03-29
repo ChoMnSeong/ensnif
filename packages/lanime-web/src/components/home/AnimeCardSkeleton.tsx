@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Skeleton from '../common/Skeleton'
+import Skeleton from '@components/common/Skeleton'
 
 const AnimeCardSkeleton = () => {
     return (
@@ -15,13 +15,14 @@ const AnimeCardSkeleton = () => {
 
 export default AnimeCardSkeleton
 
-const AnimeCardSkeletonBlock = styled.ol`
+const AnimeCardSkeletonBlock = styled.li`
+    list-style: none;
     gap: 3%;
-    flex: 0 0 18.625em;
-    width: 18.625em;
+    flex: 0 0 var(--card-w);
+    width: var(--card-w);
     scroll-snap-align: start;
     position: relative;
-    min-height: 14em;
+    min-height: calc(var(--card-w) * 0.75);
     cursor: pointer;
 `
 

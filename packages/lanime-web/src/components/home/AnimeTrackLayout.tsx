@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import Text from '../common/Text'
-import { themedPalette } from '../../libs/style/theme'
+import Text from '@components/common/Text'
+import { themedPalette } from '@libs/style/theme'
 
 interface AnimeTrackLayoutProps {
     children: React.ReactNode
@@ -38,7 +38,11 @@ const AnimeTrackLayoutBlock = styled.div`
 `
 
 const AnimeHeadBlock = styled.div`
-    padding: 0px 3.125em;
+    padding: 0 3.125em;
+
+    @media (max-width: 767px) {
+        padding: 0 1em;
+    }
 `
 
 const AnimeTitleBlock = styled.div`

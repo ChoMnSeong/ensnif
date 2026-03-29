@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 
 interface AnimationAverageRatingProps {
     averageRating: number
@@ -8,18 +8,17 @@ interface AnimationAverageRatingProps {
 
 const AnimationAverageRating: React.FC<AnimationAverageRatingProps> = ({
     averageRating,
-    total, // 총 별점 수 기본 5
+    total,
 }) => {
     const percentage = (averageRating / 5) * 100
 
     return (
         <Container>
-            <Title>평균 평점</Title>
             <Average>{averageRating.toFixed(1)}</Average>
             <StarsWrapper>
                 <RatingText>{`총 ${total}의 별점`}</RatingText>
                 <Star percentage={percentage}>
-                    {Array.from({ length: 5 }).map((_, index) => '★')}
+                    {Array.from({ length: 5 }).map(() => '★')}
                 </Star>
             </StarsWrapper>
         </Container>
@@ -28,20 +27,12 @@ const AnimationAverageRating: React.FC<AnimationAverageRatingProps> = ({
 
 export default AnimationAverageRating
 
-// 스타일
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     padding-bottom: 12px;
-`
-
-const Title = styled.div`
-    align-self: flex-start;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: ${themedPalette.text1};
 `
 
 const Average = styled.div`

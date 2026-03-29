@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
+import Icon from '@components/common/Icon'
 
 interface AnimeCardTrackViewProps {
     state: number
@@ -22,12 +23,14 @@ const AnimeCardTrackLayout: React.FC<AnimeCardTrackViewProps> = ({
         <AnimeCardTrackWrapper>
             {hasPrev && (
                 <AnimeTrackMoveButton onClick={onPrev} isPrev>
-                    ←
+                    <Icon name="chevronLeft" size={28} color="white" />
                 </AnimeTrackMoveButton>
             )}
             <AnimeCardTrackBlock state={state}>{children}</AnimeCardTrackBlock>
             {hasNext && (
-                <AnimeTrackMoveButton onClick={onNext}>→</AnimeTrackMoveButton>
+                <AnimeTrackMoveButton onClick={onNext}>
+                    <Icon name="chevronRight" size={28} color="white" />
+                </AnimeTrackMoveButton>
             )}
         </AnimeCardTrackWrapper>
     )
@@ -45,38 +48,42 @@ const AnimeTrackMoveButton = styled.button<{ isPrev?: boolean }>`
     transition: opacity 250ms ease-in-out;
     z-index: 4;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 2.5rem;
-    width: 2.5rem;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    top: 0;
+    height: calc(var(--card-w) * 0.557047);
+    width: 2.5em;
+    background-color: rgba(0, 0, 0, 0.45);
     border: none;
-    border-radius: 50%;
+    padding: 0;
+    font-size: inherit;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    ${({ isPrev }) => (isPrev ? 'left: 0.5rem;' : 'right: 0.5rem;')}
+    ${({ isPrev }) => (isPrev ? 'left: 0;' : 'right: 0;')}
 
-    &:hover, &:focus, &:active {
+    &:hover {
+        animation: ${fadeIn} 250ms ease-in;
         opacity: 1;
     }
 `
 
 const AnimeCardTrackWrapper = styled.div`
+    --card-w: 18.625em;
+
+    @media (max-width: 1023px) {
+        --card-w: 13em;
+    }
+    @media (max-width: 767px) {
+        --card-w: 10em;
+    }
+
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     user-select: none;
     width: 100%;
-
-    &:hover ${AnimeTrackMoveButton} {
-        animation: ${fadeIn} 250ms ease-in;
-        opacity: 1;
-    }
 `
 
 const AnimeCardTrackBlock = styled.ol<{ state: number }>`
@@ -84,10 +91,14 @@ const AnimeCardTrackBlock = styled.ol<{ state: number }>`
     display: flex;
     gap: 0.375em;
     flex-wrap: nowrap;
-    padding: 0px 3.125em;
-    min-height: 14em;
+    padding: 0 3.125em;
+    min-height: calc(var(--card-w) * 0.75);
     overflow-x: visible;
     transform: ${({ state }) =>
-        `translate3d(${state * 2 * -18.625}em, 0px, 0px);`};
+        `translate3d(calc(${state} * -2 * var(--card-w)), 0px, 0px)`};
     transition: transform 300ms ease-in-out;
+
+    @media (max-width: 767px) {
+        padding: 0 1em;
+    }
 `

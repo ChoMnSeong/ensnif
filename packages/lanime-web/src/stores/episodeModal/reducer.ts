@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ModalState } from "./types";
-import { action } from "./actions";
+import { ModalState } from '@stores/episodeModal/types';
+import { action } from '@stores/episodeModal/actions';
 
 const initialState: ModalState = {
   visible: false,
