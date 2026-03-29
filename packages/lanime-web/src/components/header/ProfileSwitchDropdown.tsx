@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { NavLink } from 'react-router-dom'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
-import { themedPalette } from '../../libs/style/theme'
-import Image from '../common/Image'
-import Text from '../common/Text'
+import { themedPalette } from '@libs/style/theme'
+import Image from '@components/common/Image'
+import Text from '@components/common/Text'
 
 interface ProfileSwitchDropdownProps {
     nickname: string | null
     avatarUrl: string | null
     anchorEl: HTMLElement | null
-    onNavigateToProfile: () => void
     onLogout: () => void
     onMouseEnter: () => void
 }
@@ -19,7 +19,6 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
     nickname,
     avatarUrl,
     anchorEl,
-    onNavigateToProfile,
     onLogout,
     onMouseEnter,
 }) => {
@@ -60,16 +59,9 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
                 </Text>
             </ProfileRow>
             <Divider />
-            <ActionButton onClick={onNavigateToProfile}>
-                <Text sz="smCt" color={themedPalette.text2}>
-                    프로필 변경
-                </Text>
-            </ActionButton>
-            <ActionButton onClick={onLogout}>
-                <Text sz="smCt" color={themedPalette.text2}>
-                    로그아웃
-                </Text>
-            </ActionButton>
+            <DropdownNavLink to="/profile">프로필 변경</DropdownNavLink>
+            <DropdownNavLink to="/settings">설정</DropdownNavLink>
+            <LogoutButton onClick={onLogout}>로그아웃</LogoutButton>
         </DropdownBlock>,
         document.body,
     )
@@ -113,14 +105,27 @@ const Divider = styled.div`
     margin: 0 16px;
 `
 
-const ActionButton = styled.div`
-    display: flex;
-    align-items: center;
+const dropdownItemStyle = `
+    display: block;
+    width: 100%;
     padding: 12px 16px;
+    font-size: 0.875rem;
+    color: ${themedPalette.text2};
+    text-align: left;
+    text-decoration: none;
+    background: none;
+    border: none;
     cursor: pointer;
 
-    &:hover span {
+    &:hover {
         color: ${themedPalette.primary1};
-        transition: color 0.15s ease;
     }
+`
+
+const DropdownNavLink = styled(NavLink)`
+    ${dropdownItemStyle}
+`
+
+const LogoutButton = styled.button`
+    ${dropdownItemStyle}
 `

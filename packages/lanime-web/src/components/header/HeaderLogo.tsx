@@ -1,27 +1,12 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
-import Image from '../common/Image'
-import whiteLogo from '../../assets/whiteLogo.svg'
-import blackLogo from '../../assets/blackLogo.svg'
-import { useEffect, useState } from 'react'
+import Logo from '@components/header/Logo'
 
-interface HeaderLogoProps {
-    theme?: 'light' | 'dark'
-}
-
-const HeaderLogo: React.FC<HeaderLogoProps> = ({ theme = 'light' }) => {
-    const [logo, setLogo] = useState<string>(
-        theme === 'light' ? blackLogo : whiteLogo,
-    )
-
-    useEffect(() => {
-        setLogo(theme === 'light' ? blackLogo : whiteLogo)
-    }, [theme])
-
+const HeaderLogo: React.FC = () => {
     return (
         <HeaderLogoBlock>
             <Link to="/">
-                <Image src={logo} alt="logo" width={'auto'} height={60} />
+                <Logo height={36} />
             </Link>
         </HeaderLogoBlock>
     )

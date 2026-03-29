@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../stores'
-import ProfileSwitchDropdown from '../../components/header/ProfileSwitchDropdown'
-import customCookie from '../../libs/customCookie'
-import { setUserProfile } from '../../stores/auth/reducer'
+import { useDispatch } from 'react-redux'
+import ProfileSwitchDropdown from '@components/header/ProfileSwitchDropdown'
+import customCookie from '@libs/customCookie'
+import { setUserProfile } from '@stores/auth/reducer'
+import { useSelector } from 'react-redux'
+import { RootState } from '@stores'
 
 interface HeaderProfileDropdownContainerProps {
     anchorEl: HTMLElement | null
@@ -11,17 +12,14 @@ interface HeaderProfileDropdownContainerProps {
     onMouseEnter: () => void
 }
 
-const HeaderProfileDropdownContainer: React.FC<
-    HeaderProfileDropdownContainerProps
-> = ({ anchorEl, onClose, onMouseEnter }) => {
+const HeaderProfileDropdownContainer: React.FC<HeaderProfileDropdownContainerProps> = ({
+    anchorEl,
+    onClose,
+    onMouseEnter,
+}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const profile = useSelector((state: RootState) => state.userProfile)
-
-    const handleNavigateToProfile = () => {
-        onClose()
-        navigate('/profile')
-    }
 
     const handleLogout = () => {
         customCookie.remove.accessToken()
@@ -37,7 +35,6 @@ const HeaderProfileDropdownContainer: React.FC<
             nickname={profile.nickname}
             avatarUrl={profile.avatarUrl}
             anchorEl={anchorEl}
-            onNavigateToProfile={handleNavigateToProfile}
             onLogout={handleLogout}
             onMouseEnter={onMouseEnter}
         />

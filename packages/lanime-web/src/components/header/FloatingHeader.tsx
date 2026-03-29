@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import Header, { HeaderProps } from './Header'
+import Header from '@components/header/Header'
 import styled from '@emotion/styled'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 
-const FloatingHeader: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
+const FloatingHeader: React.FC = () => {
     const [visible, setVisible] = useState<boolean>(false)
 
     useEffect(() => {
@@ -17,8 +17,8 @@ const FloatingHeader: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     }, [])
 
     return (
-        <FloatingHeaderBlock style={{ height: visible ? '60px' : '0' }}>
-            <Header theme={theme} toggleTheme={toggleTheme} />
+        <FloatingHeaderBlock style={{ height: visible ? '4rem' : '0' }}>
+            <Header />
         </FloatingHeaderBlock>
     )
 }

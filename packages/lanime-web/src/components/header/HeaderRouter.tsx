@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import routers from '../../libs/constants/routers'
+import routers from '@libs/constants/routers'
 import { NavLink } from 'react-router-dom'
-import Text from '../common/Text'
-import { themedPalette } from '../../libs/style/theme'
+import { themedPalette } from '@libs/style/theme'
 
 export default function HeaderRouter({ currentUrl }: { currentUrl: string }) {
     return (
@@ -13,9 +12,7 @@ export default function HeaderRouter({ currentUrl }: { currentUrl: string }) {
                     to={route.path}
                     className={currentUrl === route.path ? 'active' : ''}
                 >
-                    <Text sz="mdBt" color={themedPalette.button_text}>
-                        {route.title}
-                    </Text>
+                    {route.title}
                 </StyledNavLink>
             ))}
         </HeaderRouterBlock>
@@ -31,4 +28,11 @@ const HeaderRouterBlock = styled.div`
 
 const StyledNavLink = styled(NavLink)`
     text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${themedPalette.button_text};
+
+    &.active {
+        color: ${themedPalette.primary1};
+    }
 `

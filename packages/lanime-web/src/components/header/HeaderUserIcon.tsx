@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import Image from '../common/Image'
+import Image from '@components/common/Image'
 
 interface IHeaderUserIcon {
     onClick?: () => void
