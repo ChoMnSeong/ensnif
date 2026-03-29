@@ -1,8 +1,3 @@
-// type.ts
-
-// ==========================
-// 도메인 모델 (UserProfile.kt 등)
-// ==========================
 export interface IUserProfile {
     profileId: string
     userId: string
@@ -14,9 +9,6 @@ export interface IUserProfile {
     updatedAt: string
 }
 
-// ==========================
-// Auth Requests
-// ==========================
 export interface IEmailCheckRequest {
     email: string
 }
@@ -41,9 +33,6 @@ export interface ISigninRequest {
     password: string
 }
 
-// ==========================
-// Auth Responses
-// ==========================
 export interface IEmailCheckResponse {
     email: string
     registered: boolean
@@ -53,12 +42,9 @@ export interface IAuthResponse {
     accessToken: string
     refreshToken?: string
     expiresIn: number
-    tokenType: string // 기본값: "Bearer"
+    tokenType: string
 }
 
-// ==========================
-// Profile Requests
-// ==========================
 export interface IProfileCreateRequest {
     avatarUrl: string
     pin?: string
@@ -75,12 +61,33 @@ export interface IProfileUpdateRequest {
     pin?: string
 }
 
-// ==========================
-// Profile Responses
-// ==========================
 export interface IProfileAccessResponse {
     passwordRequired: boolean
     profileToken?: string
+}
+
+export interface ISendEmailVerificationRequest {
+    email: string
+}
+
+export interface IChangeEmailRequest {
+    newEmail: string
+    verificationCode: string
+}
+
+export interface IChangePasswordRequest {
+    currentPassword: string
+    newPassword: string
+}
+
+export interface IForgotPasswordRequest {
+    email: string
+}
+
+export interface IResetPasswordRequest {
+    email: string
+    token: string
+    newPassword: string
 }
 
 export interface IMyProfileResponse {

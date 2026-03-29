@@ -1,8 +1,12 @@
-// index.ts
-import customCookie from '../../customCookie'
-import { instance } from '../axios' // Axios 인스턴스 (Base URL 포함되어 있다고 가정)
+import customCookie from '@libs/customCookie'
+import { instance } from '@libs/apis/axios'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import {
+    ISendEmailVerificationRequest,
+    IChangeEmailRequest,
+    IChangePasswordRequest,
+    IForgotPasswordRequest,
+    IResetPasswordRequest,
     IEmailCheckRequest,
     IEmailCheckResponse,
     IVerificationSendRequest,
@@ -16,13 +20,9 @@ import {
     IProfileUpdateRequest,
     IProfileAccessResponse,
     IMyProfileResponse,
-} from './type'
+} from '@libs/apis/auth/type'
 
-import { IApiResponse } from '../../types/type'
-
-// ==========================================
-// Auth 관련 Mutations (AuthController.kt)
-// ==========================================
+import { IApiResponse } from '@libs/types/type'
 
 export const useCheckEmailMutation = () => {
     return useMutation({
@@ -30,7 +30,7 @@ export const useCheckEmailMutation = () => {
             const { data } = await instance.post<
                 IApiResponse<IEmailCheckResponse>
             >('/auth/check-email', request)
-            return data.data // IEmailCheckResponse 반환
+            return data.data
         },
     })
 }
@@ -42,7 +42,7 @@ export const useSendVerificationMutation = () => {
                 '/auth/send-verification',
                 request,
             )
-            return data // message("인증 번호가 이메일로 발송되었습니다.") 확인을 위해 전체 response 반환
+            return data
         },
     })
 }
@@ -54,7 +54,7 @@ export const useVerifyCodeMutation = () => {
                 '/auth/verify-code',
                 request,
             )
-            return data.data // boolean 반환
+            return data.data
         },
     })
 }
@@ -92,14 +92,8 @@ export const useSigninMutation = () => {
     })
 }
 
-// ==========================================
-// Profile 관련 Queries & Mutations (ProfileController.kt)
-// ==========================================
-
-// 프로필 목록 조회
 export const useProfilesQuery = () => {
     const fetchProfiles = async () => {
-        // 백엔드에서 Flux<UserProfile>를 바로 반환하므로 배열 형태
         const { data } =
             await instance.get<IApiResponse<IUserProfile[]>>('/profiles')
         return data.data
@@ -111,7 +105,6 @@ export const useProfilesQuery = () => {
     })
 }
 
-// 프로필 진입 (PIN 체크 여부)
 export const useCheckProfileAccessMutation = () => {
     return useMutation({
         mutationFn: async (profileId: string) => {
@@ -123,8 +116,6 @@ export const useCheckProfileAccessMutation = () => {
     })
 }
 
-// 프로필 PIN 검증
-// 수정 후: profileId와 request(pin)를 객체로 묶어서 받음
 export const useVerifyProfilePinMutation = () => {
     return useMutation({
         mutationFn: async ({
@@ -142,7 +133,6 @@ export const useVerifyProfilePinMutation = () => {
     })
 }
 
-// 프로필 생성
 export const useCreateProfileMutation = () => {
     return useMutation({
         mutationFn: async (request: IProfileCreateRequest) => {
@@ -155,7 +145,6 @@ export const useCreateProfileMutation = () => {
     })
 }
 
-// 현재 접속 중인 프로필 정보 조회 (새로고침 시 Redux 상태 복구용)
 export const useMyProfileQuery = (options?: { enabled?: boolean }) => {
     return useQuery({
         queryKey: ['myProfile'],
@@ -171,13 +160,93 @@ export const useMyProfileQuery = (options?: { enabled?: boolean }) => {
     })
 }
 
-// 현재 접속된 프로필 수정
 export const useUpdateProfileMutation = () => {
     return useMutation({
         mutationFn: async (request: IProfileUpdateRequest) => {
             const { data } = await instance.patch<IApiResponse<void>>(
                 '/profiles/self',
                 request,
+            )
+            return data
+        },
+    })
+}
+
+export const useDeleteAccountMutation = () => {
+    return useMutation({
+        mutationFn: async () => {
+            const { data } =
+                await instance.delete<IApiResponse<void>>('/auth/account')
+            return data
+        },
+    })
+}
+
+export const useSendEmailVerificationMutation = () => {
+    return useMutation({
+        mutationFn: async (request: ISendEmailVerificationRequest) => {
+            const { data } = await instance.post<IApiResponse<void>>(
+                '/auth/account/email/send-verification',
+                request,
+            )
+            return data
+        },
+    })
+}
+
+export const useChangeEmailMutation = () => {
+    return useMutation({
+        mutationFn: async (request: IChangeEmailRequest) => {
+            const { data } = await instance.patch<IApiResponse<void>>(
+                '/auth/account/email',
+                request,
+            )
+            return data
+        },
+    })
+}
+
+export const useChangePasswordMutation = () => {
+    return useMutation({
+        mutationFn: async (request: IChangePasswordRequest) => {
+            const { data } = await instance.patch<IApiResponse<void>>(
+                '/auth/account/password',
+                request,
+            )
+            return data
+        },
+    })
+}
+
+export const useForgotPasswordMutation = () => {
+    return useMutation({
+        mutationFn: async (request: IForgotPasswordRequest) => {
+            const { data } = await instance.post<IApiResponse<void>>(
+                '/auth/forgot-password',
+                request,
+            )
+            return data
+        },
+    })
+}
+
+export const useResetPasswordMutation = () => {
+    return useMutation({
+        mutationFn: async (request: IResetPasswordRequest) => {
+            const { data } = await instance.post<IApiResponse<void>>(
+                '/auth/reset-password',
+                request,
+            )
+            return data
+        },
+    })
+}
+
+export const useDeleteProfileMutation = () => {
+    return useMutation({
+        mutationFn: async (profileId: string) => {
+            const { data } = await instance.delete<IApiResponse<void>>(
+                `/profiles/${profileId}`,
             )
             return data
         },
