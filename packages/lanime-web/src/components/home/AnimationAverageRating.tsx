@@ -1,5 +1,7 @@
+import React from 'react'
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
 
 interface AnimationAverageRatingProps {
     averageRating: number
@@ -13,40 +15,24 @@ const AnimationAverageRating: React.FC<AnimationAverageRatingProps> = ({
     const percentage = (averageRating / 5) * 100
 
     return (
-        <Container>
+        <Flex direction="column" align="center" gap="1rem" padding="0 0 12px 0">
             <Average>{averageRating.toFixed(1)}</Average>
-            <StarsWrapper>
+            <Flex direction="column" align="center" gap="4px">
                 <RatingText>{`총 ${total}의 별점`}</RatingText>
                 <Star percentage={percentage}>
                     {Array.from({ length: 5 }).map(() => '★')}
                 </Star>
-            </StarsWrapper>
-        </Container>
+            </Flex>
+        </Flex>
     )
 }
 
 export default AnimationAverageRating
 
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    padding-bottom: 12px;
-`
-
 const Average = styled.div`
     font-size: 2.5rem;
     font-weight: bold;
     color: ${themedPalette.text1};
-`
-
-const StarsWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 2rem;
-    gap: 4px;
 `
 
 const RatingText = styled.div`
@@ -57,6 +43,7 @@ const RatingText = styled.div`
 const Star = styled.span<{ percentage: number }>`
     display: inline-block;
     position: relative;
+    font-size: 2rem;
 
     background: linear-gradient(
         90deg,

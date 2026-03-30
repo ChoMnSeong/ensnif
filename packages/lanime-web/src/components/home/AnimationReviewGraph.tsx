@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from '@emotion/styled'
 import { RatingCount } from '@containers/home/AnimationReview'
 import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
 
 interface AnimationReviewGraphProps {
     ratingCounts: RatingCount[]
@@ -19,7 +21,7 @@ const AnimationReviewGraph: React.FC<AnimationReviewGraphProps> = ({
     const maxCount = Math.max(...allBars.map((r) => r.count), 0)
 
     return (
-        <GraphContainer>
+        <GraphContainer gap="0.5rem" height="10rem">
             {allBars.map((r) => {
                 const rawPercent = maxCount > 0 ? (r.count / maxCount) * 100 : 0
                 const heightPercent = Math.max(rawPercent, minHeight)
@@ -30,8 +32,21 @@ const AnimationReviewGraph: React.FC<AnimationReviewGraphProps> = ({
                 const isHalf = r.rating % 1 !== 0
 
                 return (
-                    <BarColumn key={r.rating}>
-                        <BarFiller height={heightPercent} color={color} />
+                    <BarColumn
+                        key={r.rating}
+                        direction="column"
+                        align="center"
+                        justify="flex-end"
+                        gap="4px"
+                        width="20px"
+                        height="100%"
+                    >
+                        <BarFiller
+                            style={{
+                                height: `${Math.min(heightPercent, 100)}%`,
+                                background: color,
+                            }}
+                        />
                         <StarLabel>{isHalf ? '\u00A0' : r.rating}</StarLabel>
                     </BarColumn>
                 )
@@ -42,26 +57,14 @@ const AnimationReviewGraph: React.FC<AnimationReviewGraphProps> = ({
 
 export default AnimationReviewGraph
 
-const GraphContainer = styled.div`
-    display: flex;
-    gap: 0.5rem;
-    height: 10rem;
-
+const GraphContainer = styled(Flex)`
     @media (max-width: 480px) {
         width: 100%;
         gap: 0.25rem;
     }
 `
 
-const BarColumn = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 4px;
-    width: 20px;
-    height: 100%;
-
+const BarColumn = styled(Flex)`
     @media (max-width: 480px) {
         flex: 1;
         width: auto;
@@ -69,10 +72,8 @@ const BarColumn = styled.div`
     }
 `
 
-const BarFiller = styled.div<{ height: number; color: string }>`
+const BarFiller = styled.div`
     width: 100%;
-    height: ${(props) => Math.min(props.height, 100)}%;
-    background: ${(props) => props.color};
     transition: height 0.5s ease-out;
     border-radius: 4px 4px 0 0;
 `

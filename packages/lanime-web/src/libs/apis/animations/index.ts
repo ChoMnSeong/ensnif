@@ -118,6 +118,21 @@ export const useCreateAnimationReview = (animationId: string) => {
     })
 }
 
+export const useDeleteAnimationReview = (animationId: string) => {
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: async () => {
+            await instance.delete(`/animations/${animationId}/ratings`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['animationReviews', animationId],
+            })
+        },
+    })
+}
+
 export const useUpdateAnimationReview = (animationId: string) => {
     const queryClient = useQueryClient()
 
