@@ -1,11 +1,18 @@
+import React from 'react'
 import styled from '@emotion/styled'
 import Skeleton from '@components/common/Skeleton'
+import Flex from '@components/common/Flex'
 
 const AnimeCardSkeleton = () => {
     return (
-        <AnimeCardSkeletonBlock>
+        <AnimeCardSkeletonBlock
+            as="li"
+            flex="0 0 var(--card-w)"
+            width="var(--card-w)"
+            gap="3%"
+        >
             <Skeleton wt="100%" ht={'65%'} />
-            <AnimeCardSkeletonContentBlock>
+            <AnimeCardSkeletonContentBlock height="35%" direction="column">
                 <Skeleton wt="100%" ht={'55%'} margin="0.25rem 0 0 0" />
                 <Skeleton wt="60%" ht={'45%'} margin="0.1em 0 0 0" />
             </AnimeCardSkeletonContentBlock>
@@ -15,17 +22,12 @@ const AnimeCardSkeleton = () => {
 
 export default AnimeCardSkeleton
 
-const AnimeCardSkeletonBlock = styled.li`
+const AnimeCardSkeletonBlock = styled(Flex)`
     list-style: none;
-    gap: 3%;
-    flex: 0 0 var(--card-w);
-    width: var(--card-w);
     scroll-snap-align: start;
     position: relative;
     min-height: calc(var(--card-w) * 0.75);
     cursor: pointer;
 `
 
-const AnimeCardSkeletonContentBlock = styled.div`
-    height: 35%;
-`
+const AnimeCardSkeletonContentBlock = styled(Flex)``

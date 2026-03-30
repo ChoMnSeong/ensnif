@@ -13,17 +13,17 @@ const AnimePreview: React.FC<{ animation: AnimationDetailResponse }> = ({
     const [expanded, setExpanded] = useState(false)
 
     return (
-        <Container>
+        <Container justify="center">
             <VideoWrapper>
                 <Thumbnail
                     src={animation.thumbnailUrl}
                     alt="anime preview thumbnail"
                 />
 
-                <TopInfo>
+                <TopInfo direction="column" gap="1rem">
                     <Title>{animation.title}</Title>
-                    <TagWrapper>
-                        <Flex gap="0.6rem" justifyContent="flex-start">
+                    <Flex direction="column" gap="0.6rem">
+                        <Flex gap="0.6rem" justify="flex-start">
                             <Tag variant="glass" shape="pill" size="sm">
                                 {statusLabelMap[animation.status]}
                             </Tag>
@@ -34,7 +34,7 @@ const AnimePreview: React.FC<{ animation: AnimationDetailResponse }> = ({
                                 {animation.ageRating}+
                             </Tag>
                         </Flex>
-                        <Flex gap="0.6rem" justifyContent="flex-start">
+                        <Flex gap="0.6rem" justify="flex-start">
                             {animation.genres?.map((g) => (
                                 <Tag
                                     key={g}
@@ -46,10 +46,10 @@ const AnimePreview: React.FC<{ animation: AnimationDetailResponse }> = ({
                                 </Tag>
                             ))}
                         </Flex>
-                    </TagWrapper>
+                    </Flex>
                 </TopInfo>
 
-                <BottomInfo>
+                <BottomInfo direction="column">
                     <TextArea expanded={expanded}>
                         <AnimationPlot sz="smCt" color={themedPalette.white}>
                             {animation.description}
@@ -69,10 +69,7 @@ const AnimePreview: React.FC<{ animation: AnimationDetailResponse }> = ({
 
 export default AnimePreview
 
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-`
+const Container = styled(Flex)``
 
 const VideoWrapper = styled.div`
     position: relative;
@@ -100,15 +97,12 @@ const Thumbnail = styled.img`
     opacity: 0.4;
 `
 
-const TopInfo = styled.div`
+const TopInfo = styled(Flex)`
     position: absolute;
     top: 3rem;
     left: 3rem;
     right: 3rem;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 
     @media (max-width: 480px) {
         top: 1.5rem;
@@ -128,21 +122,13 @@ const Title = styled.div`
     }
 `
 
-const TagWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-`
-
-const BottomInfo = styled.div`
+const BottomInfo = styled(Flex)`
     position: absolute;
     bottom: 2rem;
     left: 3rem;
     right: 3rem;
     max-height: calc(26.8125rem - 2rem - 12rem);
     z-index: 2;
-    display: flex;
-    flex-direction: column;
 
     @media (max-width: 480px) {
         bottom: 1.5rem;

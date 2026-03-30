@@ -1,3 +1,4 @@
+import React from 'react'
 import Text from '@components/common/Text'
 import Image from '@components/common/Image'
 import Flex from '@components/common/Flex'
@@ -28,7 +29,15 @@ const AnimeCard: React.FC<Animation> = ({
     }
 
     return (
-        <AnimeCardBlock onClick={handleCardClick}>
+        <AnimeCardBlock
+            as="li"
+            gap="3%"
+            direction="column"
+            flex="0 0 var(--card-w)"
+            width="var(--card-w)"
+            height="100%"
+            onClick={handleCardClick}
+        >
             <ImageWrapper>
                 <Image
                     src={thumbnailUrl}
@@ -41,9 +50,9 @@ const AnimeCard: React.FC<Animation> = ({
                 />
                 {rank !== undefined && (
                     <RankBadge
-                        alignItems="baseline"
-                        justifyContent="flex-start"
                         gap="0.15rem"
+                        align="baseline"
+                        justify="flex-start"
                     >
                         <RankNumber>{rank}</RankNumber>
                         <Text
@@ -56,13 +65,13 @@ const AnimeCard: React.FC<Animation> = ({
                     </RankBadge>
                 )}
             </ImageWrapper>
-            <AnimeCardContentBlock>
-                <AnimeTitleBlock>
+            <AnimeCardContentBlock height="44%" padding="0 0 0 0.25rem">
+                <AnimeTitleBlock margin="0.25rem 0 0 0">
                     <Text color={themedPalette.text1} sz="mdCt">
                         {title}
                     </Text>
                 </AnimeTitleBlock>
-                <AnimeSubTiltBlock>
+                <AnimeSubTiltBlock margin="0.1rem 0 0 0">
                     <Text color="gray" sz="smCt">
                         {typeLabelMap[type]} | {statusLabelMap['airing']}
                         {` | ${ageRating}`}
@@ -75,8 +84,7 @@ const AnimeCard: React.FC<Animation> = ({
 
 export default AnimeCard
 
-const AnimeSubTiltBlock = styled.div`
-    margin-top: 0.1rem;
+const AnimeSubTiltBlock = styled(Flex)`
     opacity: 0;
     display: none;
     transition: opacity 0.3s ease;
@@ -90,7 +98,6 @@ const RankBadge = styled(Flex)`
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
     padding: 1.5rem 0.5rem 0.4rem;
     background: linear-gradient(
         to top,
@@ -109,22 +116,16 @@ const RankNumber = styled.span`
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 `
 
-const AnimeCardContentBlock = styled.div`
-    height: 44%;
-    padding-left: 0.25rem;
+const AnimeCardContentBlock = styled(Flex)`
+    flex-direction: column;
 `
 
-const AnimeCardBlock = styled.li`
-    gap: 3%;
-    flex: 0 0 var(--card-w);
-    width: var(--card-w);
+const AnimeCardBlock = styled(Flex)`
     scroll-snap-align: start;
     position: relative;
     cursor: pointer;
-    height: 100%;
     transition: all 0.3s ease;
     border-radius: 0.25rem;
-    list-style-type: none;
     list-style: none;
 
     &:hover {
@@ -140,7 +141,7 @@ const AnimeCardBlock = styled.li`
 
     &:hover ${AnimeSubTiltBlock} {
         opacity: 1;
-        display: block;
+        display: flex;
     }
 
     &:hover ${ImageWrapper} Image {
@@ -153,6 +154,4 @@ const AnimeCardBlock = styled.li`
     }
 `
 
-const AnimeTitleBlock = styled.div`
-    margin-top: 0.25rem;
-`
+const AnimeTitleBlock = styled(Flex)``

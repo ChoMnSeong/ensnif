@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import Icon from '@components/common/Icon'
+import Flex from '@components/common/Flex'
 
 interface SlideLayoutProps {
     children: React.ReactNode
@@ -21,13 +22,24 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
     return (
         <Container>
             {hasPrev && (
-                <SlideArrowButton onClick={onPrev} disabled={isLoading} isPrev>
+                <SlideArrowButton
+                    onClick={onPrev}
+                    disabled={isLoading}
+                    isPrev
+                    align="center"
+                    justify="center"
+                >
                     <Icon name="chevronLeft" size={32} color="white" />
                 </SlideArrowButton>
             )}
             <ContentContainer>{children}</ContentContainer>
             {hasNext && (
-                <SlideArrowButton onClick={onNext} disabled={isLoading}>
+                <SlideArrowButton
+                    onClick={onNext}
+                    disabled={isLoading}
+                    align="center"
+                    justify="center"
+                >
                     <Icon name="chevronRight" size={32} color="white" />
                 </SlideArrowButton>
             )}
@@ -37,15 +49,12 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
 
 export default SlideLayout
 
-const SlideArrowButton = styled.div<{ disabled: boolean; isPrev?: boolean }>`
+const SlideArrowButton = styled(Flex)<{ disabled: boolean; isPrev?: boolean }>`
     z-index: 2;
     position: absolute;
     top: 0;
     bottom: 0;
     width: 4em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: rgba(0, 0, 0, 0.45);
     cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
     pointer-events: ${(props) => (props.disabled ? 'none' : 'auto')};

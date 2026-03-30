@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 import Image from '@components/common/Image'
 import Text from '@components/common/Text'
+import Flex from '@components/common/Flex'
 import { themedPalette } from '@libs/style/theme'
 
 interface AnimeEpisodeCardProps {
@@ -41,7 +42,7 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
     }
 
     return (
-        <Card onClick={handleClick}>
+        <Card onClick={handleClick} width="100%" direction="row" padding="0.75rem 0">
             <Thumbnail>
                 <Image
                     src={thumbnailUrl}
@@ -51,8 +52,8 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
                     $aspectRatio="16/9"
                 />
             </Thumbnail>
-            <Content>
-                <TopArea>
+            <Content flex={1} direction="column" justify="space-between" gap="0.75rem" padding="0 1rem">
+                <Flex direction="column" gap="0.25rem">
                     <EpisodeTitle sz={'smTl'} color={themedPalette.text1}>
                         제{episodeNumber}화 {title}
                     </EpisodeTitle>
@@ -61,7 +62,7 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
                             {formatDuration(duration)}
                         </DurationText>
                     )}
-                </TopArea>
+                </Flex>
                 <Description sz={'smCt'} color={themedPalette.text3}>
                     {description}
                 </Description>
@@ -72,12 +73,8 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
 
 export default AnimeEpisodeCard
 
-const Card = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+const Card = styled(Flex)`
     cursor: pointer;
-    padding: 0.75rem 0;
     border-bottom: 1px solid ${themedPalette.border2};
 
     &:last-child {
@@ -101,20 +98,8 @@ const Thumbnail = styled.div`
     }
 `
 
-const Content = styled.div`
-    flex: 1;
+const Content = styled(Flex)`
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding: 0 1rem;
-`
-
-const TopArea = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
 `
 
 const EpisodeTitle = styled(Text)`

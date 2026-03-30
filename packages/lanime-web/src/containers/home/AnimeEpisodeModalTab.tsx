@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '@stores/index'
 import AnimationReview from '@containers/home/AnimationReview'
 import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
 
 interface AnimeEpisodeModalTabProps {
     onClose: () => void
@@ -32,9 +33,9 @@ const AnimeEpisodeModalTab: React.FC<AnimeEpisodeModalTabProps> = ({
     ])
 
     return (
-        <Container>
+        <Flex direction="column" width="100%">
             <Card>
-                <TabWrapper>
+                <Flex justify="flex-start" gap="4rem">
                     {tabs.map((el, index) => (
                         <TabButton
                             key={el}
@@ -44,20 +45,14 @@ const AnimeEpisodeModalTab: React.FC<AnimeEpisodeModalTabProps> = ({
                             {el}
                         </TabButton>
                     ))}
-                </TabWrapper>
+                </Flex>
                 <TabContent>{currentTab}</TabContent>
             </Card>
-        </Container>
+        </Flex>
     )
 }
 
 export default AnimeEpisodeModalTab
-
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
 
 const Card = styled.div`
     width: 100%;
@@ -66,12 +61,6 @@ const Card = styled.div`
     @media (max-width: 480px) {
         padding: 0 0.75rem;
     }
-`
-
-const TabWrapper = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    gap: 4rem;
 `
 
 const TabButton = styled.button<{ active: boolean }>`

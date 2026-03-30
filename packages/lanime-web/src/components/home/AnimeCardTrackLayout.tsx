@@ -1,6 +1,8 @@
+import React from 'react'
 import styled from '@emotion/styled'
 import { keyframes } from '@emotion/react'
 import Icon from '@components/common/Icon'
+import Flex from '@components/common/Flex'
 
 interface AnimeCardTrackViewProps {
     state: number
@@ -20,15 +22,38 @@ const AnimeCardTrackLayout: React.FC<AnimeCardTrackViewProps> = ({
     children,
 }) => {
     return (
-        <AnimeCardTrackWrapper>
+        <AnimeCardTrackWrapper
+            direction="column"
+            align="flex-start"
+            width="100%"
+        >
             {hasPrev && (
-                <AnimeTrackMoveButton onClick={onPrev} isPrev>
+                <AnimeTrackMoveButton
+                    as="button"
+                    align="center"
+                    justify="center"
+                    onClick={onPrev}
+                    isPrev
+                >
                     <Icon name="chevronLeft" size={28} color="white" />
                 </AnimeTrackMoveButton>
             )}
-            <AnimeCardTrackBlock state={state}>{children}</AnimeCardTrackBlock>
+            <AnimeCardTrackBlock
+                as="ol"
+                state={state}
+                width="100%"
+                gap="0.375em"
+                padding="0 3.125em"
+            >
+                {children}
+            </AnimeCardTrackBlock>
             {hasNext && (
-                <AnimeTrackMoveButton onClick={onNext}>
+                <AnimeTrackMoveButton
+                    as="button"
+                    align="center"
+                    justify="center"
+                    onClick={onNext}
+                >
                     <Icon name="chevronRight" size={28} color="white" />
                 </AnimeTrackMoveButton>
             )}
@@ -43,7 +68,7 @@ const fadeIn = keyframes`
   to { opacity: 1; }
 `
 
-const AnimeTrackMoveButton = styled.button<{ isPrev?: boolean }>`
+const AnimeTrackMoveButton = styled(Flex)<{ isPrev?: boolean }>`
     opacity: 0;
     transition: opacity 250ms ease-in-out;
     z-index: 4;
@@ -53,12 +78,8 @@ const AnimeTrackMoveButton = styled.button<{ isPrev?: boolean }>`
     width: 2.5em;
     background-color: rgba(0, 0, 0, 0.45);
     border: none;
-    padding: 0;
     font-size: inherit;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     ${({ isPrev }) => (isPrev ? 'left: 0;' : 'right: 0;')}
 
@@ -68,7 +89,7 @@ const AnimeTrackMoveButton = styled.button<{ isPrev?: boolean }>`
     }
 `
 
-const AnimeCardTrackWrapper = styled.div`
+const AnimeCardTrackWrapper = styled(Flex)`
     --card-w: 18.625em;
 
     @media (max-width: 1023px) {
@@ -79,19 +100,11 @@ const AnimeCardTrackWrapper = styled.div`
     }
 
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
     user-select: none;
-    width: 100%;
 `
 
-const AnimeCardTrackBlock = styled.ol<{ state: number }>`
-    width: 100%;
-    display: flex;
-    gap: 0.375em;
+const AnimeCardTrackBlock = styled(Flex)<{ state: number }>`
     flex-wrap: nowrap;
-    padding: 0 3.125em;
     min-height: calc(var(--card-w) * 0.75);
     overflow-x: visible;
     transform: ${({ state }) =>

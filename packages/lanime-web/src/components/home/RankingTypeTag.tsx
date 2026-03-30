@@ -23,7 +23,12 @@ const RankingTypeTag: React.FC<RankingTypeTagProps> = ({
     onTypeClick,
 }) => {
     return (
-        <TabRow justifyContent="flex-start" padding="0 0 1.5em 0">
+        <TabRow
+            justify="flex-start"
+            padding="0 0 1.5em 0"
+            gap="0.75rem"
+            wrap="wrap"
+        >
             {RANKING_TABS.map(({ type, label }) => (
                 <Tag
                     key={type}
@@ -43,9 +48,6 @@ const RankingTypeTag: React.FC<RankingTypeTagProps> = ({
 export default RankingTypeTag
 
 const TabRow = styled(Flex)`
-    gap: 0.75rem;
-    flex-wrap: wrap;
-
     @media (max-width: 767px) {
         gap: 0.5rem;
     }

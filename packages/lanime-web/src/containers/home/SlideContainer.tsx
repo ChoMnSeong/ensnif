@@ -8,9 +8,11 @@ import { themedPalette } from '@libs/style/theme'
 
 const SlideContainer = () => {
     const { data = [], isLoading: apiLoading, isError } = useAdvertiseList()
+
     const { state, onNext, onPrev, hasPrev, hasNext } = useAnimeCardTrack(
-        data.length - 1,
+        Math.max(0, data.length - 1),
     )
+
     const [imgLoading, setImgLoading] = useState(true)
 
     const handleImageLoad = () => {
@@ -26,12 +28,12 @@ const SlideContainer = () => {
     return (
         <Wrapper>
             <SlideLayout
-                    isLoading={imgLoading}
-                    onNext={onNext}
-                    onPrev={onPrev}
-                    hasPrev={hasPrev}
-                    hasNext={hasNext}
-                >
+                isLoading={imgLoading}
+                onNext={onNext}
+                onPrev={onPrev}
+                hasPrev={hasPrev}
+                hasNext={hasNext}
+            >
                 <SlideCardTrack
                     isApiLoading={apiLoading}
                     isImageLoading={imgLoading}

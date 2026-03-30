@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 import { forwardRef } from 'react'
+import Flex from '@components/common/Flex'
 
 interface AnimeEpisodeModalLayoutProps {
     children: React.ReactNode
@@ -15,7 +16,7 @@ const AnimeEpisodeModalLayout = forwardRef<
     if (!visible) return null
 
     return (
-        <Overlay>
+        <Overlay align="center" justify="center">
             <ModalContainer ref={ref}>
                 <CloseButton onClick={onClose} aria-label="닫기">
                     <svg
@@ -36,13 +37,10 @@ const AnimeEpisodeModalLayout = forwardRef<
 
 export default AnimeEpisodeModalLayout
 
-const Overlay = styled.div`
+const Overlay = styled(Flex)`
     position: fixed;
     inset: 0;
     z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: rgba(0, 0, 0, 0.5);
 `
 
