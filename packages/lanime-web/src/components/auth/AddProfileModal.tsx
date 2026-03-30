@@ -11,9 +11,7 @@ import ProfileImageUpload from '@components/common/ProfileImageUpload'
 import { ProfileModalProps } from '@containers/auth/ProfileContainer'
 import { IProfileCreateRequest } from '@libs/apis/auth/type'
 import { toast } from 'sonner'
-
-const DEFAULT_AVATAR =
-    'http://localhost:8080/ec6acdc61ea087fbd502e95973af28e6768a56722ba45d69c84f95e26baff139.jpg'
+import { defaultAvatar } from '@/libs/constants/image'
 
 const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
     onClose,
@@ -22,7 +20,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
     const [nickname, setNickname] = useState('')
     const [isPinEnabled, setIsPinEnabled] = useState(false)
     const [pin, setPin] = useState(['', '', '', ''])
-    const [avatarUrl, setAvatarUrl] = useState(DEFAULT_AVATAR)
+    const [avatarUrl, setAvatarUrl] = useState(defaultAvatar)
 
     const handleSave = () => {
         const fullPin = pin.join('')
@@ -43,7 +41,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
 
     return (
         <ProfileModalLayout onClose={onClose}>
-            <Flex gap="3rem" direction="column" alignItems="center">
+            <Flex gap="3rem" direction="column" align="center">
                 <Text sz="lgTl" color={themedPalette.text1}>
                     새 프로필
                 </Text>
@@ -74,7 +72,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
                     {isPinEnabled && (
                         <Flex
                             direction="column"
-                            alignItems="center"
+                            align="center"
                             margin="1.5rem 0 0 0"
                         >
                             <Text

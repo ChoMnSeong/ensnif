@@ -29,8 +29,28 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
     const isMatch = value === confirmPhrase
 
     return (
-        <Overlay onClick={onClose}>
-            <ModalContent onClick={(e) => e.stopPropagation()}>
+        <Flex
+            align="center"
+            justify="center"
+            onClick={onClose}
+            style={{
+                position: 'fixed',
+                inset: 0,
+                background: 'rgba(0, 0, 0, 0.55)',
+                zIndex: 1000,
+            }}
+        >
+            <Flex
+                direction="column"
+                padding="2rem"
+                width="360px"
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                    backgroundColor: themedPalette.bg_element1,
+                    border: `1px solid ${themedPalette.border2}`,
+                    borderRadius: '12px',
+                }}
+            >
                 <Text sz="mdCt" color={themedPalette.text1} style={{ fontWeight: 600 }}>
                     {title}
                 </Text>
@@ -53,7 +73,7 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
                     }}
                 />
 
-                <Flex gap="0.75rem" width="100%" style={{ marginTop: '1.5rem' }}>
+                <Flex gap="0.75rem" width="100%" margin="1.5rem 0 0 0">
                     <Button variant="secondary" onClick={onClose} style={{ flex: 1 }}>
                         취소
                     </Button>
@@ -66,32 +86,12 @@ const DeleteConfirmModal: React.FC<DeleteConfirmModalProps> = ({
                         {isLoading ? '삭제 중...' : confirmLabel}
                     </Button>
                 </Flex>
-            </ModalContent>
-        </Overlay>
+            </Flex>
+        </Flex>
     )
 }
 
 export default DeleteConfirmModal
-
-const Overlay = styled.div`
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`
-
-const ModalContent = styled.div`
-    background-color: ${themedPalette.bg_element1};
-    border: 1px solid ${themedPalette.border2};
-    border-radius: 12px;
-    padding: 2rem;
-    width: 360px;
-    display: flex;
-    flex-direction: column;
-`
 
 const PhraseBox = styled.div`
     margin: 1rem 0 0.75rem;

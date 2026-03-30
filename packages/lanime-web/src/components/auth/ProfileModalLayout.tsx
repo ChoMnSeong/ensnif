@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react'
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 import Icon from '@components/common/Icon'
+import Flex from '@components/common/Flex'
 
 interface ProfileModalLayoutProps {
     children: ReactNode
@@ -13,11 +14,11 @@ const ProfileModalLayout: React.FC<ProfileModalLayoutProps> = ({
     onClose,
 }) => {
     return (
-        <ModalOverlay onClick={onClose}>
-            <CloseButton onClick={onClose}>
+        <ModalOverlay direction="column" justify="center" align="center" onClick={onClose}>
+            <CloseButton as="button" align="center" justify="center" padding="4px" onClick={onClose}>
                 <Icon name="close" size={28} color={themedPalette.button_text} />
             </CloseButton>
-            <ContentContainer onClick={(e) => e.stopPropagation()}>
+            <ContentContainer direction="column" align="center" width="100%" onClick={(e) => e.stopPropagation()}>
                 {children}
             </ContentContainer>
         </ModalOverlay>
@@ -26,18 +27,14 @@ const ProfileModalLayout: React.FC<ProfileModalLayoutProps> = ({
 
 export default ProfileModalLayout
 
-const ModalOverlay = styled.div`
+const ModalOverlay = styled(Flex)`
     position: fixed;
     inset: 0;
     background-color: ${themedPalette.bg_page2};
     z-index: 2000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 `
 
-const CloseButton = styled.button`
+const CloseButton = styled(Flex)`
     position: absolute;
     top: 40px;
     right: 40px;
@@ -45,10 +42,6 @@ const CloseButton = styled.button`
     z-index: 2001;
     background: none;
     border: none;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0.7;
 
     &:hover {
@@ -56,9 +49,4 @@ const CloseButton = styled.button`
     }
 `
 
-const ContentContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-`
+const ContentContainer = styled(Flex)``

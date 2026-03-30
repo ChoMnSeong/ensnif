@@ -20,9 +20,9 @@ const SettingsAccountSection: React.FC<SettingsAccountSectionProps> = ({
     const [showModal, setShowModal] = useState(false)
 
     return (
-        <Section>
+        <Flex direction="column" gap="1rem">
             <SectionTitle>계정 삭제</SectionTitle>
-            <Flex justifyContent="space-between" alignItems="center" width="100%">
+            <Flex justify="space-between" align="center" width="100%">
                 <Text sz="smCt" color={themedPalette.text3}>
                     계정을 삭제하면 모든 데이터가 영구적으로 삭제됩니다.
                 </Text>
@@ -47,17 +47,11 @@ const SettingsAccountSection: React.FC<SettingsAccountSectionProps> = ({
                     onClose={() => setShowModal(false)}
                 />
             )}
-        </Section>
+        </Flex>
     )
 }
 
 export default SettingsAccountSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;

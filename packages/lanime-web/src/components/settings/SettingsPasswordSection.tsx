@@ -41,13 +41,13 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
     }
 
     return (
-        <Section>
+        <Flex direction="column" gap="1rem">
             <SectionTitle>비밀번호 변경</SectionTitle>
             <Flex
                 direction="column"
                 gap="1.25rem"
                 width="100%"
-                alignItems="flex-start"
+                align="flex-start"
             >
                 <Input
                     label="현재 비밀번호"
@@ -60,7 +60,7 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
                     direction="column"
                     gap="0.4rem"
                     width="100%"
-                    alignItems="flex-start"
+                    align="flex-start"
                 >
                     <Input
                         label="새 비밀번호"
@@ -80,7 +80,7 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
                     direction="column"
                     gap="0.4rem"
                     width="100%"
-                    alignItems="flex-start"
+                    align="flex-start"
                 >
                     <Input
                         label="새 비밀번호 확인"
@@ -106,17 +106,11 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
                     {isLoading ? '변경 중...' : '비밀번호 변경'}
                 </Button>
             </Flex>
-        </Section>
+        </Flex>
     )
 }
 
 export default SettingsPasswordSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;

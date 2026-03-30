@@ -35,7 +35,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
         isLoading
 
     return (
-        <FormCard direction="column" gap="0.5rem">
+        <FormCard direction="column" gap="0.5rem" padding="40px 32px">
             <Text
                 sz="mdCt"
                 color={themedPalette.text1}
@@ -57,8 +57,8 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
                 <Flex direction="column" width="100%" gap="8px">
                     <Flex
                         width="100%"
-                        justifyContent="space-between"
-                        alignItems="center"
+                        justify="space-between"
+                        align="center"
                     >
                         <Text sz="smCt" color={themedPalette.text4}>
                             인증 코드
@@ -93,7 +93,7 @@ const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({
 
                 <Flex
                     direction="column"
-                    alignItems="flex-start"
+                    align="flex-start"
                     width="100%"
                     gap="8px"
                 >
@@ -136,7 +136,6 @@ const FormCard = styled(Flex)`
     max-width: 420px;
     background-color: ${themedPalette.bg_element1};
     border-radius: 8px;
-    padding: 40px 32px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `
 

@@ -20,12 +20,12 @@ const SettingsPinSection: React.FC<SettingsPinSectionProps> = ({
     isDeleting,
 }) => {
     return (
-        <Section>
+        <Flex direction="column" gap="1rem">
             <SectionTitle>PIN 변경</SectionTitle>
             <Text sz="smCt" color={themedPalette.text3}>
                 새 PIN 4자리를 입력하세요. 비워두면 변경되지 않습니다.
             </Text>
-            <Flex alignItems="center" justifyContent="flex-start" gap="1.5rem">
+            <Flex align="center" justify="flex-start" gap="1.5rem">
                 <PinInput value={pin} onChange={onChange} size="sm" />
                 <Button
                     variant="secondary"
@@ -37,17 +37,11 @@ const SettingsPinSection: React.FC<SettingsPinSectionProps> = ({
                     PIN 삭제
                 </Button>
             </Flex>
-        </Section>
+        </Flex>
     )
 }
 
 export default SettingsPinSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;

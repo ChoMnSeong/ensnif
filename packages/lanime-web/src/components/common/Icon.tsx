@@ -15,6 +15,11 @@ import {
     MdFullscreenExit,
     MdMenu,
     MdClose,
+    MdThumbUp,
+    MdThumbDown,
+    MdMoreVert,
+    MdExpandMore,
+    MdExpandLess,
 } from 'react-icons/md'
 
 const iconMap = {
@@ -33,6 +38,11 @@ const iconMap = {
     fullscreenExit: MdFullscreenExit,
     menu: MdMenu,
     close: MdClose,
+    thumbUp: MdThumbUp,
+    thumbDown: MdThumbDown,
+    moreVert: MdMoreVert,
+    expandMore: MdExpandMore,
+    expandLess: MdExpandLess,
 } as const satisfies Record<string, IconType>
 
 export type IconName = keyof typeof iconMap

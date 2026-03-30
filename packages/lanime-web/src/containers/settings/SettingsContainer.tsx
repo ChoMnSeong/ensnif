@@ -29,6 +29,7 @@ import SettingsDangerSection from '@components/settings/SettingsDangerSection'
 import SettingsAccountSection from '@components/settings/SettingsAccountSection'
 import SettingsPasswordSection from '@components/settings/SettingsPasswordSection'
 import SettingsEmailSection from '@components/settings/SettingsEmailSection'
+import Flex from '@components/common/Flex'
 
 const SettingsContainer: React.FC = () => {
     const dispatch = useDispatch()
@@ -202,24 +203,32 @@ const SettingsContainer: React.FC = () => {
     }
 
     return (
-        <Container>
-            <InnerWrapper>
+        <Flex
+            width="100%"
+            padding="3rem 1.5rem 4rem"
+            style={{ minHeight: 'calc(100vh - 4rem)' }}
+        >
+            <Flex
+                direction="column"
+                gap="0"
+                width="100%"
+                style={{ maxWidth: '600px', margin: '0 auto' }}
+            >
                 <PageTitle>설정</PageTitle>
 
-                {/* 프로필 설정 */}
-                <CategoryRow>
+                <Flex gap="2.5rem" align="stretch">
                     <CategoryLabel>프로필 설정</CategoryLabel>
-                    <CategoryContent>
-                        <Section>
+                    <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
+                        <Flex direction="column" gap="1rem">
                             <SectionTitle>프로필 이미지</SectionTitle>
                             <ProfileImageUpload
                                 avatarUrl={avatarUrl}
                                 onChange={setAvatarUrl}
                                 size={100}
                             />
-                        </Section>
+                        </Flex>
                         <Divider />
-                        <Section>
+                        <Flex direction="column" gap="1rem">
                             <SectionTitle>닉네임</SectionTitle>
                             <Input
                                 placeholder="닉네임"
@@ -230,7 +239,7 @@ const SettingsContainer: React.FC = () => {
                                     setNickname(e.target.value.slice(0, 15))
                                 }
                             />
-                        </Section>
+                        </Flex>
                         <Divider />
                         <SettingsPinSection
                             pin={pin}
@@ -244,7 +253,7 @@ const SettingsContainer: React.FC = () => {
                             onSelect={setThemePreference}
                         />
                         <Divider />
-                        <SaveButtonRow>
+                        <Flex justify="flex-end">
                             <Button
                                 variant="primary"
                                 size="sm"
@@ -253,16 +262,15 @@ const SettingsContainer: React.FC = () => {
                             >
                                 저장
                             </Button>
-                        </SaveButtonRow>
-                    </CategoryContent>
-                </CategoryRow>
+                        </Flex>
+                    </Flex>
+                </Flex>
 
                 <GroupDivider />
 
-                {/* 계정 보안 */}
-                <CategoryRow>
+                <Flex gap="2.5rem" align="stretch">
                     <CategoryLabel>계정 보안</CategoryLabel>
-                    <CategoryContent>
+                    <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
                         <SettingsEmailSection
                             onSendCode={handleSendEmailCode}
                             onVerify={handleChangeEmail}
@@ -274,15 +282,14 @@ const SettingsContainer: React.FC = () => {
                             onSubmit={handleChangePassword}
                             isLoading={isChangingPassword}
                         />
-                    </CategoryContent>
-                </CategoryRow>
+                    </Flex>
+                </Flex>
 
                 <GroupDivider />
 
-                {/* 위험 구역 */}
-                <CategoryRow>
+                <Flex gap="2.5rem" align="stretch">
                     <CategoryLabel danger>위험 구역</CategoryLabel>
-                    <CategoryContent>
+                    <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
                         <SettingsAccountSection
                             onDelete={handleDeleteAccount}
                             isDeleting={isDeletingAccount}
@@ -297,42 +304,20 @@ const SettingsContainer: React.FC = () => {
                                 />
                             </>
                         )}
-                    </CategoryContent>
-                </CategoryRow>
-            </InnerWrapper>
-        </Container>
+                    </Flex>
+                </Flex>
+            </Flex>
+        </Flex>
     )
 }
 
 export default SettingsContainer
-
-const Container = styled.div`
-    width: 100%;
-    min-height: calc(100vh - 4rem);
-    display: flex;
-    justify-content: center;
-    padding: 3rem 1rem 4rem;
-`
-
-const InnerWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    max-width: 600px;
-`
 
 const PageTitle = styled.h2`
     font-size: 1.5rem;
     font-weight: 700;
     color: ${themedPalette.text1};
     margin: 0 0 2.5rem;
-`
-
-const CategoryRow = styled.div`
-    display: flex;
-    gap: 2.5rem;
-    align-items: flex-start;
 `
 
 const CategoryLabel = styled.div<{ danger?: boolean }>`
@@ -346,29 +331,11 @@ const CategoryLabel = styled.div<{ danger?: boolean }>`
     letter-spacing: 0.03em;
 `
 
-const CategoryContent = styled.div`
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-`
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
-
 const SectionTitle = styled.h3`
     font-size: 1rem;
     font-weight: 600;
     color: ${themedPalette.text1};
     margin: 0;
-`
-
-const SaveButtonRow = styled.div`
-    display: flex;
-    justify-content: flex-end;
 `
 
 const Divider = styled.div`

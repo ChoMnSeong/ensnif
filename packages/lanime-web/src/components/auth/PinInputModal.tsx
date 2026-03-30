@@ -15,7 +15,7 @@ const PinInputModal: React.FC<ProfileModalProps<string>> = ({
 
     return (
         <ProfileModalLayout onClose={onClose}>
-            <Flex direction="column" alignItems="center">
+            <Flex direction="column" align="center">
                 <Text sz="lgTl" color={themedPalette.text1} margin="0 0 4rem 0">
                     프로필 비밀번호를 입력해주세요
                 </Text>

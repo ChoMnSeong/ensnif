@@ -34,7 +34,7 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
 }) => {
     if (isLoading) {
         return (
-            <Flex height="100%" alignItems="center" justifyContent="center">
+            <Flex height="100%" align="center" justify="center">
                 <Text color={themedPalette.text1} sz="mdCt">
                     로딩 중...
                 </Text>
@@ -46,7 +46,7 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
         <Flex
             gap="3rem"
             direction="column"
-            alignItems="center"
+            align="center"
             padding="4rem 0"
         >
             <Text sz="lgTl" color={themedPalette.text1}>

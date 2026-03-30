@@ -11,6 +11,7 @@ import HeaderProfileDropdownContainer from '@containers/header/HeaderProfileDrop
 import Text from '@components/common/Text'
 import Icon from '@components/common/Icon'
 import routers from '@libs/constants/routers'
+import Flex from '@components/common/Flex'
 
 const Header: React.FC = () => {
     const profile = useSelector((state: RootState) => state.userProfile)
@@ -29,16 +30,20 @@ const Header: React.FC = () => {
     return (
         <>
             <HeaderBlock url={pathname}>
-                <HeaderInner>
-                    <Left>
+                <HeaderInner align="center" justify="space-between" margin="auto" height="100%">
+                    <Left align="center" gap="120px" style={{ position: 'relative' }}>
                         <HeaderLogo />
                         <DesktopNav>
                             <HeaderRouter currentUrl={pathname} />
                         </DesktopNav>
                     </Left>
-                    <Right>
+                    <Right align="center" gap="60px" style={{ position: 'relative' }}>
                         {profile.avatarUrl ? (
-                            <ProfileIconWrapper
+                            <Flex
+                                align="center"
+                                gap="8px"
+                                padding="12px 8px"
+                                style={{ cursor: 'default' }}
                                 ref={profileIconRef}
                                 onMouseEnter={handleMouseEnter}
                                 onMouseLeave={handleMouseLeave}
@@ -61,7 +66,7 @@ const Header: React.FC = () => {
                                         onMouseEnter={handleMouseEnter}
                                     />
                                 )}
-                            </ProfileIconWrapper>
+                            </Flex>
                         ) : (
                             <DesktopOnly>
                                 <LoginLink to="/auth/mail" state={{ from: pathname }}>
@@ -71,6 +76,9 @@ const Header: React.FC = () => {
                         )}
 
                         <HamburgerButton
+                            as="button"
+                            align="center"
+                            justify="center"
                             onClick={() => setIsMobileMenuOpen((v) => !v)}
                             aria-label={
                                 isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'
@@ -86,8 +94,8 @@ const Header: React.FC = () => {
                 </HeaderInner>
             </HeaderBlock>
 
-            <MobileMenu open={isMobileMenuOpen}>
-                <MobileNavList>
+            <MobileMenu open={isMobileMenuOpen} direction="column" gap="0.5rem" padding="1rem 1.5rem">
+                <Flex as="nav" direction="column" gap="0.25rem">
                     {routers.map((route) => (
                         <MobileNavLink
                             key={route.path}
@@ -98,15 +106,15 @@ const Header: React.FC = () => {
                             {route.title}
                         </MobileNavLink>
                     ))}
-                </MobileNavList>
+                </Flex>
                 <MobileDivider />
-                <MobileActions>
+                <Flex direction="column" gap="0.25rem" padding="0.25rem 0.5rem">
                     {!profile.avatarUrl && (
                         <LoginLink to="/auth/mail" state={{ from: pathname }}>
                             로그인/가입
                         </LoginLink>
                     )}
-                </MobileActions>
+                </Flex>
             </MobileMenu>
         </>
     )
@@ -127,25 +135,15 @@ const HeaderBlock = styled.div<{ url: string }>`
     height: 4rem;
 `
 
-const HeaderInner = styled.div`
+const HeaderInner = styled(Flex)`
     width: calc(100% - 60px);
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: auto;
 
     @media (max-width: ${bp.mobile}) {
         width: calc(100% - 32px);
     }
 `
 
-const Left = styled.div`
-    display: flex;
-    align-items: center;
-    position: relative;
-    gap: 120px;
-
+const Left = styled(Flex)`
     @media (max-width: ${bp.tablet}) {
         gap: 40px;
     }
@@ -155,12 +153,7 @@ const Left = styled.div`
     }
 `
 
-const Right = styled.div`
-    display: flex;
-    align-items: center;
-    position: relative;
-    gap: 60px;
-
+const Right = styled(Flex)`
     @media (max-width: ${bp.tablet}) {
         gap: 24px;
     }
@@ -182,24 +175,14 @@ const DesktopOnly = styled.div`
     }
 `
 
-const ProfileIconWrapper = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 8px;
-    cursor: default;
-`
-
 const NicknameText = styled.div`
     @media (max-width: ${bp.tablet}) {
         display: none;
     }
 `
 
-const HamburgerButton = styled.button`
+const HamburgerButton = styled(Flex)`
     display: none;
-    align-items: center;
-    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
@@ -211,7 +194,7 @@ const HamburgerButton = styled.button`
     }
 `
 
-const MobileMenu = styled.div<{ open: boolean }>`
+const MobileMenu = styled(Flex)<{ open: boolean }>`
     display: none;
     position: fixed;
     top: 4rem;
@@ -220,9 +203,6 @@ const MobileMenu = styled.div<{ open: boolean }>`
     z-index: 9;
     background-color: ${themedPalette.bg_element1};
     border-bottom: 1px solid ${themedPalette.border2};
-    padding: 1rem 1.5rem;
-    flex-direction: column;
-    gap: 0.5rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     transform: ${({ open }) => (open ? 'translateY(0)' : 'translateY(-8px)')};
@@ -235,12 +215,6 @@ const MobileMenu = styled.div<{ open: boolean }>`
     @media (max-width: ${bp.mobile}) {
         display: flex;
     }
-`
-
-const MobileNavList = styled.nav`
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
 `
 
 const MobileNavLink = styled(NavLink)`
@@ -262,13 +236,6 @@ const MobileDivider = styled.div`
     height: 1px;
     background-color: ${themedPalette.border2};
     margin: 0.5rem 0;
-`
-
-const MobileActions = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
 `
 
 const LoginLink = styled(Link)`

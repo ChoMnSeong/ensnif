@@ -15,10 +15,11 @@ const SignupConfirmModal: React.FC<SignupConfirmModalProps> = ({
     onConfirm,
 }) => {
     return (
-        <ModalOverlay onClick={onClose}>
+        <ModalOverlay justify="center" align="center" onClick={onClose}>
             <ModalContent
                 direction="column"
-                alignItems="center"
+                align="center"
+                padding="32px"
                 onClick={(e) => e.stopPropagation()}
             >
                 <Text
@@ -61,13 +62,10 @@ const ModalOverlay = styled(Flex)`
     bottom: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: 1000;
-    justify-content: center;
-    align-items: center;
 `
 
 const ModalContent = styled(Flex)`
     background-color: ${themedPalette.bg_element2};
-    padding: 32px;
     border-radius: 12px;
     width: 320px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);

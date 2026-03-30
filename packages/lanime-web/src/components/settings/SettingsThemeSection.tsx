@@ -4,6 +4,7 @@ import { MdWbSunny, MdNightlight } from 'react-icons/md'
 import { themedPalette } from '@libs/style/theme'
 import { ThemePreference } from '@libs/hooks/useTheme'
 import Text from '@components/common/Text'
+import Flex from '@components/common/Flex'
 
 interface SettingsThemeSectionProps {
     themePreference: ThemePreference
@@ -21,31 +22,31 @@ const SettingsThemeSection: React.FC<SettingsThemeSectionProps> = ({
     onSelect,
 }) => {
     return (
-        <Section>
+        <Flex direction="column" gap="1rem">
             <SectionTitle>테마</SectionTitle>
-            <ThemeCardRow>
+            <Flex gap="1.5rem" wrap="wrap">
                 {THEME_OPTIONS.map(({ value, label }) => (
-                    <ThemeCardWrapper key={value}>
+                    <Flex key={value} direction="column" align="center" gap="0.75rem">
                         <ThemeCard
                             active={themePreference === value}
                             onClick={() => onSelect(value)}
                         >
                             {value === 'light' && (
-                                <LightCard>
+                                <LightCard align="center" justify="center">
                                     <MdWbSunny size={28} color="#1A1A1A" />
                                 </LightCard>
                             )}
                             {value === 'dark' && (
-                                <DarkCard>
+                                <DarkCard align="center" justify="center">
                                     <MdNightlight size={28} color="#FAFAF8" />
                                 </DarkCard>
                             )}
                             {value === 'system' && (
                                 <SystemCard>
-                                    <SystemHalf side="left">
+                                    <SystemHalf side="left" align="center" justify="center">
                                         <MdWbSunny size={24} color="#1A1A1A" />
                                     </SystemHalf>
-                                    <SystemHalf side="right">
+                                    <SystemHalf side="right" align="center" justify="center">
                                         <MdNightlight
                                             size={24}
                                             color="#FAFAF8"
@@ -64,39 +65,20 @@ const SettingsThemeSection: React.FC<SettingsThemeSectionProps> = ({
                         >
                             {label}
                         </Text>
-                    </ThemeCardWrapper>
+                    </Flex>
                 ))}
-            </ThemeCardRow>
-        </Section>
+            </Flex>
+        </Flex>
     )
 }
 
 export default SettingsThemeSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;
     font-weight: 600;
     color: ${themedPalette.text1};
     margin: 0;
-`
-
-const ThemeCardRow = styled.div`
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-`
-
-const ThemeCardWrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
 `
 
 const ThemeCard = styled.div<{ active: boolean }>`
@@ -116,36 +98,26 @@ const ThemeCard = styled.div<{ active: boolean }>`
     }
 `
 
-const LightCard = styled.div`
+const LightCard = styled(Flex)`
     width: 100%;
     height: 100%;
     background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `
 
-const DarkCard = styled.div`
+const DarkCard = styled(Flex)`
     width: 100%;
     height: 100%;
     background-color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `
 
-const SystemCard = styled.div`
+const SystemCard = styled(Flex)`
     width: 100%;
     height: 100%;
-    display: flex;
 `
 
-const SystemHalf = styled.div<{ side: 'left' | 'right' }>`
+const SystemHalf = styled(Flex)<{ side: 'left' | 'right' }>`
     width: 50%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: ${({ side }) =>
         side === 'left' ? '#ffffff' : '#1a1a1a'};
 `

@@ -24,17 +24,17 @@ const SettingsDangerSection: React.FC<SettingsDangerSectionProps> = ({
     const deletableProfiles = profiles.filter((p) => !p.admin)
 
     return (
-        <Section>
+        <Flex direction="column" gap="1.25rem">
             <SectionTitle>프로필 삭제</SectionTitle>
             {deletableProfiles.length === 0 ? (
                 <Text sz="smCt" color={themedPalette.text3}>
                     삭제할 수 있는 프로필이 없습니다.
                 </Text>
             ) : (
-                <ProfileList>
+                <ProfileList direction="column">
                     {deletableProfiles.map((profile) => (
-                        <ProfileRow key={profile.profileId}>
-                            <Flex alignItems="center" gap="0.75rem">
+                        <ProfileRow key={profile.profileId} align="center" justify="space-between" padding="0.875rem 1.25rem">
+                            <Flex align="center" gap="0.75rem">
                                 <Image
                                     src={profile.avatarUrl}
                                     alt={profile.name}
@@ -73,17 +73,11 @@ const SettingsDangerSection: React.FC<SettingsDangerSectionProps> = ({
                     onClose={() => setModalProfile(null)}
                 />
             )}
-        </Section>
+        </Flex>
     )
 }
 
 export default SettingsDangerSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;
@@ -92,19 +86,13 @@ const SectionTitle = styled.h3`
     margin: 0;
 `
 
-const ProfileList = styled.div`
-    display: flex;
-    flex-direction: column;
+const ProfileList = styled(Flex)`
     border: 1px solid ${themedPalette.border2};
     border-radius: 10px;
     overflow: hidden;
 `
 
-const ProfileRow = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.875rem 1.25rem;
+const ProfileRow = styled(Flex)`
     background-color: ${themedPalette.bg_element1};
 
     &:not(:last-of-type) {

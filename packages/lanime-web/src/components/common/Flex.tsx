@@ -8,13 +8,15 @@ interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
     direction?: React.CSSProperties['flexDirection']
     wrap?: React.CSSProperties['flexWrap']
     gap?: string
-    justifyItems?: React.CSSProperties['justifyItems']
     justifyContent?: React.CSSProperties['justifyContent']
+    justify?: React.CSSProperties['justifyContent']
     alignItems?: React.CSSProperties['alignItems']
+    align?: React.CSSProperties['alignItems']
     alignContent?: React.CSSProperties['alignContent']
     margin?: string
     padding?: string
-    flex?: string
+    flex?: string | number
+    as?: React.ElementType
 }
 
 const Flex: React.FC<FlexProps> = ({ children, ...props }) => {
@@ -30,11 +32,10 @@ const StyledFlex = styled.div<FlexProps>`
     flex-direction: ${({ direction }) => direction || 'row'};
     flex-wrap: ${({ wrap }) => wrap || 'nowrap'};
     gap: ${({ gap }) => gap || '0px'};
-    justify-items: ${({ justifyItems }) => justifyItems || 'center'};
-    justify-content: ${({ justifyContent }) => justifyContent || 'center'};
-    align-items: ${({ alignItems }) => alignItems || 'center'};
-    align-content: ${({ alignContent }) => alignContent || 'center'};
+    justify-content: ${({ justifyContent, justify }) => justify || justifyContent || 'flex-start'};
+    align-items: ${({ alignItems, align }) => align || alignItems || 'stretch'};
+    align-content: ${({ alignContent }) => alignContent || 'stretch'};
     padding: ${({ padding }) => padding || '0'};
     margin: ${({ margin }) => margin || '0'};
-    flex: ${({ flex }) => flex || 'unset'};
+    flex: ${({ flex }) => (typeof flex === 'number' ? flex : flex || 'unset')};
 `

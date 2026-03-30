@@ -23,8 +23,8 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
     return (
-        <FormCard direction="column" gap="0.5rem">
-            <BackButton onClick={() => navigate('/auth/mail')}>
+        <FormCard direction="column" gap="0.5rem" padding="40px 32px">
+            <BackButton as="button" align="center" gap="0.375rem" onClick={() => navigate('/auth/mail')}>
                 <MdArrowBack size={20} color={themedPalette.text2} />
                 <Text sz="smCt" color={themedPalette.text2}>돌아가기</Text>
             </BackButton>
@@ -68,18 +68,13 @@ const FormCard = styled(Flex)`
     max-width: 420px;
     background-color: ${themedPalette.bg_element1};
     border-radius: 8px;
-    padding: 40px 32px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `
 
-const BackButton = styled.button`
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
+const BackButton = styled(Flex)`
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0;
     align-self: flex-start;
     opacity: 0.7;
     transition: opacity 0.15s ease;

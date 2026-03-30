@@ -37,7 +37,7 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
     }
 
     return (
-        <Section>
+        <Flex direction="column" gap="1rem">
             <SectionTitle>이메일 변경</SectionTitle>
             {currentEmail && (
                 <Text sz="smCt" color={themedPalette.text3}>
@@ -51,16 +51,16 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                 direction="column"
                 gap="1.25rem"
                 width="100%"
-                alignItems="flex-start"
+                align="flex-start"
             >
                 <Flex
                     direction="column"
                     gap="0.5rem"
                     width="100%"
-                    alignItems="flex-start"
+                    align="flex-start"
                 >
-                    <Flex gap="0.75rem" alignItems="flex-end" width="100%">
-                        <InputFlex>
+                    <Flex gap="0.75rem" align="flex-end" width="100%">
+                        <Flex flex={1} style={{ minWidth: 0 }}>
                             <Input
                                 label="새 이메일"
                                 type="email"
@@ -72,7 +72,7 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                                 }}
                                 placeholder="새 이메일을 입력해주세요"
                             />
-                        </InputFlex>
+                        </Flex>
                         <Button
                             variant="secondary"
                             size="sm"
@@ -94,12 +94,12 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                         direction="column"
                         gap="0.5rem"
                         width="100%"
-                        alignItems="flex-start"
+                        align="flex-start"
                     >
                         <Flex
                             width="100%"
-                            justifyContent="space-between"
-                            alignItems="center"
+                            justify="space-between"
+                            align="center"
                         >
                             <Text sz="smCt" color={themedPalette.text4}>
                                 인증 코드
@@ -139,26 +139,15 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                     </Flex>
                 )}
             </Flex>
-        </Section>
+        </Flex>
     )
 }
 
 export default SettingsEmailSection
-
-const Section = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-`
 
 const SectionTitle = styled.h3`
     font-size: 1rem;
     font-weight: 600;
     color: ${themedPalette.text1};
     margin: 0;
-`
-
-const InputFlex = styled.div`
-    flex: 1;
-    min-width: 0;
 `

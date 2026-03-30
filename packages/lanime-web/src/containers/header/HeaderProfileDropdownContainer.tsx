@@ -4,7 +4,7 @@ import ProfileSwitchDropdown from '@components/header/ProfileSwitchDropdown'
 import customCookie from '@libs/customCookie'
 import { setUserProfile } from '@stores/auth/reducer'
 import { useSelector } from 'react-redux'
-import { RootState } from '@stores'
+import { RootState } from '@stores/index'
 
 interface HeaderProfileDropdownContainerProps {
     anchorEl: HTMLElement | null
@@ -12,11 +12,9 @@ interface HeaderProfileDropdownContainerProps {
     onMouseEnter: () => void
 }
 
-const HeaderProfileDropdownContainer: React.FC<HeaderProfileDropdownContainerProps> = ({
-    anchorEl,
-    onClose,
-    onMouseEnter,
-}) => {
+const HeaderProfileDropdownContainer: React.FC<
+    HeaderProfileDropdownContainerProps
+> = ({ anchorEl, onClose, onMouseEnter }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const profile = useSelector((state: RootState) => state.userProfile)
@@ -25,7 +23,13 @@ const HeaderProfileDropdownContainer: React.FC<HeaderProfileDropdownContainerPro
         customCookie.remove.accessToken()
         customCookie.remove.refreshToken()
         customCookie.remove.profileToken()
-        dispatch(setUserProfile({ nickname: null, avatarUrl: null, profileId: null }))
+        dispatch(
+            setUserProfile({
+                nickname: null,
+                avatarUrl: null,
+                profileId: null,
+            }),
+        )
         onClose()
         navigate('/auth/mail')
     }

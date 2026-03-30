@@ -23,6 +23,8 @@ const ProfileList: React.FC<ProfileListProps> = ({
             {profiles.map((profile) => (
                 <UserProfileCard
                     key={profile.profileId}
+                    direction="column"
+                    align="center"
                     onClick={() => onProfileSelect(profile)}
                 >
                     <AvatarWrapper>
@@ -36,7 +38,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
                             border={`2px solid ${themedPalette.border2}`}
                         />
                         {profile.pin && (
-                            <LockIcon>
+                            <LockIcon align="center" justify="center" width="32px" height="32px">
                                 <Icon
                                     name="lock"
                                     size={16}
@@ -52,9 +54,9 @@ const ProfileList: React.FC<ProfileListProps> = ({
             ))}
 
             {profiles.length < 4 && (
-                <UserProfileCard onClick={onAddProfile}>
+                <UserProfileCard direction="column" align="center" onClick={onAddProfile}>
                     <AvatarWrapper>
-                        <AddAvatar>
+                        <AddAvatar width="140px" height="140px" align="center" justify="center">
                             <Text sz="lgTl" color={themedPalette.text1}>
                                 +
                             </Text>
@@ -71,10 +73,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
 
 export default ProfileList
 
-const UserProfileCard = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const UserProfileCard = styled(Flex)`
     cursor: pointer;
     transition: transform 0.2s ease;
     &:hover {
@@ -86,13 +85,9 @@ const AvatarWrapper = styled.div`
     margin-bottom: 12px;
 `
 const AddAvatar = styled(Flex)`
-    width: 140px;
-    height: 140px;
     border-radius: 50%;
     background-color: ${themedPalette.bg_element3};
     border: 2px solid ${themedPalette.border2};
-    align-items: center;
-    justify-content: center;
 `
 const Badge = styled.div`
     position: absolute;
@@ -106,16 +101,11 @@ const Badge = styled.div`
     padding: 4px 12px;
     border-radius: 12px;
 `
-const LockIcon = styled.div`
+const LockIcon = styled(Flex)`
     position: absolute;
     bottom: 4px;
     right: 12px;
     background-color: ${themedPalette.bg_element6};
     border: 1px solid ${themedPalette.border2};
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
 `

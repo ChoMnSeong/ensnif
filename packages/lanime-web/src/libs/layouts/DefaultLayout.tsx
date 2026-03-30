@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Footer from '@components/footer/Footer'
 import useScrollToTop from '@hooks/useScrollToTop'
 import FloatingHeader from '@components/header/FloatingHeader'
+import Flex from '@components/common/Flex'
 
 const DefaultLayout: React.FC = () => {
     const { pathname } = useLocation()
@@ -12,31 +13,20 @@ const DefaultLayout: React.FC = () => {
     useScrollToTop()
 
     return (
-        <Container>
-            <Wrapper>
+        <Flex direction="column" width="100vw">
+            <Flex direction="column" width="100%">
                 <Header />
                 <FloatingHeader />
                 <Main isPlayerPage={isPlayerPage}>
                     <Outlet />
                 </Main>
                 <Footer />
-            </Wrapper>
-        </Container>
+            </Flex>
+        </Flex>
     )
 }
 
 export default DefaultLayout
-
-const Container = styled.div`
-    width: 100vw;
-`
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-`
 
 const Main = styled.main<{ isPlayerPage: boolean }>`
     width: 100%;

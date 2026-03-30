@@ -37,7 +37,7 @@ const MailForm: React.FC<MailFormProps> = ({
     }
 
     return (
-        <FormCard direction="column" gap="0.5rem">
+        <FormCard direction="column" gap="0.5rem" padding="40px 32px">
             <Text sz="mdCt" color={themedPalette.text1}>
                 이메일로 시작
             </Text>
@@ -101,7 +101,6 @@ const FormCard = styled(Flex)`
     max-width: 420px;
     background-color: ${themedPalette.bg_element1};
     border-radius: 8px;
-    padding: 40px 32px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 `
 
