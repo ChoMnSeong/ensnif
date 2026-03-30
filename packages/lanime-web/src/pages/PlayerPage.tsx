@@ -5,6 +5,7 @@ import EpisodeListContainer from '@containers/player/EpisodeListContainer'
 import PlayerCommentContainer from '@containers/player/PlayerCommentContainer'
 import { themedPalette } from '@libs/style/theme'
 import { useAnimationEpisodes } from '@libs/apis/animations'
+import Flex from '@components/common/Flex'
 
 const PlayerPage = () => {
     const { animeId = '', videoId = '' } = useParams<{
@@ -17,13 +18,13 @@ const PlayerPage = () => {
 
     return (
         <PageWrapper>
-            <Inner>
-                <VideoRow>
-                    <VideoWrapper>
+            <Inner direction="column" gap="2rem" width="100%">
+                <VideoRow gap="1rem" align="stretch">
+                    <Flex flex={1} style={{ minWidth: 0 }}>
                         {currentEpisode && (
                             <VideoPlayerContainer src={currentEpisode.videoUrl} />
                         )}
-                    </VideoWrapper>
+                    </Flex>
                     <EpisodeListContainer
                         animationId={animeId}
                         currentEpisodeId={videoId}
@@ -31,13 +32,13 @@ const PlayerPage = () => {
                 </VideoRow>
 
                 {currentEpisode && (
-                    <EpisodeMeta>
+                    <Flex direction="column" gap="0.4rem" padding="0.25rem 0">
                         <EpisodeLabel>EP.{currentEpisode.episodeNumber}</EpisodeLabel>
                         <EpisodeTitle>{currentEpisode.title}</EpisodeTitle>
-                    </EpisodeMeta>
+                    </Flex>
                 )}
 
-                <PlayerCommentContainer />
+                <PlayerCommentContainer episodeId={videoId} />
             </Inner>
         </PageWrapper>
     )
@@ -51,38 +52,18 @@ const PageWrapper = styled.div`
     padding: 1rem 0 3rem;
 `
 
-const Inner = styled.div`
-    width: 100%;
+const Inner = styled(Flex)`
     padding: 0 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
 
     @media (max-width: 600px) {
         padding: 0 0.75rem;
     }
 `
 
-const VideoRow = styled.div`
-    display: flex;
-    gap: 1rem;
-    align-items: stretch;
-
+const VideoRow = styled(Flex)`
     @media (max-width: 900px) {
         flex-direction: column;
     }
-`
-
-const VideoWrapper = styled.div`
-    flex: 1 1 0;
-    min-width: 0;
-`
-
-const EpisodeMeta = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    padding: 0.25rem 0;
 `
 
 const EpisodeLabel = styled.span`

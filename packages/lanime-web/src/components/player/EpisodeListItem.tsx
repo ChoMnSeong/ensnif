@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 import { EpisodeResponse } from '@libs/apis/animations/type'
+import Flex from '@components/common/Flex'
 import Image from '@components/common/Image'
 
 interface EpisodeListItemProps {
@@ -22,8 +23,8 @@ const EpisodeListItem: React.FC<EpisodeListItemProps> = ({
     onClick,
 }) => {
     return (
-        <Item isCurrent={isCurrent} onClick={onClick}>
-            <Thumb isCurrent={isCurrent}>
+        <Item isCurrent={isCurrent} onClick={onClick} align="center" gap="0.75rem" padding="0.75rem 1rem">
+            <Thumb isCurrent={isCurrent} align="center" justify="center">
                 <Image
                     src={episode.thumbnailUrl}
                     alt={`episode ${episode.episodeNumber}`}
@@ -31,29 +32,25 @@ const EpisodeListItem: React.FC<EpisodeListItemProps> = ({
                     height={45}
                 />
             </Thumb>
-            <Info>
+            <Flex direction="column" gap="0.3rem" flex={1} style={{ minWidth: 0 }}>
                 <Title isCurrent={isCurrent}>{episode.title}</Title>
-                <Meta>
-                    <span>EP.{episode.episodeNumber}</span>
+                <Flex align="center" gap="0.4rem">
+                    <MetaText>EP.{episode.episodeNumber}</MetaText>
                     {episode.duration != null && (
                         <>
                             <Dot />
-                            <span>{formatDuration(episode.duration)}</span>
+                            <MetaText>{formatDuration(episode.duration)}</MetaText>
                         </>
                     )}
-                </Meta>
-            </Info>
+                </Flex>
+            </Flex>
         </Item>
     )
 }
 
 export default EpisodeListItem
 
-const Item = styled.div<{ isCurrent: boolean }>`
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 1rem;
+const Item = styled(Flex)<{ isCurrent: boolean }>`
     cursor: pointer;
     transition: background 0.15s;
     background: ${({ isCurrent }) =>
@@ -66,25 +63,14 @@ const Item = styled.div<{ isCurrent: boolean }>`
     }
 `
 
-const Thumb = styled.div<{ isCurrent: boolean }>`
+const Thumb = styled(Flex)<{ isCurrent: boolean }>`
     flex-shrink: 0;
     width: 80px;
     aspect-ratio: 16 / 9;
     border-radius: 4px;
     background: ${({ isCurrent }) =>
         isCurrent ? 'rgba(180, 115, 249, 0.3)' : themedPalette.bg_element3};
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
-`
-
-const Info = styled.div`
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
 `
 
 const Title = styled.span<{ isCurrent: boolean }>`
@@ -97,10 +83,7 @@ const Title = styled.span<{ isCurrent: boolean }>`
     text-overflow: ellipsis;
 `
 
-const Meta = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+const MetaText = styled.span`
     font-size: 0.75rem;
     color: ${themedPalette.text4};
 `

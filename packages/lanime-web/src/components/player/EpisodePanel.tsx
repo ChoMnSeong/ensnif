@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
+import Flex from '@components/common/Flex'
 
 interface EpisodePanelProps {
     children: React.ReactNode
@@ -7,7 +8,7 @@ interface EpisodePanelProps {
 
 const EpisodePanel: React.FC<EpisodePanelProps> = ({ children }) => {
     return (
-        <Panel>
+        <Panel direction="column">
             <PanelTitle>에피소드 목록</PanelTitle>
             <Scroll>{children}</Scroll>
         </Panel>
@@ -16,14 +17,12 @@ const EpisodePanel: React.FC<EpisodePanelProps> = ({ children }) => {
 
 export default EpisodePanel
 
-const Panel = styled.aside`
+const Panel = styled(Flex)`
     flex: 0 0 20%;
     background: ${themedPalette.bg_element1};
     border: 1px solid ${themedPalette.border2};
     border-radius: 6px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
     min-height: 0;
 
     @media (max-width: 900px) {
