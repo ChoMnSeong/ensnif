@@ -5,7 +5,8 @@ import { IApiResponse } from '@/libs/types/type'
 
 export const useAdvertiseList = () => {
     const response = async () => {
-        const { data } = await instance.get<IApiResponse<AdListResponse>>('ad')
+        const { data } =
+            await instance.get<IApiResponse<AdListResponse[]>>('ad')
         return data.data
     }
     return useQuery({

@@ -25,7 +25,7 @@ export interface RankingAnimation {
     id: string
     title: string
     thumbnailUrl: string
-    type: string
+    type: AnimeType
     ageRating: string
     averageScore: number
     reviewCount: number
