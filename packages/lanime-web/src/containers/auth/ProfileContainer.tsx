@@ -108,6 +108,16 @@ const ProfileContainer = () => {
         [createProfile, queryClient],
     )
 
+    const handleForgotPin = useCallback(() => {
+        if (!selectedProfile) return
+        navigate('/profile/reset-pin', {
+            state: {
+                profileId: selectedProfile.profileId,
+                profileName: selectedProfile.name,
+            },
+        })
+    }, [navigate, selectedProfile])
+
     return (
         <ProfilePresenter
             profiles={profiles}
@@ -116,6 +126,7 @@ const ProfileContainer = () => {
             isAddProfileModalOpen={isAddProfileModalOpen}
             onProfileSelect={handleProfileSelect}
             onPinVerify={handlePinVerify}
+            onForgotPin={handleForgotPin}
             onCreateProfile={handleCreateProfile}
             onClosePinModal={() => setIsPinModalOpen(false)}
             onCloseAddModal={() => setIsAddProfileModalOpen(false)}

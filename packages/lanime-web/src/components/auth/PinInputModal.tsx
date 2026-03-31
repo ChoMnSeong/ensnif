@@ -7,9 +7,14 @@ import PinInput from '@components/common/PinInput'
 import ProfileModalLayout from '@components/auth/ProfileModalLayout'
 import { ProfileModalProps } from '@containers/auth/ProfileContainer'
 
-const PinInputModal: React.FC<ProfileModalProps<string>> = ({
+interface PinInputModalProps extends ProfileModalProps<string> {
+    onForgotPin: () => void
+}
+
+const PinInputModal: React.FC<PinInputModalProps> = ({
     onClose,
     onComplete,
+    onForgotPin,
 }) => {
     const [pins, setPins] = useState(['', '', '', ''])
 
@@ -27,7 +32,13 @@ const PinInputModal: React.FC<ProfileModalProps<string>> = ({
                     size="lg"
                 />
 
-                <Button variant="text" size="sm" type="button" style={{ marginTop: '4rem' }}>
+                <Button
+                    variant="text"
+                    size="sm"
+                    type="button"
+                    style={{ marginTop: '4rem' }}
+                    onClick={onForgotPin}
+                >
                     프로필 비밀번호를 잊으셨나요? 〉
                 </Button>
             </Flex>

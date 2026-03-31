@@ -19,6 +19,7 @@ const SignUpPage = loadable(() => import('./pages/SignUpPage'))
 const ProfilePage = loadable(() => import('./pages/ProfilePage'))
 const SettingsPage = loadable(() => import('./pages/SettingsPage'))
 const ForgotPasswordPage = loadable(() => import('./pages/ForgotPasswordPage'))
+const ResetPinPage = loadable(() => import('./pages/ResetPinPage'))
 const AnimeEpisodeModal = loadable(() => import('@containers/home/AnimeEpisodeModal'))
 
 const App: React.FC = () => {
@@ -74,6 +75,7 @@ const App: React.FC = () => {
                 <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
 
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/profile/reset-pin" element={<ResetPinPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
 
                 <Route path="*" element={<NotFoundPage />} />

@@ -14,6 +14,7 @@ interface ProfilePresenterProps {
     isAddProfileModalOpen: boolean
     onProfileSelect: (profile: IUserProfile) => void
     onPinVerify: (pin: string) => void
+    onForgotPin: () => void
     onCreateProfile: (request: IProfileCreateRequest) => void
     onClosePinModal: () => void
     onCloseAddModal: () => void
@@ -27,6 +28,7 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
     isAddProfileModalOpen,
     onProfileSelect,
     onPinVerify,
+    onForgotPin,
     onCreateProfile,
     onClosePinModal,
     onCloseAddModal,
@@ -63,6 +65,7 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
                 <PinInputModal
                     onClose={onClosePinModal}
                     onComplete={onPinVerify}
+                    onForgotPin={onForgotPin}
                 />
             )}
 

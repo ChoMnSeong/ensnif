@@ -96,3 +96,7 @@ export interface IMyProfileResponse {
     avatarUrl: string
     admin: boolean
 }
+
+export interface IResetProfilePinRequest {
+    password: string
+}

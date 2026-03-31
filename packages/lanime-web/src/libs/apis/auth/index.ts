@@ -20,6 +20,7 @@ import {
     IProfileUpdateRequest,
     IProfileAccessResponse,
     IMyProfileResponse,
+    IResetProfilePinRequest,
 } from '@libs/apis/auth/type'
 
 import { IApiResponse } from '@libs/types/type'
@@ -247,6 +248,24 @@ export const useDeleteProfileMutation = () => {
         mutationFn: async (profileId: string) => {
             const { data } = await instance.delete<IApiResponse<void>>(
                 `/profiles/${profileId}`,
+            )
+            return data
+        },
+    })
+}
+
+export const useResetProfilePinMutation = () => {
+    return useMutation({
+        mutationFn: async ({
+            profileId,
+            request,
+        }: {
+            profileId: string
+            request: IResetProfilePinRequest
+        }) => {
+            const { data } = await instance.delete<IApiResponse<void>>(
+                `/profiles/${profileId}/pin`,
+                { data: request },
             )
             return data
         },
