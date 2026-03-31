@@ -266,46 +266,46 @@ const SettingsContainer: React.FC = () => {
                     </Flex>
                 </Flex>
 
-                <GroupDivider />
+                {isAdmin && (
+                    <>
+                        <GroupDivider />
 
-                <Flex gap="2.5rem" align="stretch">
-                    <CategoryLabel>계정 보안</CategoryLabel>
-                    <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
-                        <SettingsEmailSection
-                            onSendCode={handleSendEmailCode}
-                            onVerify={handleChangeEmail}
-                            isSending={isSendingEmail}
-                            isVerifying={isChangingEmail}
-                        />
-                        <Divider />
-                        <SettingsPasswordSection
-                            onSubmit={handleChangePassword}
-                            isLoading={isChangingPassword}
-                        />
-                    </Flex>
-                </Flex>
+                        <Flex gap="2.5rem" align="stretch">
+                            <CategoryLabel>계정 보안</CategoryLabel>
+                            <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
+                                <SettingsEmailSection
+                                    onSendCode={handleSendEmailCode}
+                                    onVerify={handleChangeEmail}
+                                    isSending={isSendingEmail}
+                                    isVerifying={isChangingEmail}
+                                />
+                                <Divider />
+                                <SettingsPasswordSection
+                                    onSubmit={handleChangePassword}
+                                    isLoading={isChangingPassword}
+                                />
+                            </Flex>
+                        </Flex>
 
-                <GroupDivider />
+                        <GroupDivider />
 
-                <Flex gap="2.5rem" align="stretch">
-                    <CategoryLabel danger>위험 구역</CategoryLabel>
-                    <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
-                        <SettingsAccountSection
-                            onDelete={handleDeleteAccount}
-                            isDeleting={isDeletingAccount}
-                        />
-                        {isAdmin && (
-                            <>
+                        <Flex gap="2.5rem" align="stretch">
+                            <CategoryLabel danger>위험 구역</CategoryLabel>
+                            <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
+                                <SettingsAccountSection
+                                    onDelete={handleDeleteAccount}
+                                    isDeleting={isDeletingAccount}
+                                />
                                 <Divider />
                                 <SettingsDangerSection
                                     profiles={profiles}
                                     onDelete={handleDeleteProfile}
                                     isDeleting={isDeleting}
                                 />
-                            </>
-                        )}
-                    </Flex>
-                </Flex>
+                            </Flex>
+                        </Flex>
+                    </>
+                )}
             </Flex>
         </Flex>
     )
