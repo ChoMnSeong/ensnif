@@ -3,10 +3,18 @@ import { env } from '@libs/env'
 import { useReissue } from '@libs/apis/auth/reisuue'
 import * as customAxios from '@ensnif/common'
 
+const handleRefreshFail = () => {
+    customCookie.remove.accessToken()
+    customCookie.remove.refreshToken()
+    customCookie.remove.profileToken()
+    window.location.href = '/auth/mail'
+}
+
 const jwtOptions: customAxios.JwtOptions = {
     accessTokenGetter: () => customCookie.get.accessToken(),
     refreshTokenGetter: () => customCookie.get.refreshToken(),
     useReissue,
+    onRefreshFail: handleRefreshFail,
 }
 
 export const instance = customAxios.createTokenAxios({

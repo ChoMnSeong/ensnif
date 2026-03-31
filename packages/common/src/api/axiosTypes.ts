@@ -8,6 +8,7 @@ export interface JwtOptions {
     accessTokenGetter: () => string | null
     refreshTokenGetter: () => string | null
     useReissue: (refreshToken: string) => Promise<void>
+    onRefreshFail?: () => void
 }
 
 // 동적 설정을 위한 타입 추가
