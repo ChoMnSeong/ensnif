@@ -28,7 +28,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
                     onClick={() => onProfileSelect(profile)}
                 >
                     <AvatarWrapper>
-                        {profile.admin && <Badge>대표</Badge>}
+                        {profile.isOwner && <Badge>대표</Badge>}
                         <Image
                             src={profile.avatarUrl || ''}
                             alt={profile.name}

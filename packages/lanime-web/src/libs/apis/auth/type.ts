@@ -4,7 +4,7 @@ export interface IUserProfile {
     pin?: string
     name: string
     avatarUrl: string
-    admin: boolean
+    isOwner: boolean
     createdAt: string
     updatedAt: string
 }
@@ -94,7 +94,7 @@ export interface IMyProfileResponse {
     profileId: string
     name: string
     avatarUrl: string
-    admin: boolean
+    isOwner: boolean
 }
 
 export interface IResetProfilePinRequest {

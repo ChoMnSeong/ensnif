@@ -21,7 +21,7 @@ const SettingsDangerSection: React.FC<SettingsDangerSectionProps> = ({
 }) => {
     const [modalProfile, setModalProfile] = useState<IUserProfile | null>(null)
 
-    const deletableProfiles = profiles.filter((p) => !p.admin)
+    const deletableProfiles = profiles.filter((p) => !p.isOwner)
 
     return (
         <Flex direction="column" gap="1.25rem">

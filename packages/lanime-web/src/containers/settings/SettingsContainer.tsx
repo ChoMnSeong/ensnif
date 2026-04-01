@@ -44,7 +44,7 @@ const SettingsContainer: React.FC = () => {
     }, [])
 
     const { data: myProfile } = useMyProfileQuery()
-    const isAdmin = myProfile?.admin ?? false
+    const isOwner = myProfile?.isOwner ?? false
 
     const { data: profiles = [] } = useProfilesQuery()
 
@@ -266,7 +266,7 @@ const SettingsContainer: React.FC = () => {
                     </Flex>
                 </Flex>
 
-                {isAdmin && (
+                {isOwner && (
                     <>
                         <GroupDivider />
 
