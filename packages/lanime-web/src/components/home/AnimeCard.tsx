@@ -4,18 +4,24 @@ import Image from '@components/common/Image'
 import Flex from '@components/common/Flex'
 import { statusLabelMap, typeLabelMap } from '@libs/constants/anime'
 import styled from '@emotion/styled'
+import { css } from '@emotion/react'
 import { useDispatch } from 'react-redux'
 import { openModal } from '@stores/episodeModal/reducer'
 import { Animation } from '@libs/apis/animations/type'
 import { themedPalette } from '@libs/style/theme'
 
-const AnimeCard: React.FC<Animation> = ({
+interface AnimeCardProps extends Animation {
+    disableHover?: boolean
+}
+
+const AnimeCard: React.FC<AnimeCardProps> = ({
     id,
     title,
     thumbnailUrl,
     type,
     ageRating,
     rank,
+    disableHover = false,
 }) => {
     const dispatch = useDispatch()
 
@@ -37,6 +43,7 @@ const AnimeCard: React.FC<Animation> = ({
             width="var(--card-w)"
             height="100%"
             onClick={handleCardClick}
+            disableHover={disableHover}
         >
             <ImageWrapper>
                 <Image
@@ -120,7 +127,7 @@ const AnimeCardContentBlock = styled(Flex)`
     flex-direction: column;
 `
 
-const AnimeCardBlock = styled(Flex)`
+const AnimeCardBlock = styled(Flex)<{ disableHover: boolean }>`
     scroll-snap-align: start;
     position: relative;
     cursor: pointer;
@@ -128,30 +135,34 @@ const AnimeCardBlock = styled(Flex)`
     border-radius: 0.25rem;
     list-style: none;
 
-    &:hover {
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        transform: scale(1.25);
-    }
-
-    @media (max-width: 1023px) {
-        &:hover {
-            transform: scale(1.1);
-        }
-    }
-
-    &:hover ${AnimeSubTiltBlock} {
-        opacity: 1;
-        display: flex;
-    }
-
-    &:hover ${ImageWrapper} Image {
+    &:hover ${ImageWrapper} img {
         border-radius: 0.5rem 0.5rem 0 0;
     }
 
-    &:hover ${AnimeCardContentBlock} {
-        height: 50%;
-        padding: 0.4rem;
-    }
+    ${({ disableHover }) =>
+        !disableHover &&
+        css`
+            &:hover {
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+                transform: scale(1.25);
+            }
+
+            @media (max-width: 1023px) {
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            &:hover ${AnimeSubTiltBlock} {
+                opacity: 1;
+                display: flex;
+            }
+
+            &:hover ${AnimeCardContentBlock} {
+                height: 50%;
+                padding: 0.4rem;
+            }
+        `}
 `
 
 const AnimeTitleBlock = styled(Flex)``
