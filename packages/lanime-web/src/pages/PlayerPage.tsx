@@ -6,6 +6,7 @@ import PlayerCommentContainer from '@containers/player/PlayerCommentContainer'
 import { themedPalette } from '@libs/style/theme'
 import { useAnimationEpisodes } from '@libs/apis/animations'
 import Flex from '@components/common/Flex'
+import { env } from '@libs/env'
 
 const PlayerPage = () => {
     const { animeId = '', videoId = '' } = useParams<{
@@ -22,7 +23,9 @@ const PlayerPage = () => {
                 <VideoRow gap="1rem" align="stretch">
                     <Flex flex={1} style={{ minWidth: 0 }}>
                         {currentEpisode && (
-                            <VideoPlayerContainer src={currentEpisode.videoUrl} />
+                            <VideoPlayerContainer
+                                src={`${env.BASE_URL}/stream/${currentEpisode.episodeId}/index.m3u8`}
+                            />
                         )}
                     </Flex>
                     <EpisodeListContainer
