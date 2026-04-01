@@ -5,7 +5,8 @@
     "scripts": {
         "setup:mac": "sh setup.sh",
         "dev:lanime-web": "pnpm --filter lanime-web dev",
-        "dev:ssr:lanime-web": "pnpm --filter lanime-web dev:ssr"
+        "dev:ssr:lanime-web": "pnpm --filter lanime-web dev:ssr",
+        "dev:lanime-admin-web": "pnpm --filter lanime-admin-web dev"
     },
     "devDependencies": {
         "@swc/plugin-emotion": "^9.0.0",

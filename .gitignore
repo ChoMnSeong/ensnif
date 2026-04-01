@@ -42,3 +42,5 @@ desktop.ini
 packages/common/dist/
 
 packages/lanime-web/docs/
+
+.workman/
