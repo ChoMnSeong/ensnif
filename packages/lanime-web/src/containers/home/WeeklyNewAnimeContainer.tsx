@@ -16,7 +16,7 @@ const WeeklyNewAnimeContainer = () => {
         'Sunday',
     ]
 
-    const [currentDay, setCurrentDay] = useState<number>(new Date().getDay())
+    const [currentDay, setCurrentDay] = useState<number>(new Date().getDay() || 7)
 
     const { data, isLoading, isError } = useWeeklyAnimationList({
         airDay: airDays[currentDay - 1],
