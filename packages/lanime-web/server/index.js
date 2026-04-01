@@ -48,7 +48,7 @@ app.get(/^\/player\/[^/]+\/[^/]+$/, async (req, res) => {
 
 app.use("*all", async (req, res) => {
   try {
-    const url = req.originalUrl.replace(base, "");
+    const url = base === '/' ? req.originalUrl : req.originalUrl.replace(base, '') || '/';
 
     let template;
     let render;
