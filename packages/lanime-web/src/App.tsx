@@ -20,6 +20,7 @@ const ProfilePage = loadable(() => import('./pages/ProfilePage'))
 const SettingsPage = loadable(() => import('./pages/SettingsPage'))
 const ForgotPasswordPage = loadable(() => import('./pages/ForgotPasswordPage'))
 const ResetPinPage = loadable(() => import('./pages/ResetPinPage'))
+const WeeklyPage = loadable(() => import('./pages/WeeklyPage'))
 const AnimeEpisodeModal = loadable(() => import('@containers/home/AnimeEpisodeModal'))
 
 const App: React.FC = () => {
@@ -64,6 +65,7 @@ const App: React.FC = () => {
             <Routes>
                 <Route element={<DefaultLayout />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/weekly" element={<WeeklyPage />} />
                     <Route
                         path="/player/:animeId/:videoId"
                         element={<PlayerPage />}
