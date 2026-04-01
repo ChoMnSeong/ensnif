@@ -1,21 +1,30 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { instance } from '@libs/apis/axios'
 import { IApiResponse } from '@/libs/types/type'
-import { AnimationDetailResponse, AnimationResponse, AnimationReviewRatingsResponse, EpisodeResponse, RankingAnimation, RankingType } from './type'
+import { AnimationDetailResponse, AnimationResponse, AnimationReviewRatingsResponse, EpisodeResponse, RankingAnimation, RankingType, WeeklyAnimationResponse } from './type'
 
-export const useWeeklyAnimationList = ({ airDay }: { airDay?: string }) => {
-    const response = async () => {
-        const { data } = await instance.get<IApiResponse<AnimationResponse[]>>(
-            'animations/weekly',
-            {
-                params: { airDay },
-            },
-        )
-        return data.data
-    }
+export const useWeeklyAnimationList = ({ airDay }: { airDay: string }) => {
     return useQuery({
         queryKey: ['weeklyAnimationList', airDay],
-        queryFn: response,
+        queryFn: async () => {
+            const { data } = await instance.get<IApiResponse<AnimationResponse[]>>(
+                'animations/weekly',
+                { params: { airDay } },
+            )
+            return data.data ?? []
+        },
+    })
+}
+
+export const useAllWeeklyAnimations = () => {
+    return useQuery({
+        queryKey: ['weeklyAnimationList', 'all'],
+        queryFn: async () => {
+            const { data } = await instance.get<IApiResponse<WeeklyAnimationResponse>>(
+                'animations/weekly',
+            )
+            return data.data ?? {}
+        },
     })
 }
 

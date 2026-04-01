@@ -9,6 +9,10 @@ export interface AnimationResponse {
     rank?: number
 }
 
+export interface WeeklyAnimationResponse {
+    [key: string]: AnimationResponse[]
+}
+
 export type Animation = AnimationResponse
 
 export type RankingType =
