@@ -1,12 +1,12 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string
     error?: string
-    count?: number // 현재 글자 수
-    maxCount?: number // 최대 글자 수
+    count?: number
+    maxCount?: number
     width?: string
 }
 
