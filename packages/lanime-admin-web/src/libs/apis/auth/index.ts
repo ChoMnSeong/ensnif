@@ -1,17 +1,16 @@
-import api from '@/libs/axios'
+import { useMutation } from '@tanstack/react-query'
+import instance from "@libs/api/axios";
+import type { IAdminSigninRequest, IAdminAuthResponse } from '@libs/apis/auth/type'
 
-export interface IAdminSigninRequest {
-    email: string
-    password: string
+interface IApiResponse<T> {
+    success: boolean
+    data: T
 }
 
-export interface IAdminAuthResponse {
-    accessToken: string
-    expiresIn: number
-    tokenType: string
-}
-
-export const adminSignin = async (data: IAdminSigninRequest): Promise<IAdminAuthResponse> => {
-    const res = await api.post<{ success: boolean; data: IAdminAuthResponse }>('/admin/auth/signin', data)
-    return res.data.data
-}
+export const useAdminSignin = () =>
+    useMutation({
+        mutationFn: async (data: IAdminSigninRequest): Promise<IAdminAuthResponse> => {
+            const res = await instance.post<IApiResponse<IAdminAuthResponse>>('/admin/auth/signin', data)
+            return res.data.data
+        },
+    })

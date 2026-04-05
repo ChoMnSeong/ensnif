@@ -1,161 +1,271 @@
-import api from '@/libs/axios'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import instance from "@libs/api/axios";
+import type {
+    IAdminAccount,
+    IAdminAnimation,
+    IAdminAnimationDetail,
+    IAnimationCreateRequest,
+    IAnimationType,
+    IAnimationGenre,
+    IAdminEpisode,
+    IEpisodeCreateRequest,
+    IEncodingStatus,
+    IAdBanner,
+    IBannerCreateRequest,
+    IBannerUpdateRequest,
+} from '@libs/apis/admin/type'
+
+interface IApiResponse<T> {
+    success: boolean
+    data: T
+}
 
 // --- Admin Accounts ---
 
-export interface IAdminAccount {
-    adminId: string
-    email: string
-    createdAt: string
+export const useAdminAccounts = () =>
+    useQuery({
+        queryKey: ['admin', 'accounts'],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAdminAccount[]>>('/admin/accounts')
+            return res.data.data
+        },
+    })
+
+export const useCreateAdminAccount = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: { email: string; password: string }) => {
+            await instance.post('/admin/accounts', data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'accounts'] })
+        },
+    })
 }
 
-export const getAdminAccounts = async (): Promise<IAdminAccount[]> => {
-    const res = await api.get<{ success: boolean; data: IAdminAccount[] }>('/admin/accounts')
-    return res.data.data
-}
-
-export const createAdminAccount = async (data: { email: string; password: string }): Promise<void> => {
-    await api.post('/admin/accounts', data)
-}
-
-export const deleteAdminAccount = async (adminId: string): Promise<void> => {
-    await api.delete(`/admin/accounts/${adminId}`)
+export const useDeleteAdminAccount = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (adminId: string) => {
+            await instance.delete(`/admin/accounts/${adminId}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'accounts'] })
+        },
+    })
 }
 
 // --- Animation Metadata ---
 
-export interface IAnimationType {
-    typeId: string
-    name: string
+export const useAnimationTypes = () =>
+    useQuery({
+        queryKey: ['admin', 'types'],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAnimationType[]>>('/animations/types')
+            return res.data.data
+        },
+    })
+
+export const useCreateAnimationType = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (name: string) => {
+            await instance.post('/admin/animations/types', { name })
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'types'] })
+        },
+    })
 }
 
-export interface IAnimationGenre {
-    genreId: string
-    name: string
-}
+export const useAnimationGenres = () =>
+    useQuery({
+        queryKey: ['admin', 'genres'],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAnimationGenre[]>>('/animations/genres')
+            return res.data.data
+        },
+    })
 
-export const getAnimationTypes = async (): Promise<IAnimationType[]> => {
-    const res = await api.get<{ success: boolean; data: IAnimationType[] }>('/animations/types')
-    return res.data.data
-}
-
-export const createAnimationType = async (name: string): Promise<void> => {
-    await api.post('/admin/animations/types', { name })
-}
-
-export const getAnimationGenres = async (): Promise<IAnimationGenre[]> => {
-    const res = await api.get<{ success: boolean; data: IAnimationGenre[] }>('/animations/genres')
-    return res.data.data
-}
-
-export const createAnimationGenre = async (name: string): Promise<void> => {
-    await api.post('/admin/animations/genres', { name })
+export const useCreateAnimationGenre = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (name: string) => {
+            await instance.post('/admin/animations/genres', { name })
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'genres'] })
+        },
+    })
 }
 
 // --- Animations ---
 
-export interface IAdminAnimation {
-    id: string
-    title: string
-    thumbnailUrl: string
-    type: string
-    ageRating: string
-    status: string
-    airDay: string | null
-    releasedAt: string
-}
+export const useAdminAnimations = () =>
+    useQuery({
+        queryKey: ['admin', 'animations'],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAdminAnimation[]>>('/animations')
+            return res.data.data
+        },
+    })
 
-export interface IAdminAnimationDetail extends IAdminAnimation {
-    description: string
-    genres: string[] // string[] (names)
-    rating?: string
-}
-
-export interface IAnimationCreateRequest {
-    typeId: string
-    title: string
-    description: string
-    thumbnailUrl: string
-    rating: string
-    status: string
-    airDay?: string
-    releasedAt: string
-    genreIds: string[]
-}
-
-export const getAnimations = async (): Promise<IAdminAnimation[]> => {
-    const res = await api.get<{ success: boolean; data: IAdminAnimation[] }>('/animations')
+export const fetchAnimationDetail = async (id: string): Promise<IAdminAnimationDetail> => {
+    const res = await instance.get<IApiResponse<IAdminAnimationDetail>>(`/animations/${id}`)
     return res.data.data
 }
 
-export const getAnimationDetail = async (id: string): Promise<IAdminAnimationDetail> => {
-    const res = await api.get<{ success: boolean; data: IAdminAnimationDetail }>(`/animations/${id}`)
-    return res.data.data
+export const useCreateAnimation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: IAnimationCreateRequest) => {
+            await instance.post('/admin/animations', data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'animations'] })
+        },
+    })
 }
 
-export const createAnimation = async (data: IAnimationCreateRequest): Promise<void> => {
-    await api.post('/admin/animations', data)
+export const useUpdateAnimation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: Partial<IAnimationCreateRequest> }) => {
+            await instance.patch(`/admin/animations/${id}`, data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'animations'] })
+        },
+    })
 }
 
-export const updateAnimation = async (
-    animationId: string,
-    data: Partial<IAnimationCreateRequest>,
-): Promise<void> => {
-    await api.patch(`/admin/animations/${animationId}`, data)
-}
-
-export const deleteAnimation = async (animationId: string): Promise<void> => {
-    await api.delete(`/admin/animations/${animationId}`)
+export const useDeleteAnimation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (animationId: string) => {
+            await instance.delete(`/admin/animations/${animationId}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'animations'] })
+        },
+    })
 }
 
 // --- Episodes ---
 
-export interface IAdminEpisode {
-    episodeId: string
-    episodeNumber: number
-    title: string
-    thumbnailUrl: string
-    description: string
-    duration: number
-    videoUrl: string | null
+export const useEpisodes = (animationId: string | undefined) =>
+    useQuery({
+        queryKey: ['admin', 'episodes', animationId],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAdminEpisode[]>>(
+                `/animations/${animationId}/episodes`,
+            )
+            return res.data.data
+        },
+        enabled: !!animationId,
+    })
+
+export const useCreateEpisode = (animationId: string | undefined) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: IEpisodeCreateRequest) => {
+            await instance.post(`/admin/animations/${animationId}/episodes`, data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'episodes', animationId] })
+        },
+    })
 }
 
-export interface IEpisodeCreateRequest {
-    episodeNumber: number
-    title: string
-    thumbnailUrl: string
-    description: string
-    duration: number
+export const useUpdateEpisode = (animationId: string | undefined) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: Partial<IEpisodeCreateRequest> }) => {
+            await instance.patch(`/admin/episodes/${id}`, data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'episodes', animationId] })
+        },
+    })
 }
 
-export const getEpisodes = async (animationId: string): Promise<IAdminEpisode[]> => {
-    const res = await api.get<{ success: boolean; data: IAdminEpisode[] }>(
-        `/animations/${animationId}/episodes`,
-    )
-    return res.data.data
-}
-
-export const createEpisode = async (animationId: string, data: IEpisodeCreateRequest): Promise<void> => {
-    await api.post(`/admin/animations/${animationId}/episodes`, data)
-}
-
-export const updateEpisode = async (
-    episodeId: string,
-    data: Partial<IEpisodeCreateRequest>,
-): Promise<void> => {
-    await api.patch(`/admin/episodes/${episodeId}`, data)
-}
-
-export const deleteEpisode = async (episodeId: string): Promise<void> => {
-    await api.delete(`/admin/episodes/${episodeId}`)
+export const useDeleteEpisode = (animationId: string | undefined) => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (episodeId: string) => {
+            await instance.delete(`/admin/episodes/${episodeId}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'episodes', animationId] })
+        },
+    })
 }
 
 // --- Video & Encoding ---
 
-export interface IEncodingStatus {
-    episodeId: string
-    status: 'PENDING' | 'ENCODING' | 'COMPLETED' | 'FAILED'
-    progress: number | null
-    hlsPath?: string
+export const useEncodingStatus = (episodeId: string) =>
+    useQuery({
+        queryKey: ['admin', 'encoding', episodeId],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IEncodingStatus>>(
+                `/admin/episodes/${episodeId}/encoding-status`,
+            )
+            return res.data.data
+        },
+        refetchInterval: (query) => {
+            const status = query.state.data?.status
+            return status === 'ENCODING' || status === 'PENDING' ? 3000 : false
+        },
+        retry: false,
+    })
+
+// --- Ad Banners ---
+
+export const useAdBanners = () =>
+    useQuery({
+        queryKey: ['admin', 'banners'],
+        queryFn: async () => {
+            const res = await instance.get<IApiResponse<IAdBanner[]>>('/admin/banners')
+            return res.data.data
+        },
+    })
+
+export const useCreateAdBanner = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: IBannerCreateRequest) => {
+            const res = await instance.post<IApiResponse<IAdBanner>>('/admin/banners', data)
+            return res.data.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'banners'] })
+        },
+    })
+}
+
+export const useUpdateAdBanner = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async ({ id, data }: { id: string; data: IBannerUpdateRequest }) => {
+            const res = await instance.patch<IApiResponse<IAdBanner>>(`/admin/banners/${id}`, data)
+            return res.data.data
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'banners'] })
+        },
+    })
+}
+
+export const useDeleteAdBanner = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (bannerId: string) => {
+            await instance.delete(`/admin/banners/${bannerId}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'banners'] })
+        },
+    })
 }
 
 export const uploadEpisodeVideo = async (
@@ -165,7 +275,7 @@ export const uploadEpisodeVideo = async (
 ): Promise<void> => {
     const formData = new FormData()
     formData.append('file', file)
-    await api.post(`/admin/episodes/${episodeId}/video`, formData, {
+    await instance.post(`/admin/episodes/${episodeId}/video`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: (e) => {
             if (onProgress && e.total) {
@@ -173,11 +283,4 @@ export const uploadEpisodeVideo = async (
             }
         },
     })
-}
-
-export const getEncodingStatus = async (episodeId: string): Promise<IEncodingStatus> => {
-    const res = await api.get<{ success: boolean; data: IEncodingStatus }>(
-        `/admin/episodes/${episodeId}/encoding-status`,
-    )
-    return res.data.data
 }
