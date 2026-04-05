@@ -66,10 +66,12 @@ const AnimationReview: React.FC<AnimationReviewProps> = ({
                 <AnimationReviewGraph ratingCounts={ratingCounts} />
             </ReviewSummaryContainer>
 
-            <AnimationReviewWrite
-                onCreate={(rating, comment) => createReview({ rating, comment })}
-                isPending={isPending}
-            />
+            {currentProfileId && (
+                <AnimationReviewWrite
+                    onCreate={(rating, comment) => createReview({ rating, comment })}
+                    isPending={isPending}
+                />
+            )}
 
             <Flex as="ul" direction="column" width="100%" gap="1.25rem" padding="0" margin="0" style={{ listStyle: 'none' }}>
                 {allReviews.map((review) => (

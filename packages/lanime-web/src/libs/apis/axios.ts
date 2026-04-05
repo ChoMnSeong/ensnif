@@ -4,10 +4,13 @@ import { useReissue } from '@libs/apis/auth/reisuue'
 import * as customAxios from '@ensnif/common'
 
 const handleRefreshFail = () => {
+    const wasLoggedIn = !!customCookie.get.accessToken()
     customCookie.remove.accessToken()
     customCookie.remove.refreshToken()
     customCookie.remove.profileToken()
-    window.location.href = '/auth/mail'
+    if (wasLoggedIn) {
+        window.location.href = '/auth/mail'
+    }
 }
 
 const jwtOptions: customAxios.JwtOptions = {

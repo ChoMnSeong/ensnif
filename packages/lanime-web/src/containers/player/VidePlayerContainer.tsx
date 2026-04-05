@@ -1,4 +1,5 @@
 import { useRef, useCallback, useState, useEffect } from 'react'
+import styled from '@emotion/styled'
 import VideoPlayer from '@components/player/VideoPlayer'
 import PlayerControls from '@components/player/controls/PlayerControls'
 import ProgressBar from '@components/player/controls/ProgressBar'
@@ -9,16 +10,19 @@ import { useVideoProgress } from '@hooks/player/useVideoProgress'
 import { useVideoControls } from '@hooks/player/useVideoControls'
 import { useVolumeControl } from '@hooks/player/useVolumeControl'
 import { useFullscreen } from '@hooks/player/useFullscreen'
+import customCookie from '@libs/customCookie'
 
 interface VideoPlayerContainerProps {
     src: string
+    poster?: string
 }
 
-const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src }) => {
+const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src, poster }) => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
+    const hasProfileToken = !!customCookie.get.profileToken()
 
-    useShakaPlayer(videoRef, src)
+    useShakaPlayer(videoRef, hasProfileToken ? src : '')
 
     const {
         videoDuration,
@@ -51,8 +55,10 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src }) => {
 
     const handleLoadedMetadata = useCallback(() => {
         onLoadedMetadata()
-        autoPlay(muteSync)
-    }, [onLoadedMetadata, autoPlay, muteSync])
+        if (hasProfileToken) {
+            autoPlay(muteSync)
+        }
+    }, [onLoadedMetadata, autoPlay, muteSync, hasProfileToken])
 
     const [controlsVisible, setControlsVisible] = useState(true)
     const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -71,6 +77,8 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src }) => {
     useEffect(() => {
         const container = containerRef.current
         if (!container) return
+        if (!hasProfileToken) return
+
         container.addEventListener('mousemove', showControls)
         container.addEventListener('mouseleave', hideControlsNow)
         document.addEventListener('fullscreenchange', showControls)
@@ -83,7 +91,18 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src }) => {
             document.removeEventListener('webkitfullscreenchange', showControls)
             if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
         }
-    }, [showControls, hideControlsNow])
+    }, [showControls, hideControlsNow, hasProfileToken])
+
+    if (!hasProfileToken) {
+        return (
+            <PosterWrapper>
+                <PosterImage src={poster} alt="poster" />
+                <LoginOverlay>
+                    <span>로그인이 필요한 서비스입니다.</span>
+                </LoginOverlay>
+            </PosterWrapper>
+        )
+    }
 
     return (
         <VideoPlayer
@@ -125,3 +144,30 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src }) => {
 }
 
 export default VideoPlayerContainer
+
+const PosterWrapper = styled.div`
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+`
+
+const PosterImage = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+`
+
+const LoginOverlay = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+`

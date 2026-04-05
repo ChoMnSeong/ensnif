@@ -58,13 +58,15 @@ const PlayerCommentContainer: React.FC<PlayerCommentContainerProps> = ({
 
     return (
         <Flex as="section" direction="column" gap="1.5rem">
-            <CommentInput
-                value={input}
-                onChange={setInput}
-                onSubmit={handleSubmit}
-                isLoading={createMutation.isPending}
-                avatarUrl={profile.avatarUrl}
-            />
+            {profile.profileId && (
+                <CommentInput
+                    value={input}
+                    onChange={setInput}
+                    onSubmit={handleSubmit}
+                    isLoading={createMutation.isPending}
+                    avatarUrl={profile.avatarUrl}
+                />
+            )}
 
             <Flex direction="column" gap="1.25rem">
                 <CommentTitle>댓글 {totalCount}개</CommentTitle>
