@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAllWeeklyAnimations } from '@libs/apis/animations'
-import WeeklyAnimeGrid from '@components/home/WeeklyAnimeGrid'
+import WeeklyAnimeGrid from '@components/weekly/WeeklyAnimeGrid'
 import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
 import styled from '@emotion/styled'
