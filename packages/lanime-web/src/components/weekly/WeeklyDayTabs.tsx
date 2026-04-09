@@ -3,8 +3,9 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/react'
 import { themedPalette } from '@libs/style/theme'
 import Flex from '@components/common/Flex'
+import { useTranslation } from 'react-i18next'
 
-const DAY_LABELS = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+const AIR_DAY_KEYS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'] as const
 
 interface WeeklyDayTabsProps {
     selectedDay: number
@@ -12,16 +13,18 @@ interface WeeklyDayTabsProps {
 }
 
 const WeeklyDayTabs: React.FC<WeeklyDayTabsProps> = ({ selectedDay, onSelect }) => {
+    const { t } = useTranslation()
+
     return (
         <TabList as="ul" wrap="wrap">
-            {DAY_LABELS.map((label, index) => (
-                <TabItem key={label} as="li">
+            {AIR_DAY_KEYS.map((key, index) => (
+                <TabItem key={key} as="li">
                     <TabButton
                         type="button"
                         active={selectedDay === index}
                         onClick={() => onSelect(index)}
                     >
-                        {label}
+                        {t(`airDay.${key}`)}
                     </TabButton>
                 </TabItem>
             ))}

@@ -6,7 +6,10 @@ import Flex from '@components/common/Flex'
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 
+import { useTranslation } from 'react-i18next'
+
 const WeeklyAnimePageContainer = () => {
+    const { t } = useTranslation()
     const { data, isLoading } = useAllWeeklyAnimations()
     const [todayIndex, setTodayIndex] = useState(-1)
 
@@ -18,11 +21,10 @@ const WeeklyAnimePageContainer = () => {
         <Flex direction="column" gap="2rem" padding="2.5rem 2rem 4rem">
             <Flex direction="column" gap="0.75rem">
                 <Text sz="lgTl" color={themedPalette.text1} weight={700}>
-                    요일별 신작
+                    {t('weekly.pageTitle')}
                 </Text>
                 <Notice sz="smCt" color={themedPalette.text4}>
-                    * 서비스 원활한 방영 일정이 다를 수 있습니다. 실제 방영
-                    일정은 각 방송국 홈페이지를 확인해 주시기 바랍니다.
+                    {t('weekly.notice')}
                 </Notice>
             </Flex>
 

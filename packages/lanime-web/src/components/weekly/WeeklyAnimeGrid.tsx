@@ -1,14 +1,22 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import AnimeCard from '@components/home/AnimeCard'
-import AnimeCardSkeleton from '@components/home/AnimeCardSkeleton'
+import WeeklyCardSkeleton from '@components/weekly/WeeklyCardSkeleton'
 import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
 import { themedPalette } from '@libs/style/theme'
 import { WeeklyAnimationResponse } from '@libs/apis/animations/type'
+import { useTranslation } from 'react-i18next'
 
-const DAY_LABELS = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-const AIR_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const DAYS = [
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+    'SUNDAY',
+] as const
 const SKELETON_COUNT = 4
 
 interface WeeklyAnimeGridProps {
@@ -18,35 +26,36 @@ interface WeeklyAnimeGridProps {
 }
 
 const WeeklyAnimeGrid: React.FC<WeeklyAnimeGridProps> = ({ data, isLoading, todayIndex }) => {
+    const { t } = useTranslation()
+
     return (
         <DayGrid>
-            {DAY_LABELS.map((label, dayIndex) => {
-                const airDay = AIR_DAYS[dayIndex]
-                const dayData = data?.[airDay] ?? []
+            {DAYS.map((key, dayIndex) => {
+                const dayData = data?.[key] ?? []
                 const isToday = dayIndex === todayIndex
 
                 return (
-                    <DayColumn key={label} direction="column" gap="0.75rem">
+                    <DayColumn key={key} direction="column" gap="0.75rem">
                         <DayHeader align="center" justify="center" isToday={isToday}>
                             <Text
                                 sz="smCt"
                                 color={isToday ? themedPalette.primary1 : themedPalette.text2}
                                 weight={isToday ? 700 : 500}
                             >
-                                {label}
+                                {t(`airDay.${key}`)}
                             </Text>
                         </DayHeader>
 
                         <CardList as="ol" direction="column" gap="1rem">
                             {isLoading
                                 ? Array.from({ length: SKELETON_COUNT }).map((_, i) => (
-                                      <AnimeCardSkeleton key={i} />
+                                      <WeeklyCardSkeleton key={i} />
                                   ))
                                 : dayData.length === 0
                                   ? (
                                       <Flex align="center" justify="center" padding="2rem 0">
                                           <Text sz="smCt" color={themedPalette.text4}>
-                                              없음
+                                              {t('weekly.noData')}
                                           </Text>
                                       </Flex>
                                     )
