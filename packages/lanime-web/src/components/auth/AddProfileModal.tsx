@@ -12,11 +12,13 @@ import { ProfileModalProps } from '@containers/auth/ProfileContainer'
 import { IProfileCreateRequest } from '@libs/apis/auth/type'
 import { toast } from 'sonner'
 import { defaultAvatar } from '@/libs/constants/image'
+import { useTranslation } from 'react-i18next'
 
 const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
     onClose,
     onComplete,
 }) => {
+    const { t } = useTranslation()
     const [nickname, setNickname] = useState('')
     const [isPinEnabled, setIsPinEnabled] = useState(false)
     const [pin, setPin] = useState(['', '', '', ''])
@@ -25,7 +27,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
     const handleSave = () => {
         const fullPin = pin.join('')
         if (isPinEnabled && fullPin.length < 4) {
-            toast.error('PIN 번호 4자리를 모두 입력해주세요.')
+            toast.error(t('auth.pinRequired'))
             return
         }
 
@@ -43,7 +45,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
         <ProfileModalLayout onClose={onClose}>
             <Flex gap="3rem" direction="column" align="center">
                 <Text sz="lgTl" color={themedPalette.text1}>
-                    새 프로필
+                    {t('auth.newProfile')}
                 </Text>
 
                 <ProfileImageUpload
@@ -53,7 +55,7 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
                 />
 
                 <Input
-                    placeholder="프로필 이름"
+                    placeholder={t('auth.profileNamePlaceholder')}
                     value={nickname}
                     count={nickname.length}
                     maxCount={15}
@@ -63,24 +65,16 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
 
                 <Flex direction="column" gap="1rem">
                     <Switch
-                        label="계정 잠금 사용"
+                        label={t('auth.useLock')}
                         checked={isPinEnabled}
                         onChange={setIsPinEnabled}
                         width="300px"
                     />
 
                     {isPinEnabled && (
-                        <Flex
-                            direction="column"
-                            align="center"
-                            margin="1.5rem 0 0 0"
-                        >
-                            <Text
-                                sz="smCt"
-                                color={themedPalette.text3}
-                                margin="0 0 1rem 0"
-                            >
-                                4자리 PIN 번호를 설정하세요
+                        <Flex direction="column" align="center" margin="1.5rem 0 0 0">
+                            <Text sz="smCt" color={themedPalette.text3} margin="0 0 1rem 0">
+                                {t('auth.setPinHint')}
                             </Text>
                             <PinInput value={pin} onChange={setPin} size="sm" />
                         </Flex>
@@ -89,14 +83,10 @@ const AddProfileModal: React.FC<ProfileModalProps<IProfileCreateRequest>> = ({
 
                 <Flex gap="1rem">
                     <Button variant="secondary" onClick={onClose} type="button">
-                        취소
+                        {t('common.cancel')}
                     </Button>
-                    <Button
-                        variant="primary"
-                        onClick={handleSave}
-                        type="button"
-                    >
-                        저장
+                    <Button variant="primary" onClick={handleSave} type="button">
+                        {t('common.save')}
                     </Button>
                 </Flex>
             </Flex>

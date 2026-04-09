@@ -6,6 +6,7 @@ import Flex from '@components/common/Flex'
 import Text from '@components/common/Text'
 import Image from '@components/common/Image'
 import Icon from '@components/common/Icon'
+import { useTranslation } from 'react-i18next'
 
 interface ProfileListProps {
     profiles: IUserProfile[]
@@ -18,6 +19,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
     onProfileSelect,
     onAddProfile,
 }) => {
+    const { t } = useTranslation()
     return (
         <Flex gap="2.5rem">
             {profiles.map((profile) => (
@@ -28,7 +30,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
                     onClick={() => onProfileSelect(profile)}
                 >
                     <AvatarWrapper>
-                        {profile.isOwner && <Badge>대표</Badge>}
+                        {profile.isOwner && <Badge>{t('auth.ownerBadge')}</Badge>}
                         <Image
                             src={profile.avatarUrl || ''}
                             alt={profile.name}
@@ -63,7 +65,7 @@ const ProfileList: React.FC<ProfileListProps> = ({
                         </AddAvatar>
                     </AvatarWrapper>
                     <Text sz="lgCt" color={themedPalette.text2}>
-                        추가
+                        {t('auth.addProfile')}
                     </Text>
                 </UserProfileCard>
             )}

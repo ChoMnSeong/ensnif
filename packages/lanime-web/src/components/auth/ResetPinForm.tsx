@@ -7,6 +7,7 @@ import Flex from '@components/common/Flex'
 import Text from '@components/common/Text'
 import Input from '@components/common/Input'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 interface ResetPinFormProps {
     profileName: string
@@ -19,6 +20,7 @@ const ResetPinForm: React.FC<ResetPinFormProps> = ({
     onSubmit,
     isLoading,
 }) => {
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const [password, setPassword] = useState('')
 
@@ -26,26 +28,26 @@ const ResetPinForm: React.FC<ResetPinFormProps> = ({
         <FormCard direction="column" gap="0.5rem" padding="40px 32px">
             <BackButton as="button" align="center" gap="0.375rem" onClick={() => navigate('/profile')}>
                 <MdArrowBack size={20} color={themedPalette.text2} />
-                <Text sz="smCt" color={themedPalette.text2}>돌아가기</Text>
+                <Text sz="smCt" color={themedPalette.text2}>{t('common.goBack')}</Text>
             </BackButton>
 
             <Text sz="mdCt" color={themedPalette.text1} margin="0.75rem 0 0 0">
-                PIN 초기화
+                {t('auth.resetPin')}
             </Text>
             <Text sz="smCt" color={themedPalette.text3} margin="0.25rem 0 0 0">
-                <b>{profileName}</b> 프로필의 PIN을 초기화합니다.
+                {t('auth.resetPinDesc', { profileName })}
             </Text>
             <Text sz="smCt" color={themedPalette.text3}>
-                계정 비밀번호를 입력하면 PIN이 제거됩니다.
+                {t('auth.resetPinDesc2')}
             </Text>
 
             <Flex width="100%" direction="column" margin="2rem 0 1rem 0">
                 <Input
-                    label="계정 비밀번호"
+                    label={t('auth.accountPassword')}
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    placeholder="비밀번호를 입력해주세요"
+                    placeholder={t('auth.accountPasswordPlaceholder')}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && password) onSubmit(password)
                     }}
@@ -59,7 +61,7 @@ const ResetPinForm: React.FC<ResetPinFormProps> = ({
                 onClick={() => onSubmit(password)}
                 type="button"
             >
-                {isLoading ? '처리 중...' : 'PIN 초기화'}
+                {isLoading ? t('common.processing') : t('auth.resetPin')}
             </Button>
         </FormCard>
     )
@@ -82,8 +84,5 @@ const BackButton = styled(Flex)`
     align-self: flex-start;
     opacity: 0.7;
     transition: opacity 0.15s ease;
-
-    &:hover {
-        opacity: 1;
-    }
+    &:hover { opacity: 1; }
 `

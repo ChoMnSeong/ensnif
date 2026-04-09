@@ -5,6 +5,7 @@ import Flex from '@components/common/Flex'
 import Button from '@components/common/Button'
 import Input from '@components/common/Input'
 import { themedPalette } from '@libs/style/theme'
+import { useTranslation } from 'react-i18next'
 
 interface ButtonConfig {
     text: string
@@ -46,56 +47,35 @@ const SignupForm: React.FC<SignupFormProps> = ({
     onVerifyCode,
     onSignup,
 }) => {
+    const { t } = useTranslation()
+
     return (
         <FormCard direction="column" gap="0.5rem" width="100%" padding="40px 32px">
-            <Text
-                sz="mdCt"
-                color={themedPalette.text1}
-                style={{ fontWeight: 'bold' }}
-            >
-                회원가입
+            <Text sz="mdCt" color={themedPalette.text1} style={{ fontWeight: 'bold' }}>
+                {t('auth.signup')}
             </Text>
 
-            <Flex
-                width="100%"
-                direction="column"
-                margin="2rem 0 2.5rem 0"
-                gap="1.5rem"
-            >
-                <Input
-                    label="이메일"
-                    type="email"
-                    value={email}
-                    readOnly
-                />
+            <Flex width="100%" direction="column" margin="2rem 0 2.5rem 0" gap="1.5rem">
+                <Input label={t('auth.email')} type="email" value={email} readOnly />
 
                 {isCodeSent && !isVerified && (
                     <Flex direction="column" width="100%" gap="8px">
-                        <Flex
-                            width="100%"
-                            justify="space-between"
-                            align="center"
-                        >
+                        <Flex width="100%" justify="space-between" align="center">
                             <Text sz="smCt" color={themedPalette.text4}>
-                                인증번호
+                                {t('auth.verificationCode')}
                             </Text>
-                            <ResendText
-                                sz="smCt"
-                                color={themedPalette.primary2}
-                                onClick={onSendCode}
-                            >
-                                재발송
+                            <ResendText sz="smCt" color={themedPalette.primary2} onClick={onSendCode}>
+                                {t('auth.resend')}
                             </ResendText>
                         </Flex>
                         <Input
                             type="text"
-                            placeholder="5자리 인증번호 입력"
+                            placeholder={t('auth.codePlaceholder')}
                             value={code}
                             maxLength={5}
                             onChange={onCodeChange}
                             onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !buttonConfig.disabled)
-                                    onVerifyCode()
+                                if (e.key === 'Enter' && !buttonConfig.disabled) onVerifyCode()
                             }}
                         />
                     </Flex>
@@ -104,24 +84,20 @@ const SignupForm: React.FC<SignupFormProps> = ({
                 {isVerified && (
                     <FadeInWrapper direction="column" gap="1.5rem" width="100%">
                         <Input
-                            label="비밀번호"
+                            label={t('auth.password')}
                             type="password"
-                            placeholder="영문, 숫자, 특수문자 포함 8자 이상"
+                            placeholder={t('auth.passwordPlaceholder')}
                             value={password}
                             onChange={onPasswordChange}
                         />
                         <Input
-                            label="닉네임"
+                            label={t('auth.nickname')}
                             type="text"
-                            placeholder="2~10자 이내 입력"
+                            placeholder={t('auth.nicknamePlaceholder')}
                             value={nickname}
                             onChange={onNicknameChange}
                             onKeyDown={(e) => {
-                                if (
-                                    e.key === 'Enter' &&
-                                    !buttonConfig.disabled
-                                )
-                                    onSignup()
+                                if (e.key === 'Enter' && !buttonConfig.disabled) onSignup()
                             }}
                         />
                     </FadeInWrapper>
@@ -141,7 +117,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
                 onClick={buttonConfig.onClick}
                 type="button"
             >
-                {buttonConfig.loading ? '처리 중...' : buttonConfig.text}
+                {buttonConfig.loading ? t('common.processing') : buttonConfig.text}
             </Button>
         </FormCard>
     )
@@ -168,13 +144,7 @@ const ResendText = styled(Text)`
 const FadeInWrapper = styled(Flex)`
     animation: fadeIn 0.3s ease-in-out;
     @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-5px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(-5px); }
+        to   { opacity: 1; transform: translateY(0); }
     }
 `

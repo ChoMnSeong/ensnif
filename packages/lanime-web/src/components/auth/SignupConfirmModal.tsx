@@ -4,6 +4,7 @@ import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
 import Button from '@components/common/Button'
 import { themedPalette } from '@libs/style/theme'
+import { useTranslation } from 'react-i18next'
 
 interface SignupConfirmModalProps {
     onClose: () => void
@@ -14,6 +15,8 @@ const SignupConfirmModal: React.FC<SignupConfirmModalProps> = ({
     onClose,
     onConfirm,
 }) => {
+    const { t } = useTranslation()
+
     return (
         <ModalOverlay justify="center" align="center" onClick={onClose}>
             <ModalContent
@@ -27,24 +30,23 @@ const SignupConfirmModal: React.FC<SignupConfirmModalProps> = ({
                     color={themedPalette.text1}
                     style={{ marginBottom: '16px', fontWeight: 'bold' }}
                 >
-                    회원가입 가능한 메일입니다
+                    {t('auth.validEmail')}
                 </Text>
                 <Text
                     sz="smCt"
                     color={themedPalette.text4}
-                    style={{
-                        marginBottom: '32px',
-                        textAlign: 'center',
-                    }}
+                    style={{ marginBottom: '32px', textAlign: 'center' }}
                 >
-                    입력하신 이메일로
-                    <br />
-                    회원가입을 진행하시겠습니까?
+                    {t('auth.confirmSignupDesc').split('\n').map((line, i) => (
+                        <React.Fragment key={i}>{line}{i === 0 && <br />}</React.Fragment>
+                    ))}
                 </Text>
-                <Flex width={'100%'} gap={'12px'}>
-                    <Button variant="secondary" style={{ flex: 1 }} onClick={onClose} type="button">닫기</Button>
+                <Flex width="100%" gap="12px">
+                    <Button variant="secondary" style={{ flex: 1 }} onClick={onClose} type="button">
+                        {t('common.close')}
+                    </Button>
                     <Button variant="primary" style={{ flex: 1 }} onClick={onConfirm} type="button">
-                        회원가입
+                        {t('auth.signup')}
                     </Button>
                 </Flex>
             </ModalContent>

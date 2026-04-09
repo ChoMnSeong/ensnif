@@ -6,6 +6,7 @@ import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
 import { themedPalette } from '@libs/style/theme'
 import { IUserProfile, IProfileCreateRequest } from '@libs/apis/auth/type'
+import { useTranslation } from 'react-i18next'
 
 interface ProfilePresenterProps {
     profiles: IUserProfile[]
@@ -34,11 +35,13 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
     onCloseAddModal,
     onOpenAddModal,
 }) => {
+    const { t } = useTranslation()
+
     if (isLoading) {
         return (
             <Flex height="100%" align="center" justify="center">
                 <Text color={themedPalette.text1} sz="mdCt">
-                    로딩 중...
+                    {t('auth.loadingProfile')}
                 </Text>
             </Flex>
         )
@@ -52,7 +55,7 @@ const ProfilePresenter: React.FC<ProfilePresenterProps> = ({
             padding="4rem 0"
         >
             <Text sz="lgTl" color={themedPalette.text1}>
-                사용할 프로필을 선택해주세요.
+                {t('auth.selectProfile')}
             </Text>
 
             <ProfileList

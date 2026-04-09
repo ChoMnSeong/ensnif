@@ -43,11 +43,25 @@ const ProfileContainer = () => {
                     nickname: profile.name,
                     avatarUrl: profile.avatarUrl,
                     profileId: profile.profileId,
+                    age: profile.age ?? null,
                 }),
             )
+            // 프로필 선택 후 애니메이션 쿼리 무효화
+            queryClient.invalidateQueries({
+                queryKey: ['weeklyAnimationList'],
+            })
+            queryClient.invalidateQueries({
+                queryKey: ['searchAnimations'],
+            })
+            queryClient.invalidateQueries({
+                queryKey: ['animationRankings'],
+            })
+            queryClient.invalidateQueries({
+                queryKey: ['similarAnimations'],
+            })
             navigate('/')
         },
-        [dispatch, navigate],
+        [dispatch, navigate, queryClient],
     )
 
     const handleProfileSelect = useCallback(
@@ -55,7 +69,7 @@ const ProfileContainer = () => {
             setSelectedProfile(profile)
             checkAccess(profile.profileId, {
                 onSuccess: (res) => {
-                    if (res?.passwordRequired) {
+                    if (res?.isPasswordRequired) {
                         setIsPinModalOpen(true)
                     } else if (res?.profileToken) {
                         handleLoginSuccess(profile, res.profileToken)

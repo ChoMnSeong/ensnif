@@ -7,6 +7,7 @@ import Flex from '@components/common/Flex'
 import Text from '@components/common/Text'
 import Input from '@components/common/Input'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 interface ForgotPasswordFormProps {
     onSubmit: (email: string) => void
@@ -17,6 +18,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
     onSubmit,
     isLoading,
 }) => {
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const [email, setEmail] = useState('')
 
@@ -26,22 +28,22 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
         <FormCard direction="column" gap="0.5rem" padding="40px 32px">
             <BackButton as="button" align="center" gap="0.375rem" onClick={() => navigate('/auth/mail')}>
                 <MdArrowBack size={20} color={themedPalette.text2} />
-                <Text sz="smCt" color={themedPalette.text2}>돌아가기</Text>
+                <Text sz="smCt" color={themedPalette.text2}>{t('common.goBack')}</Text>
             </BackButton>
             <Text sz="mdCt" color={themedPalette.text1} margin="0.75rem 0 0 0">
-                비밀번호 찾기
+                {t('auth.forgotPassword')}
             </Text>
             <Text sz="smCt" color={themedPalette.text3} margin="0.5rem 0 0 0">
-                가입한 이메일을 입력하면 재설정 코드를 보내드립니다.
+                {t('auth.forgotPasswordDesc')}
             </Text>
 
             <Flex width="100%" direction="column" margin="2rem 0 1rem 0" gap="1.5rem">
                 <Input
-                    label="이메일"
+                    label={t('auth.email')}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="이메일을 입력해주세요"
+                    placeholder={t('auth.emailPlaceholder')}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && isEmailValid) onSubmit(email)
                     }}
@@ -55,7 +57,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({
                 onClick={() => onSubmit(email)}
                 type="button"
             >
-                {isLoading ? '전송 중...' : '재설정 코드 전송'}
+                {isLoading ? t('auth.sending') : t('auth.sendResetCode')}
             </Button>
         </FormCard>
     )
@@ -78,8 +80,5 @@ const BackButton = styled(Flex)`
     align-self: flex-start;
     opacity: 0.7;
     transition: opacity 0.15s ease;
-
-    &:hover {
-        opacity: 1;
-    }
+    &:hover { opacity: 1; }
 `

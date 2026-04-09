@@ -6,6 +6,7 @@ import Flex from '@components/common/Flex'
 import Button from '@components/common/Button'
 import Input from '@components/common/Input'
 import { themedPalette } from '@libs/style/theme'
+import { useTranslation } from 'react-i18next'
 
 interface MailFormProps {
     mail: string
@@ -31,6 +32,7 @@ const MailForm: React.FC<MailFormProps> = ({
     isLoading,
 }) => {
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') onSubmit()
@@ -39,7 +41,7 @@ const MailForm: React.FC<MailFormProps> = ({
     return (
         <FormCard direction="column" gap="0.5rem" padding="40px 32px">
             <Text sz="mdCt" color={themedPalette.text1}>
-                이메일로 시작
+                {t('auth.emailStart')}
             </Text>
 
             <Flex
@@ -49,21 +51,21 @@ const MailForm: React.FC<MailFormProps> = ({
                 gap="1.5rem"
             >
                 <Input
-                    label="이메일"
+                    label={t('auth.emailLabel')}
                     type="email"
                     value={mail}
                     onChange={onMailChange}
-                    placeholder="이메일을 입력해주세요"
+                    placeholder={t('auth.emailPlaceholderLogin')}
                 />
 
                 {isRegistered && (
                     <Input
-                        label="비밀번호"
+                        label={t('auth.passwordLabel')}
                         type="password"
                         value={password || ''}
                         onChange={onPasswordChange}
                         onKeyDown={handleKeyDown}
-                        placeholder="비밀번호를 입력해주세요"
+                        placeholder={t('auth.passwordPlaceholderLogin')}
                     />
                 )}
 
@@ -77,7 +79,7 @@ const MailForm: React.FC<MailFormProps> = ({
                 onClick={() => navigate('/auth/forgot-password')}
                 style={{ opacity: 0.7, padding: 0 }}
             >
-                비밀번호를 잊으셨나요?
+                {t('auth.forgotPasswordLink')}
             </Button>
 
             <Button
@@ -88,7 +90,7 @@ const MailForm: React.FC<MailFormProps> = ({
                 type="button"
                 style={{ marginTop: '1rem' }}
             >
-                {isLoading ? '처리 중...' : '다음'}
+                {isLoading ? t('common.processing') : t('auth.next')}
             </Button>
         </FormCard>
     )

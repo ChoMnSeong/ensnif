@@ -6,6 +6,7 @@ import Button from '@components/common/Button'
 import PinInput from '@components/common/PinInput'
 import ProfileModalLayout from '@components/auth/ProfileModalLayout'
 import { ProfileModalProps } from '@containers/auth/ProfileContainer'
+import { useTranslation } from 'react-i18next'
 
 interface PinInputModalProps extends ProfileModalProps<string> {
     onForgotPin: () => void
@@ -16,21 +17,17 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
     onComplete,
     onForgotPin,
 }) => {
+    const { t } = useTranslation()
     const [pins, setPins] = useState(['', '', '', ''])
 
     return (
         <ProfileModalLayout onClose={onClose}>
             <Flex direction="column" align="center">
                 <Text sz="lgTl" color={themedPalette.text1} margin="0 0 4rem 0">
-                    프로필 비밀번호를 입력해주세요
+                    {t('auth.enterPin')}
                 </Text>
 
-                <PinInput
-                    value={pins}
-                    onChange={setPins}
-                    onComplete={onComplete}
-                    size="lg"
-                />
+                <PinInput value={pins} onChange={setPins} onComplete={onComplete} size="lg" />
 
                 <Button
                     variant="text"
@@ -39,7 +36,7 @@ const PinInputModal: React.FC<PinInputModalProps> = ({
                     style={{ marginTop: '4rem' }}
                     onClick={onForgotPin}
                 >
-                    프로필 비밀번호를 잊으셨나요? 〉
+                    {t('auth.forgotPin')}
                 </Button>
             </Flex>
         </ProfileModalLayout>
