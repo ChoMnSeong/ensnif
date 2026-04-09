@@ -1,5 +1,6 @@
 import { useRef, useCallback, useState, useEffect } from 'react'
 import styled from '@emotion/styled'
+import { useTranslation } from 'react-i18next'
 import VideoPlayer from '@components/player/VideoPlayer'
 import PlayerControls from '@components/player/controls/PlayerControls'
 import ProgressBar from '@components/player/controls/ProgressBar'
@@ -10,17 +11,21 @@ import { useVideoProgress } from '@hooks/player/useVideoProgress'
 import { useVideoControls } from '@hooks/player/useVideoControls'
 import { useVolumeControl } from '@hooks/player/useVolumeControl'
 import { useFullscreen } from '@hooks/player/useFullscreen'
+import { useWatchHistory } from '@hooks/player/useWatchHistory'
 import customCookie from '@libs/customCookie'
 
 interface VideoPlayerContainerProps {
     src: string
     poster?: string
+    episodeId: string
+    initialTime?: number
 }
 
-const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src, poster }) => {
+const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src, poster, episodeId, initialTime }) => {
     const videoRef = useRef<HTMLVideoElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const hasProfileToken = !!customCookie.get.profileToken()
+    const { t } = useTranslation()
 
     useShakaPlayer(videoRef, hasProfileToken ? src : '')
 
@@ -53,12 +58,18 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src, poster
 
     const { toggleFullscreen } = useFullscreen(containerRef)
 
+    useWatchHistory(videoRef, episodeId, isPlaying)
+
     const handleLoadedMetadata = useCallback(() => {
         onLoadedMetadata()
         if (hasProfileToken) {
+            if (initialTime && initialTime > 0) {
+                const video = videoRef.current
+                if (video) video.currentTime = initialTime
+            }
             autoPlay(muteSync)
         }
-    }, [onLoadedMetadata, autoPlay, muteSync, hasProfileToken])
+    }, [onLoadedMetadata, autoPlay, muteSync, hasProfileToken, initialTime, videoRef])
 
     const [controlsVisible, setControlsVisible] = useState(true)
     const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -98,7 +109,7 @@ const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({ src, poster
             <PosterWrapper>
                 <PosterImage src={poster} alt="poster" />
                 <LoginOverlay>
-                    <span>로그인이 필요한 서비스입니다.</span>
+                    <span>{t('player.loginRequired')}</span>
                 </LoginOverlay>
             </PosterWrapper>
         )

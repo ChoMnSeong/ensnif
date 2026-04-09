@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { RootState } from '@stores/index'
 import CommentInput from '@components/player/CommentInput'
 import CommentWithReplies from '@components/player/CommentWithReplies'
@@ -21,6 +22,7 @@ const PlayerCommentContainer: React.FC<PlayerCommentContainerProps> = ({
     episodeId,
 }) => {
     const profile = useSelector((state: RootState) => state.userProfile)
+    const { t } = useTranslation()
     const [input, setInput] = useState('')
 
     const {
@@ -69,7 +71,7 @@ const PlayerCommentContainer: React.FC<PlayerCommentContainerProps> = ({
             )}
 
             <Flex direction="column" gap="1.25rem">
-                <CommentTitle>댓글 {totalCount}개</CommentTitle>
+                <CommentTitle>{t('comment.title', { count: totalCount })}</CommentTitle>
                 <Flex direction="column" gap="1.5rem">
                     {comments.map((comment) => (
                         <CommentWithReplies
@@ -90,7 +92,7 @@ const PlayerCommentContainer: React.FC<PlayerCommentContainerProps> = ({
                         onClick={() => fetchNextPage()}
                         disabled={isFetchingNextPage}
                     >
-                        {isFetchingNextPage ? '불러오는 중...' : '댓글 더 보기'}
+                        {isFetchingNextPage ? t('comment.loading') : t('comment.loadMore')}
                     </LoadMoreBtn>
                 )}
             </Flex>
