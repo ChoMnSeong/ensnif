@@ -12,6 +12,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@stores/index'
 import { setUserProfile } from '@stores/auth/reducer'
 import { useMyProfileQuery } from '@libs/apis/auth'
+import { useQueryClient } from '@tanstack/react-query'
+import i18n from '@libs/i18n'
 
 const PlayerPage = loadable(() => import('./pages/PlayerPage'))
 const MailPage = loadable(() => import('./pages/MailPage'))
@@ -21,12 +23,15 @@ const SettingsPage = loadable(() => import('./pages/SettingsPage'))
 const ForgotPasswordPage = loadable(() => import('./pages/ForgotPasswordPage'))
 const ResetPinPage = loadable(() => import('./pages/ResetPinPage'))
 const WeeklyPage = loadable(() => import('./pages/WeeklyPage'))
+const SearchPage = loadable(() => import('./pages/SearchPage'))
+const LibraryPage = loadable(() => import('./pages/LibraryPage'))
 const AnimeEpisodeModal = loadable(() => import('@containers/home/AnimeEpisodeModal'))
 
 const App: React.FC = () => {
     const navigate = useNavigate()
     const location = useLocation()
     const dispatch = useDispatch()
+    const queryClient = useQueryClient()
     const profileId = useSelector(
         (state: RootState) => state.userProfile.profileId,
     )
@@ -44,9 +49,23 @@ const App: React.FC = () => {
                 nickname: myProfile.name,
                 avatarUrl: myProfile.avatarUrl,
                 profileId: myProfile.profileId,
+                age: myProfile.age ?? null,
             }),
         )
-    }, [myProfile, dispatch])
+        // userAge 변경 시 애니메이션 쿼리 무효화
+        queryClient.invalidateQueries({
+            queryKey: ['weeklyAnimationList'],
+        })
+        queryClient.invalidateQueries({
+            queryKey: ['searchAnimations'],
+        })
+        queryClient.invalidateQueries({
+            queryKey: ['animationRankings'],
+        })
+        queryClient.invalidateQueries({
+            queryKey: ['similarAnimations'],
+        })
+    }, [myProfile, dispatch, queryClient])
 
     useEffect(() => {
         const hasAccessToken = !!customCookie.get.accessToken()
@@ -58,6 +77,18 @@ const App: React.FC = () => {
         }
     }, [navigate, location.pathname, hasProfileToken])
 
+    useEffect(() => {
+        const handleLanguageChange = () => {
+            queryClient.invalidateQueries()
+        }
+
+        i18n.on('languageChanged', handleLanguageChange)
+
+        return () => {
+            i18n.off('languageChanged', handleLanguageChange)
+        }
+    }, [queryClient])
+
     return (
         <>
             <Global styles={GlobalStyles} />
@@ -65,7 +96,9 @@ const App: React.FC = () => {
             <Routes>
                 <Route element={<DefaultLayout />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/search" element={<SearchPage />} />
                     <Route path="/weekly" element={<WeeklyPage />} />
+                    <Route path="/library" element={<LibraryPage />} />
                     <Route
                         path="/player/:animeId/:videoId"
                         element={<PlayerPage />}

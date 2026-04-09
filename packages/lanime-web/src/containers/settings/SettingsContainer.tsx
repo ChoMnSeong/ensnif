@@ -20,6 +20,7 @@ import {
 } from '@libs/apis/auth'
 import useTheme from '@libs/hooks/useTheme'
 import customCookie from '@libs/customCookie'
+import { useTranslation } from 'react-i18next'
 import Button from '@components/common/Button'
 import Input from '@components/common/Input'
 import ProfileImageUpload from '@components/common/ProfileImageUpload'
@@ -37,11 +38,12 @@ const SettingsContainer: React.FC = () => {
     const queryClient = useQueryClient()
     const profile = useSelector((state: RootState) => state.userProfile)
     const { themePreference, setThemePreference } = useTheme()
+    const { t } = useTranslation()
 
     useEffect(() => {
         queryClient.invalidateQueries({ queryKey: ['myProfile'] })
         queryClient.invalidateQueries({ queryKey: ['profiles'] })
-    }, [])
+    }, [queryClient])
 
     const { data: myProfile } = useMyProfileQuery()
     const isOwner = myProfile?.isOwner ?? false
@@ -49,6 +51,7 @@ const SettingsContainer: React.FC = () => {
     const { data: profiles = [] } = useProfilesQuery()
 
     const [nickname, setNickname] = useState(profile.nickname ?? '')
+    const [age, setAge] = useState(profile.age?.toString() ?? '')
     const [pin, setPin] = useState(['', '', '', ''])
     const [avatarUrl, setAvatarUrl] = useState(profile.avatarUrl ?? '')
 
@@ -69,16 +72,23 @@ const SettingsContainer: React.FC = () => {
         if (!myProfile) return
         setNickname(myProfile.name)
         setAvatarUrl(myProfile.avatarUrl)
+        setAge(myProfile.age?.toString() ?? '')
     }, [myProfile])
 
     const handleSave = () => {
         const fullPin = pin.join('')
         if (fullPin.length > 0 && fullPin.length < 4) {
-            toast.error('PIN 번호 4자리를 모두 입력해주세요.')
+            toast.error(t('auth.pinRequired'))
             return
         }
         if (!nickname.trim()) {
-            toast.error('닉네임을 입력해주세요.')
+            toast.error(t('settings.nicknamePlaceholder'))
+            return
+        }
+
+        const parsedAge = age ? parseInt(age, 10) : undefined
+        if (age && (isNaN(parsedAge!) || parsedAge! < 1 || parsedAge! > 150)) {
+            toast.error(t('auth.profileAgePlaceholder'))
             return
         }
 
@@ -86,6 +96,7 @@ const SettingsContainer: React.FC = () => {
             {
                 name: nickname,
                 avatarUrl,
+                ...(parsedAge !== undefined ? { age: parsedAge } : {}),
                 ...(fullPin.length === 4 ? { pin: fullPin } : {}),
             },
             {
@@ -95,13 +106,27 @@ const SettingsContainer: React.FC = () => {
                             nickname,
                             avatarUrl,
                             profileId: profile.profileId,
+                            age: parsedAge ?? null,
                         }),
                     )
                     queryClient.invalidateQueries({ queryKey: ['myProfile'] })
                     queryClient.invalidateQueries({ queryKey: ['profiles'] })
-                    toast.success('설정이 저장되었습니다.')
+                    // age 변경 시 애니메이션 쿼리 무효화
+                    queryClient.invalidateQueries({
+                        queryKey: ['weeklyAnimationList'],
+                    })
+                    queryClient.invalidateQueries({
+                        queryKey: ['searchAnimations'],
+                    })
+                    queryClient.invalidateQueries({
+                        queryKey: ['animationRankings'],
+                    })
+                    queryClient.invalidateQueries({
+                        queryKey: ['similarAnimations'],
+                    })
+                    toast.success(t('settings.saveSuccess'))
                 },
-                onError: () => toast.error('저장에 실패했습니다.'),
+                onError: () => toast.error(t('settings.saveFailed')),
             },
         )
     }
@@ -112,9 +137,9 @@ const SettingsContainer: React.FC = () => {
             {
                 onSuccess: () => {
                     setPin(['', '', '', ''])
-                    toast.success('PIN이 삭제되었습니다.')
+                    toast.success(t('settings.pinDeleteSuccess'))
                 },
-                onError: () => toast.error('PIN 삭제에 실패했습니다.'),
+                onError: () => toast.error(t('settings.pinDeleteFailed')),
             },
         )
     }
@@ -123,9 +148,9 @@ const SettingsContainer: React.FC = () => {
         deleteProfile(profileId, {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['profiles'] })
-                toast.success('프로필이 삭제되었습니다.')
+                toast.success(t('settings.profileDeleteSuccess'))
             },
-            onError: () => toast.error('프로필 삭제에 실패했습니다.'),
+            onError: () => toast.error(t('settings.profileDeleteFailed')),
         })
     }
 
@@ -142,14 +167,14 @@ const SettingsContainer: React.FC = () => {
                         profileId: null,
                     }),
                 )
-                toast.success('계정이 삭제되었습니다.')
+                toast.success(t('settings.accountDeleteSuccess'))
                 navigate('/auth/mail')
             },
             onError: (err) => {
                 const message = axios.isAxiosError(err)
                     ? err.response?.data?.message
                     : undefined
-                toast.error(message || '계정 삭제에 실패했습니다.')
+                toast.error(message || t('settings.accountDeleteFailed'))
             },
         })
     }
@@ -158,12 +183,12 @@ const SettingsContainer: React.FC = () => {
         sendEmailVerification(
             { email },
             {
-                onSuccess: () => toast.success('인증 코드가 전송되었습니다.'),
+                onSuccess: () => toast.success(t('settings.emailCodeSent')),
                 onError: (err) => {
                     const message = axios.isAxiosError(err)
                         ? err.response?.data?.message
                         : undefined
-                    toast.error(message || '인증 코드 전송에 실패했습니다.')
+                    toast.error(message || t('settings.emailCodeFailed'))
                 },
             },
         )
@@ -173,12 +198,12 @@ const SettingsContainer: React.FC = () => {
         changeEmail(
             { newEmail, verificationCode },
             {
-                onSuccess: () => toast.success('이메일이 변경되었습니다.'),
+                onSuccess: () => toast.success(t('settings.emailChanged')),
                 onError: (err) => {
                     const message = axios.isAxiosError(err)
                         ? err.response?.data?.message
                         : undefined
-                    toast.error(message || '이메일 변경에 실패했습니다.')
+                    toast.error(message || t('settings.emailChangeFailed'))
                 },
             },
         )
@@ -191,12 +216,12 @@ const SettingsContainer: React.FC = () => {
         changePassword(
             { currentPassword, newPassword },
             {
-                onSuccess: () => toast.success('비밀번호가 변경되었습니다.'),
+                onSuccess: () => toast.success(t('settings.passwordChanged')),
                 onError: (err) => {
                     const message = axios.isAxiosError(err)
                         ? err.response?.data?.message
                         : undefined
-                    toast.error(message || '비밀번호 변경에 실패했습니다.')
+                    toast.error(message || t('settings.passwordChangeFailed'))
                 },
             },
         )
@@ -214,13 +239,13 @@ const SettingsContainer: React.FC = () => {
                 width="100%"
                 style={{ maxWidth: '600px', margin: '0 auto' }}
             >
-                <PageTitle>설정</PageTitle>
+                <PageTitle>{t('settings.title')}</PageTitle>
 
                 <Flex gap="2.5rem" align="stretch">
-                    <CategoryLabel>프로필 설정</CategoryLabel>
+                    <CategoryLabel>{t('settings.profileSettings')}</CategoryLabel>
                     <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
                         <Flex direction="column" gap="1rem">
-                            <SectionTitle>프로필 이미지</SectionTitle>
+                            <SectionTitle>{t('settings.profileImage')}</SectionTitle>
                             <ProfileImageUpload
                                 avatarUrl={avatarUrl}
                                 onChange={setAvatarUrl}
@@ -229,15 +254,32 @@ const SettingsContainer: React.FC = () => {
                         </Flex>
                         <Divider />
                         <Flex direction="column" gap="1rem">
-                            <SectionTitle>닉네임</SectionTitle>
+                            <SectionTitle>{t('settings.nickname')}</SectionTitle>
                             <Input
-                                placeholder="닉네임"
+                                placeholder={t('settings.nicknamePlaceholder')}
                                 value={nickname}
                                 count={nickname.length}
                                 maxCount={15}
                                 onChange={(e) =>
                                     setNickname(e.target.value.slice(0, 15))
                                 }
+                            />
+                        </Flex>
+                        <Divider />
+                        <Flex direction="column" gap="1rem">
+                            <SectionTitle>{t('auth.profileAgePlaceholder')}</SectionTitle>
+                            <Input
+                                placeholder={t('auth.profileAgePlaceholder')}
+                                type="number"
+                                min="1"
+                                max="150"
+                                value={age}
+                                onChange={(e) => {
+                                    const value = e.target.value
+                                    if (value === '' || /^\d+$/.test(value)) {
+                                        setAge(value)
+                                    }
+                                }}
                             />
                         </Flex>
                         <Divider />
@@ -260,7 +302,7 @@ const SettingsContainer: React.FC = () => {
                                 onClick={handleSave}
                                 disabled={isUpdating}
                             >
-                                저장
+                                {t('common.save')}
                             </Button>
                         </Flex>
                     </Flex>
@@ -271,7 +313,7 @@ const SettingsContainer: React.FC = () => {
                         <GroupDivider />
 
                         <Flex gap="2.5rem" align="stretch">
-                            <CategoryLabel>계정 보안</CategoryLabel>
+                            <CategoryLabel>{t('settings.accountSecurity')}</CategoryLabel>
                             <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
                                 <SettingsEmailSection
                                     onSendCode={handleSendEmailCode}
@@ -290,7 +332,7 @@ const SettingsContainer: React.FC = () => {
                         <GroupDivider />
 
                         <Flex gap="2.5rem" align="stretch">
-                            <CategoryLabel danger>위험 구역</CategoryLabel>
+                            <CategoryLabel danger>{t('settings.dangerZone')}</CategoryLabel>
                             <Flex flex={1} direction="column" style={{ minWidth: 0 }}>
                                 <SettingsAccountSection
                                     onDelete={handleDeleteAccount}

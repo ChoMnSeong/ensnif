@@ -3,7 +3,6 @@ import styled from '@emotion/styled'
 import Text from '@components/common/Text'
 import { themedPalette } from '@libs/style/theme'
 import Flex from '@components/common/Flex'
-import { keyframes } from '@emotion/react'
 
 interface AnimeTrackLayoutProps {
     children: React.ReactNode
@@ -17,7 +16,7 @@ const AnimeTrackLayout: React.FC<AnimeTrackLayoutProps> = ({
     option,
 }) => {
     return (
-        <AnimeTrackWrapper direction="column" align="flex-start" width="100%">
+        <AnimeTrackWrapper direction="column" width="100%">
             <AnimeHeadBlock>
                 <AnimeTitleBlock>
                     <Text sz={'mdTl'} color={themedPalette.text1}>
@@ -26,7 +25,7 @@ const AnimeTrackLayout: React.FC<AnimeTrackLayoutProps> = ({
                 </AnimeTitleBlock>
                 {option}
             </AnimeHeadBlock>
-            <AnimeTrackBlock justify="flex-start" wrap="nowrap">
+            <AnimeTrackBlock justify="flex-start" wrap="nowrap" width="100%">
                 {children}
             </AnimeTrackBlock>
         </AnimeTrackWrapper>
@@ -34,32 +33,6 @@ const AnimeTrackLayout: React.FC<AnimeTrackLayoutProps> = ({
 }
 
 export default AnimeTrackLayout
-
-const fadeIn = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`
-
-const AnimeTrackMoveButton = styled(Flex)<{ isPrev?: boolean }>`
-    opacity: 0;
-    transition: opacity 250ms ease-in-out;
-    z-index: 4;
-    position: absolute;
-    top: 0;
-    height: calc(var(--card-w) * 0.557047);
-    width: 2.5em;
-    background-color: rgba(0, 0, 0, 0.45);
-    border: none;
-    font-size: inherit;
-    cursor: pointer;
-
-    ${({ isPrev }) => (isPrev ? 'left: 0;' : 'right: 0;')}
-
-    &:hover {
-        animation: ${fadeIn} 250ms ease-in;
-        opacity: 1;
-    }
-`
 
 const AnimeTrackWrapper = styled(Flex)`
     --card-w: 18.625em;
@@ -87,15 +60,8 @@ const AnimeTitleBlock = styled.div`
     padding-bottom: 1.5em;
 `
 
-const AnimeTrackBlock = styled(Flex)<{ state: number }>`
+const AnimeTrackBlock = styled(Flex)`
     flex-wrap: nowrap;
     min-height: calc(var(--card-w) * 0.75);
     overflow-x: visible;
-    transform: ${({ state }) =>
-        `translate3d(calc(${state} * -2 * var(--card-w)), 0px, 0px)`};
-    transition: transform 300ms ease-in-out;
-
-    @media (max-width: 767px) {
-        padding: 0 1em;
-    }
 `

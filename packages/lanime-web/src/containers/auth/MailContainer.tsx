@@ -4,10 +4,12 @@ import { useCheckEmailMutation, useSigninMutation } from '@libs/apis/auth'
 import MailForm from '@components/auth/MailForm'
 import SignupConfirmModal from '@components/auth/SignupConfirmModal'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 const MailContainer = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const [mail, setMail] = useState(location.state?.mail || '')
     const [password, setPassword] = useState('')
@@ -33,17 +35,17 @@ const MailContainer = () => {
             {
                 onSuccess: (data) => {
                     setError('')
-                    setIsRegistered(data?.registered || false)
+                    setIsRegistered(data?.isRegistered || false)
                 },
                 onError: (err) => {
                     const message = axios.isAxiosError(err)
                         ? err.response?.data?.message
-                        : '오류가 발생했습니다'
-                    setError(message || '서버 통신 오류')
+                        : t('auth.unknownError')
+                    setError(message || t('auth.serverError'))
                 },
             },
         )
-    }, [mail, isEmailValid, checkEmail])
+    }, [mail, isEmailValid, checkEmail, t])
 
     const handleSubmit = () => {
         if (isRegistered) {
@@ -52,7 +54,7 @@ const MailContainer = () => {
                 {
                     onSuccess: () => navigate('/profile'),
                     onError: () =>
-                        setError('로그인 실패. 비밀번호를 확인해주세요.'),
+                        setError(t('auth.loginFailed')),
                 },
             )
         } else {
