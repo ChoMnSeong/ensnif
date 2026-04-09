@@ -5,6 +5,7 @@ import Flex from '@components/common/Flex'
 import Textarea from '@components/common/Textarea'
 import Button from '@components/common/Button'
 import AnimationStarSelector from '@components/home/AnimationStarSelector'
+import { useTranslation } from 'react-i18next'
 
 interface AnimationReviewWriteProps {
     onCreate: (rating: number, comment: string) => void
@@ -17,6 +18,7 @@ const AnimationReviewWrite: React.FC<AnimationReviewWriteProps> = ({
     onCreate,
     isPending,
 }) => {
+    const { t } = useTranslation()
     const [hoverRating, setHoverRating] = useState(0)
     const [selectedRating, setSelectedRating] = useState(0)
     const [comment, setComment] = useState('')
@@ -30,14 +32,8 @@ const AnimationReviewWrite: React.FC<AnimationReviewWriteProps> = ({
     }
 
     return (
-        <WriteSection
-            direction="column"
-            gap="0.75rem"
-            padding="1.25rem 0 0 0"
-            margin="0 0 1.5rem 0"
-            width="100%"
-        >
-            <SectionTitle>리뷰 작성</SectionTitle>
+        <WriteSection direction="column" gap="0.75rem" padding="1.25rem 0 0 0" margin="0 0 1.5rem 0" width="100%">
+            <SectionTitle>{t('review.write')}</SectionTitle>
             <AnimationStarSelector
                 rating={selectedRating}
                 hoverRating={hoverRating}
@@ -45,7 +41,7 @@ const AnimationReviewWrite: React.FC<AnimationReviewWriteProps> = ({
                 onHoverChange={setHoverRating}
             />
             <Textarea
-                placeholder="이 작품에 대한 리뷰를 남겨주세요."
+                placeholder={t('review.placeholder')}
                 rows={4}
                 value={comment}
                 onChange={(e) => setComment(e.target.value.slice(0, MAX_COMMENT))}
@@ -59,7 +55,7 @@ const AnimationReviewWrite: React.FC<AnimationReviewWriteProps> = ({
                     disabled={selectedRating === 0 || isPending}
                     onClick={handleSubmit}
                 >
-                    {isPending ? '등록 중...' : '리뷰 등록'}
+                    {isPending ? t('review.submitting') : t('review.submit')}
                 </Button>
             </Flex>
         </WriteSection>

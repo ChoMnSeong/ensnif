@@ -76,11 +76,11 @@ const SlideBlock = styled.div<{
     isLoading: boolean
 }>`
     outline: none;
-    width: 100vw;
+    width: 100%;
     height: 100%;
     float: left;
     position: relative;
-    left: ${(props) => `${props.index * -100}vw`};
+    left: ${(props) => `${props.index * -100}%`};
     opacity: ${(props) => (props.index === props.now ? 1 : 0)};
     z-index: ${(props) => (props.index === props.now ? -1 : '')};
     transition: ${(props) =>
@@ -135,3 +135,4 @@ const LogoImg = styled.img`
     object-fit: cover;
     margin-top: 0.75em;
 `
+

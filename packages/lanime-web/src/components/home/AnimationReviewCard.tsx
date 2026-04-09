@@ -9,6 +9,7 @@ import Icon from '@components/common/Icon'
 import Button from '@components/common/Button'
 import Textarea from '@components/common/Textarea'
 import AnimationStarSelector from '@components/home/AnimationStarSelector'
+import { useTranslation } from 'react-i18next'
 
 interface AnimationReviewCardProps {
     review: Review
@@ -27,6 +28,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
     onUpdate,
     isUpdating,
 }) => {
+    const { t } = useTranslation()
     const [isEditing, setIsEditing] = useState(false)
     const [editRating, setEditRating] = useState(0)
     const [editHoverRating, setEditHoverRating] = useState(0)
@@ -87,7 +89,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                     <TimeText margin="0 0 0 0.5rem">
                         {review.updateAt && review.updateAt !== review.createdAt ? (
                             <Flex align="center" gap="0.3rem">
-                                <UpdatedBadge>수정됨</UpdatedBadge>
+                                <UpdatedBadge>{t('review.updated')}</UpdatedBadge>
                                 {formattedDate(review.updateAt)}
                             </Flex>
                         ) : (
@@ -98,14 +100,8 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
 
                 <Flex align="center" gap="0.5rem">
                     <Flex align="center" gap="0.5rem">
-                        <Image
-                            src={avatarSrc}
-                            alt={review.profileName}
-                            width="30px"
-                            height="30px"
-                            borderRadius="50%"
-                        />
-                        <Nickname>{review.profileName || '익명'}</Nickname>
+                        <Image src={avatarSrc} alt={review.profileName} width="30px" height="30px" borderRadius="50%" />
+                        <Nickname>{review.profileName || t('review.anonymous')}</Nickname>
                     </Flex>
                     {isOwn && (
                         <MenuWrap ref={menuRef}>
@@ -120,13 +116,8 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                             </MenuTrigger>
                             {menuOpen && (
                                 <MenuDropdown direction="column">
-                                    <MenuItem
-                                        as="button"
-                                        width="100%"
-                                        padding="0.6rem 1rem"
-                                        onClick={handleEditStart}
-                                    >
-                                        수정
+                                    <MenuItem as="button" width="100%" padding="0.6rem 1rem" onClick={handleEditStart}>
+                                        {t('common.edit')}
                                     </MenuItem>
                                     <MenuItem
                                         as="button"
@@ -138,7 +129,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                                             setMenuOpen(false)
                                         }}
                                     >
-                                        삭제
+                                        {t('common.delete')}
                                     </MenuItem>
                                 </MenuDropdown>
                             )}
@@ -156,7 +147,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                         onHoverChange={setEditHoverRating}
                     />
                     <Textarea
-                        placeholder="이 작품에 대한 리뷰를 남겨주세요."
+                        placeholder={t('review.placeholder')}
                         rows={3}
                         value={editComment}
                         onChange={(e) => setEditComment(e.target.value.slice(0, MAX_COMMENT))}
@@ -165,7 +156,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                     />
                     <Flex justify="flex-end" gap="0.5rem">
                         <Button variant="secondary" size="sm" onClick={handleEditCancel}>
-                            취소
+                            {t('common.cancel')}
                         </Button>
                         <Button
                             variant="primary"
@@ -173,7 +164,7 @@ const AnimationReviewCard: React.FC<AnimationReviewCardProps> = ({
                             disabled={editRating === 0 || isUpdating}
                             onClick={handleEditSubmit}
                         >
-                            {isUpdating ? '수정 중...' : '수정 완료'}
+                            {isUpdating ? t('review.editing') : t('review.editDone')}
                         </Button>
                     </Flex>
                 </Flex>
@@ -243,9 +234,7 @@ const MenuTrigger = styled(Flex)`
     border: none;
     cursor: pointer;
     border-radius: 50%;
-    &:hover {
-        background: ${themedPalette.bg_element3};
-    }
+    &:hover { background: ${themedPalette.bg_element3}; }
 `
 
 const MenuDropdown = styled(Flex)`
@@ -269,7 +258,5 @@ const MenuItem = styled(Flex)<{ danger?: boolean }>`
     font-weight: 500;
     color: ${({ danger }) => (danger ? themedPalette.destructive1 : themedPalette.text1)};
     cursor: pointer;
-    &:hover {
-        background: ${themedPalette.bg_element3};
-    }
+    &:hover { background: ${themedPalette.bg_element3}; }
 `

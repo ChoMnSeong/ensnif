@@ -50,7 +50,7 @@ const SlideLayout: React.FC<SlideLayoutProps> = ({
 export default SlideLayout
 
 const SlideArrowButton = styled(Flex)<{ disabled: boolean; isPrev?: boolean }>`
-    z-index: 2;
+    z-index: 20;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -64,12 +64,12 @@ const SlideArrowButton = styled(Flex)<{ disabled: boolean; isPrev?: boolean }>`
     ${({ isPrev }) => (isPrev ? 'left: 0;' : 'right: 0;')}
 
     &:hover {
-        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.65);
     }
 `
 
 const ContentContainer = styled.div`
-    width: 100vw;
+    width: 100%;
     overflow: hidden;
     height: 100%;
     position: relative;
@@ -80,4 +80,8 @@ const Container = styled.div`
     display: block;
     font-size: calc(16vw / (1920 + 16) * 100);
     height: 51.375em;
+
+    &:hover ${SlideArrowButton} {
+        opacity: 1;
+    }
 `

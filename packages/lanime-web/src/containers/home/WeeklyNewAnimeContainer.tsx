@@ -1,19 +1,21 @@
 import WeeklyNewAnimeTag from '@components/home/WeeklyNewAnimeTag'
 import AnimeCardTrack from '@components/home/AnimeCardTrack'
+import { useTranslation } from 'react-i18next'
 import AnimeTrackLayout from '@components/home/AnimeTrackLayout'
 import AnimeCardTrackContainer from '@containers/home/AnimeCardTrackContainer'
 import { useWeeklyAnimationList } from '@libs/apis/animations'
 import { useState } from 'react'
 
 const WeeklyNewAnimeContainer = () => {
+    const { t } = useTranslation()
     const airDays = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
+        'MONDAY',
+        'TUESDAY',
+        'WEDNESDAY',
+        'THURSDAY',
+        'FRIDAY',
+        'SATURDAY',
+        'SUNDAY',
     ]
 
     const [currentDay, setCurrentDay] = useState<number>(new Date().getDay() || 7)
@@ -28,7 +30,7 @@ const WeeklyNewAnimeContainer = () => {
 
     return (
         <AnimeTrackLayout
-            title={'요일별 신작 애니'}
+            title={t('home.weeklyAnime')}
             option={
                 <WeeklyNewAnimeTag
                     currentDay={currentDay}
@@ -37,7 +39,7 @@ const WeeklyNewAnimeContainer = () => {
             }
         >
             <AnimeCardTrackContainer
-                length={Math.floor((data?.length || 1) / 5)}
+                length={data?.length || 0}
             >
                 <AnimeCardTrack
                     isLoading={isLoading}

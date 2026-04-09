@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Image from '@components/common/Image'
 import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
@@ -34,6 +35,7 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
     handleEpisodeClick,
 }) => {
     const navigate = useNavigate()
+    const { t } = useTranslation()
 
     const handleClick = () => {
         localStorage.setItem('hasInteracted', 'true')
@@ -55,7 +57,7 @@ const AnimeEpisodeCard: React.FC<AnimeEpisodeCardProps> = ({
             <Content flex={1} direction="column" justify="space-between" gap="0.75rem" padding="0 1rem">
                 <Flex direction="column" gap="0.25rem">
                     <EpisodeTitle sz={'smTl'} color={themedPalette.text1}>
-                        제{episodeNumber}화 {title}
+                        {t('library.episode', { number: episodeNumber })} {title}
                     </EpisodeTitle>
                     {duration != null && (
                         <DurationText sz={'smCt'} color={themedPalette.text4}>

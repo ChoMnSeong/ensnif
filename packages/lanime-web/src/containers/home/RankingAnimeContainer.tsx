@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import AnimeCardTrack from '@components/home/AnimeCardTrack'
 import AnimeTrackLayout from '@components/home/AnimeTrackLayout'
 import AnimeCardTrackContainer from '@containers/home/AnimeCardTrackContainer'
@@ -7,6 +8,7 @@ import { useAnimationRankings } from '@libs/apis/animations'
 import { RankingType } from '@libs/apis/animations/type'
 
 const RankingAnimeContainer = () => {
+    const { t } = useTranslation()
     const [selectedType, setSelectedType] = useState<RankingType>('REALTIME')
     const { data, isLoading, isError } = useAnimationRankings(selectedType)
 
@@ -16,7 +18,7 @@ const RankingAnimeContainer = () => {
 
     return (
         <AnimeTrackLayout
-            title={'라애니 인기 애니'}
+            title={t('home.popularAnime')}
             option={
                 <RankingTypeTag
                     selectedType={selectedType}
@@ -24,7 +26,7 @@ const RankingAnimeContainer = () => {
                 />
             }
         >
-            <AnimeCardTrackContainer length={Math.floor(animeList.length * 5)}>
+            <AnimeCardTrackContainer length={animeList.length}>
                 <AnimeCardTrack
                     isLoading={isLoading}
                     anime={animeList}

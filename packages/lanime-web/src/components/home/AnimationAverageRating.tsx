@@ -3,6 +3,8 @@ import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 import Flex from '@components/common/Flex'
 
+import { useTranslation } from 'react-i18next'
+
 interface AnimationAverageRatingProps {
     averageRating: number
     total: number
@@ -12,13 +14,14 @@ const AnimationAverageRating: React.FC<AnimationAverageRatingProps> = ({
     averageRating,
     total,
 }) => {
+    const { t } = useTranslation()
     const percentage = (averageRating / 5) * 100
 
     return (
         <Flex direction="column" align="center" gap="1rem" padding="0 0 12px 0">
             <Average>{averageRating.toFixed(1)}</Average>
             <Flex direction="column" align="center" gap="4px">
-                <RatingText>{`총 ${total}의 별점`}</RatingText>
+                <RatingText>{t('home.totalRatings', { total })}</RatingText>
                 <Star percentage={percentage}>
                     {Array.from({ length: 5 }).map(() => '★')}
                 </Star>

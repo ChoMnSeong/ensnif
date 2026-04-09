@@ -48,6 +48,6 @@ const SlideCardTrackContainer = styled.div<{ cardLength: number }>`
     top: 0;
     left: 0;
     margin-left: auto 0;
-    width: ${({ cardLength }) => `${cardLength * 100}vw`};
+    width: ${({ cardLength }) => `${cardLength * 100}%`};
     height: 100%;
 `

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import {
     useInfiniteAnimationReview,
     useCreateAnimationReview,
@@ -36,6 +37,7 @@ const AnimationReview: React.FC<AnimationReviewProps> = ({
     const { mutate: deleteReview } = useDeleteAnimationReview(animationId)
 
     const currentProfileId = useSelector((state: RootState) => state.userProfile.profileId)
+    const { t } = useTranslation()
 
     const allReviews = data?.pages.flatMap((page) => page.data.data?.reviews ?? []) ?? []
     const firstPageData = data?.pages[0]?.data.data
@@ -60,7 +62,7 @@ const AnimationReview: React.FC<AnimationReviewProps> = ({
 
     return (
         <Flex direction="column" align="flex-start" width="100%" padding="1rem" gap="0">
-            <SectionTitle>평균 평점</SectionTitle>
+            <SectionTitle>{t('home.averageRating')}</SectionTitle>
             <ReviewSummaryContainer width="100%" justify="space-around" align="center" gap="3rem" margin="0 0 1.5rem 0">
                 <AnimationAverageRating averageRating={averageRating} total={totalCount} />
                 <AnimationReviewGraph ratingCounts={ratingCounts} />
