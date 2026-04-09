@@ -1,4 +1,5 @@
 import { StrictMode } from 'react'
+import '../src/libs/i18n'
 import App from '../src/App'
 import { Provider } from 'react-redux'
 import { store } from '../src/stores'

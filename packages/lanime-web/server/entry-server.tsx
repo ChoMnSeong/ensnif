@@ -1,4 +1,5 @@
 import { renderToString } from 'react-dom/server'
+import '../src/libs/i18n'
 import { CacheProvider } from '@emotion/react'
 import createEmotionServer from '@emotion/server/create-instance'
 import createCache from '@emotion/cache'
