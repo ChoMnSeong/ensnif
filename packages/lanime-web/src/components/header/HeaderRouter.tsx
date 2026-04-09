@@ -2,8 +2,10 @@ import styled from '@emotion/styled'
 import routers from '@libs/constants/routers'
 import { NavLink } from 'react-router-dom'
 import { themedPalette } from '@libs/style/theme'
+import { useTranslation } from 'react-i18next'
 
 export default function HeaderRouter({ currentUrl }: { currentUrl: string }) {
+    const { t } = useTranslation()
     return (
         <HeaderRouterBlock>
             {routers.map((route) => (
@@ -12,7 +14,7 @@ export default function HeaderRouter({ currentUrl }: { currentUrl: string }) {
                     to={route.path}
                     className={currentUrl === route.path ? 'active' : ''}
                 >
-                    {route.title}
+                    {t(route.titleKey)}
                 </StyledNavLink>
             ))}
         </HeaderRouterBlock>

@@ -5,32 +5,32 @@ import { themedPalette } from '@libs/style/theme'
 import { ThemePreference } from '@libs/hooks/useTheme'
 import Text from '@components/common/Text'
 import Flex from '@components/common/Flex'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsThemeSectionProps {
     themePreference: ThemePreference
     onSelect: (value: ThemePreference) => void
 }
 
-const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
-    { value: 'light', label: '밝은 테마' },
-    { value: 'dark', label: '어두운 테마' },
-    { value: 'system', label: '기기 설정을 따름' },
+const THEME_OPTIONS: { value: ThemePreference; key: string }[] = [
+    { value: 'light', key: 'settings.themeLight' },
+    { value: 'dark', key: 'settings.themeDark' },
+    { value: 'system', key: 'settings.themeSystem' },
 ]
 
 const SettingsThemeSection: React.FC<SettingsThemeSectionProps> = ({
     themePreference,
     onSelect,
 }) => {
+    const { t } = useTranslation()
+
     return (
         <Flex direction="column" gap="1rem">
-            <SectionTitle>테마</SectionTitle>
+            <SectionTitle>{t('settings.theme')}</SectionTitle>
             <Flex gap="1.5rem" wrap="wrap">
-                {THEME_OPTIONS.map(({ value, label }) => (
+                {THEME_OPTIONS.map(({ value, key }) => (
                     <Flex key={value} direction="column" align="center" gap="0.75rem">
-                        <ThemeCard
-                            active={themePreference === value}
-                            onClick={() => onSelect(value)}
-                        >
+                        <ThemeCard active={themePreference === value} onClick={() => onSelect(value)}>
                             {value === 'light' && (
                                 <LightCard align="center" justify="center">
                                     <MdWbSunny size={28} color="#1A1A1A" />
@@ -47,23 +47,16 @@ const SettingsThemeSection: React.FC<SettingsThemeSectionProps> = ({
                                         <MdWbSunny size={24} color="#1A1A1A" />
                                     </SystemHalf>
                                     <SystemHalf side="right" align="center" justify="center">
-                                        <MdNightlight
-                                            size={24}
-                                            color="#FAFAF8"
-                                        />
+                                        <MdNightlight size={24} color="#FAFAF8" />
                                     </SystemHalf>
                                 </SystemCard>
                             )}
                         </ThemeCard>
                         <Text
                             sz="smCt"
-                            color={
-                                themePreference === value
-                                    ? themedPalette.primary1
-                                    : themedPalette.text3
-                            }
+                            color={themePreference === value ? themedPalette.primary1 : themedPalette.text3}
                         >
-                            {label}
+                            {t(key)}
                         </Text>
                     </Flex>
                 ))}
@@ -87,14 +80,10 @@ const ThemeCard = styled.div<{ active: boolean }>`
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
-    border: 2px solid
-        ${({ active }) =>
-            active ? themedPalette.primary1 : themedPalette.border2};
+    border: 2px solid ${({ active }) => (active ? themedPalette.primary1 : themedPalette.border2)};
     transition: border-color 0.15s ease;
-
     &:hover {
-        border-color: ${({ active }) =>
-            active ? themedPalette.primary1 : themedPalette.text3};
+        border-color: ${({ active }) => (active ? themedPalette.primary1 : themedPalette.text3)};
     }
 `
 
@@ -118,6 +107,5 @@ const SystemCard = styled(Flex)`
 const SystemHalf = styled(Flex)<{ side: 'left' | 'right' }>`
     width: 50%;
     height: 100%;
-    background-color: ${({ side }) =>
-        side === 'left' ? '#ffffff' : '#1a1a1a'};
+    background-color: ${({ side }) => (side === 'left' ? '#ffffff' : '#1a1a1a')};
 `

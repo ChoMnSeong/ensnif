@@ -2,14 +2,17 @@ import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
 import Flex from '@components/common/Flex'
 
+import { useTranslation } from 'react-i18next'
+
 interface EpisodePanelProps {
     children: React.ReactNode
 }
 
 const EpisodePanel: React.FC<EpisodePanelProps> = ({ children }) => {
+    const { t } = useTranslation()
     return (
         <Panel direction="column">
-            <PanelTitle>에피소드 목록</PanelTitle>
+            <PanelTitle>{t('player.episodeList')}</PanelTitle>
             <Scroll>{children}</Scroll>
         </Panel>
     )

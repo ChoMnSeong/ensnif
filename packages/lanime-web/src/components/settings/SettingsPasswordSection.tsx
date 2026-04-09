@@ -4,6 +4,7 @@ import { themedPalette } from '@libs/style/theme'
 import Flex from '@components/common/Flex'
 import Input from '@components/common/Input'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsPasswordSectionProps {
     onSubmit: (currentPassword: string, newPassword: string) => void
@@ -16,6 +17,7 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
     onSubmit,
     isLoading,
 }) => {
+    const { t } = useTranslation()
     const [currentPassword, setCurrentPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -42,58 +44,40 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
 
     return (
         <Flex direction="column" gap="1rem">
-            <SectionTitle>비밀번호 변경</SectionTitle>
-            <Flex
-                direction="column"
-                gap="1.25rem"
-                width="100%"
-                align="flex-start"
-            >
+            <SectionTitle>{t('settings.changePassword')}</SectionTitle>
+            <Flex direction="column" gap="1.25rem" width="100%" align="flex-start">
                 <Input
-                    label="현재 비밀번호"
+                    label={t('settings.currentPassword')}
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="현재 비밀번호를 입력해주세요"
+                    placeholder={t('settings.currentPasswordPlaceholder')}
                 />
-                <Flex
-                    direction="column"
-                    gap="0.4rem"
-                    width="100%"
-                    align="flex-start"
-                >
+                <Flex direction="column" gap="0.4rem" width="100%" align="flex-start">
                     <Input
-                        label="새 비밀번호"
+                        label={t('settings.newPassword')}
                         type="password"
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="영문·숫자·특수문자 포함 8~20자"
+                        placeholder={t('settings.newPasswordPlaceholder')}
                     />
                     {passwordInvalid && (
-                        <ErrorText>
-                            영문, 숫자, 특수문자(@$!%*#?&)를 각 1자 이상
-                            포함해야 합니다.
-                        </ErrorText>
+                        <ErrorText>{t('settings.passwordFormatError')}</ErrorText>
                     )}
                 </Flex>
-                <Flex
-                    direction="column"
-                    gap="0.4rem"
-                    width="100%"
-                    align="flex-start"
-                >
+                <Flex direction="column" gap="0.4rem" width="100%" align="flex-start">
                     <Input
-                        label="새 비밀번호 확인"
+                        label={t('settings.confirmNewPassword')}
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="새 비밀번호를 다시 입력해주세요"
+                        placeholder={t('settings.confirmNewPasswordPlaceholder')}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') handleSubmit()
                         }}
                     />
                     {passwordMismatch && (
-                        <ErrorText>비밀번호가 일치하지 않습니다.</ErrorText>
+                        <ErrorText>{t('settings.passwordMismatch')}</ErrorText>
                     )}
                 </Flex>
                 <Button
@@ -103,7 +87,7 @@ const SettingsPasswordSection: React.FC<SettingsPasswordSectionProps> = ({
                     onClick={handleSubmit}
                     disabled={isDisabled}
                 >
-                    {isLoading ? '변경 중...' : '비밀번호 변경'}
+                    {isLoading ? t('settings.changing') : t('settings.changePassword')}
                 </Button>
             </Flex>
         </Flex>

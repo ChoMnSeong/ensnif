@@ -5,6 +5,7 @@ import Flex from '@components/common/Flex'
 import Text from '@components/common/Text'
 import Button from '@components/common/Button'
 import PinInput from '@components/common/PinInput'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsPinSectionProps {
     pin: string[]
@@ -19,11 +20,12 @@ const SettingsPinSection: React.FC<SettingsPinSectionProps> = ({
     onDelete,
     isDeleting,
 }) => {
+    const { t } = useTranslation()
     return (
         <Flex direction="column" gap="1rem">
-            <SectionTitle>PIN 변경</SectionTitle>
+            <SectionTitle>{t('settings.changePin')}</SectionTitle>
             <Text sz="smCt" color={themedPalette.text3}>
-                새 PIN 4자리를 입력하세요. 비워두면 변경되지 않습니다.
+                {t('settings.changePinDesc')}
             </Text>
             <Flex align="center" justify="flex-start" gap="1.5rem">
                 <PinInput value={pin} onChange={onChange} size="sm" />
@@ -34,7 +36,7 @@ const SettingsPinSection: React.FC<SettingsPinSectionProps> = ({
                     disabled={isDeleting}
                     type="button"
                 >
-                    PIN 삭제
+                    {t('settings.deletePin')}
                 </Button>
             </Flex>
         </Flex>

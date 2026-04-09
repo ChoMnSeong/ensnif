@@ -1,6 +1,7 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 import styled from '@emotion/styled'
 import { themedPalette } from '@libs/style/theme'
+import { useTranslation } from 'react-i18next'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string
@@ -12,6 +13,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ label, error, count, maxCount, width = '100%', ...props }, ref) => {
+        const { t } = useTranslation()
         return (
             <Container width={width}>
                 {label && <Label>{label}</Label>}
@@ -20,7 +22,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                     <StyledInput ref={ref} {...props} />
                     {maxCount !== undefined && (
                         <CharCount>
-                            {count ?? 0}/{maxCount}자
+                            {t('common.charCount', { count: count ?? 0, max: maxCount })}
                         </CharCount>
                     )}
                 </InputWrapper>

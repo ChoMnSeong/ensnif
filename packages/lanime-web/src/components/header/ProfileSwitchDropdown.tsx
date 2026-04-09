@@ -6,6 +6,7 @@ import { keyframes } from '@emotion/react'
 import { themedPalette } from '@libs/style/theme'
 import Image from '@components/common/Image'
 import Text from '@components/common/Text'
+import { useTranslation } from 'react-i18next'
 
 interface ProfileSwitchDropdownProps {
     nickname: string | null
@@ -22,6 +23,7 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
     onLogout,
     onMouseEnter,
 }) => {
+    const { t } = useTranslation()
     const [position, setPosition] = useState({ top: 0, right: 0 })
 
     useEffect(() => {
@@ -59,9 +61,10 @@ const ProfileSwitchDropdown: React.FC<ProfileSwitchDropdownProps> = ({
                 </Text>
             </ProfileRow>
             <Divider />
-            <DropdownNavLink to="/profile">프로필 변경</DropdownNavLink>
-            <DropdownNavLink to="/settings">설정</DropdownNavLink>
-            <LogoutButton onClick={onLogout}>로그아웃</LogoutButton>
+            <DropdownNavLink to="/profile">{t('header.profileChange')}</DropdownNavLink>
+            <DropdownNavLink to="/library">{t('header.library')}</DropdownNavLink>
+            <DropdownNavLink to="/settings">{t('header.settings')}</DropdownNavLink>
+            <LogoutButton onClick={onLogout}>{t('header.logout')}</LogoutButton>
         </DropdownBlock>,
         document.body,
     )

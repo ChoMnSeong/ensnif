@@ -7,6 +7,7 @@ import Text from '@components/common/Text'
 import Button from '@components/common/Button'
 import Image from '@components/common/Image'
 import DeleteConfirmModal from '@components/common/DeleteConfirmModal'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsDangerSectionProps {
     profiles: IUserProfile[]
@@ -19,16 +20,17 @@ const SettingsDangerSection: React.FC<SettingsDangerSectionProps> = ({
     onDelete,
     isDeleting,
 }) => {
+    const { t } = useTranslation()
     const [modalProfile, setModalProfile] = useState<IUserProfile | null>(null)
 
     const deletableProfiles = profiles.filter((p) => !p.isOwner)
 
     return (
         <Flex direction="column" gap="1.25rem">
-            <SectionTitle>프로필 삭제</SectionTitle>
+            <SectionTitle>{t('settings.deleteProfile')}</SectionTitle>
             {deletableProfiles.length === 0 ? (
                 <Text sz="smCt" color={themedPalette.text3}>
-                    삭제할 수 있는 프로필이 없습니다.
+                    {t('settings.noDeleteableProfiles')}
                 </Text>
             ) : (
                 <ProfileList direction="column">
@@ -52,7 +54,7 @@ const SettingsDangerSection: React.FC<SettingsDangerSectionProps> = ({
                                 size="sm"
                                 onClick={() => setModalProfile(profile)}
                             >
-                                삭제
+                                {t('common.delete')}
                             </Button>
                         </ProfileRow>
                     ))}
@@ -94,7 +96,6 @@ const ProfileList = styled(Flex)`
 
 const ProfileRow = styled(Flex)`
     background-color: ${themedPalette.bg_element1};
-
     &:not(:last-of-type) {
         border-bottom: 1px solid ${themedPalette.border2};
     }

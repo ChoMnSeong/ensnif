@@ -8,6 +8,7 @@ import Textarea from '@components/common/Textarea'
 import Image from '@components/common/Image'
 import Icon from '@components/common/Icon'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 const formatDate = (iso: string) => {
     const date = new Date(iso)
@@ -53,6 +54,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
     showReplies,
     onToggleReplies,
 }) => {
+    const { t } = useTranslation()
     const [showReplyInput, setShowReplyInput] = useState(false)
     const [replyValue, setReplyValue] = useState('')
     const [isEditing, setIsEditing] = useState(false)
@@ -64,10 +66,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
-            if (
-                menuRef.current &&
-                !menuRef.current.contains(e.target as Node)
-            ) {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
                 setMenuOpen(false)
             }
         }
@@ -118,12 +117,8 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                 maxCount={500}
                             />
                             <Flex justify="flex-end" gap="0.5rem">
-                                <Button
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => setIsEditing(false)}
-                                >
-                                    취소
+                                <Button variant="secondary" size="sm" onClick={() => setIsEditing(false)}>
+                                    {t('common.cancel')}
                                 </Button>
                                 <Button
                                     variant="primary"
@@ -131,7 +126,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                     disabled={!editValue.trim()}
                                     onClick={handleEditSubmit}
                                 >
-                                    저장
+                                    {t('common.save')}
                                 </Button>
                             </Flex>
                         </Flex>
@@ -141,30 +136,22 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
 
                     <Flex align="center" margin="0.1rem 0 0 0">
                         {!isReply && (
-                            <Button
-                                variant="text"
-                                size="sm"
-                                onClick={() => setShowReplyInput((v) => !v)}
-                            >
-                                답글
+                            <Button variant="text" size="sm" onClick={() => setShowReplyInput((v) => !v)}>
+                                {t('comment.reply')}
                             </Button>
                         )}
                     </Flex>
 
                     {!isReply && comment.replyCount > 0 && (
-                        <Button
-                            variant="text"
-                            size="sm"
-                            onClick={onToggleReplies}
-                        >
+                        <Button variant="text" size="sm" onClick={onToggleReplies}>
                             <Icon
                                 name={showReplies ? 'expandLess' : 'expandMore'}
                                 size={18}
                                 color={themedPalette.primary1}
                             />
                             {showReplies
-                                ? '답글 숨기기'
-                                : `답글 ${comment.replyCount}개`}
+                                ? t('comment.hideReplies')
+                                : t('comment.replyCount', { count: comment.replyCount })}
                         </Button>
                     )}
                 </Flex>
@@ -172,11 +159,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                 {isOwner && (
                     <MenuWrap ref={menuRef}>
                         <MenuTrigger onClick={() => setMenuOpen((v) => !v)}>
-                            <Icon
-                                name="moreVert"
-                                size={20}
-                                color={themedPalette.text4}
-                            />
+                            <Icon name="moreVert" size={20} color={themedPalette.text4} />
                         </MenuTrigger>
                         {menuOpen && (
                             <MenuDropdown>
@@ -187,7 +170,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                         setMenuOpen(false)
                                     }}
                                 >
-                                    수정
+                                    {t('common.edit')}
                                 </MenuItem>
                                 <MenuItem
                                     danger
@@ -196,7 +179,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                         setMenuOpen(false)
                                     }}
                                 >
-                                    삭제
+                                    {t('common.delete')}
                                 </MenuItem>
                             </MenuDropdown>
                         )}
@@ -217,15 +200,11 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                     )}
                     <Flex flex={1} direction="column" gap="0.5rem">
                         <Textarea
-                            placeholder="답글을 입력하세요... (Ctrl+Enter로 제출)"
+                            placeholder={t('comment.replyPlaceholder')}
                             value={replyValue}
                             onChange={(e) => setReplyValue(e.target.value)}
                             onKeyDown={(e) => {
-                                if (
-                                    e.key === 'Enter' &&
-                                    (e.ctrlKey || e.metaKey)
-                                )
-                                    handleReplySubmit()
+                                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleReplySubmit()
                             }}
                             rows={2}
                             count={replyValue.length}
@@ -240,7 +219,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                     setReplyValue('')
                                 }}
                             >
-                                취소
+                                {t('common.cancel')}
                             </Button>
                             <Button
                                 variant="primary"
@@ -248,7 +227,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                                 disabled={!replyValue.trim()}
                                 onClick={handleReplySubmit}
                             >
-                                답글 작성
+                                {t('comment.submitReply')}
                             </Button>
                         </Flex>
                     </Flex>
@@ -257,9 +236,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
 
             {!isReply && showReplies && (
                 <Flex direction="column" gap="1rem" padding="0 0 0 52px">
-                    {repliesLoading && (
-                        <LoadingText>답글 불러오는 중...</LoadingText>
-                    )}
+                    {repliesLoading && <LoadingText>{t('comment.loadingReplies')}</LoadingText>}
                     {replies?.map((reply) => (
                         <CommentListItem
                             key={reply.commentId}
@@ -279,9 +256,7 @@ const CommentListItem: React.FC<CommentListItemProps> = ({
                             disabled={isLoadingReplies}
                             onClick={onLoadReplies}
                         >
-                            {isLoadingReplies
-                                ? '불러오는 중...'
-                                : '답글 더 보기'}
+                            {isLoadingReplies ? t('common.loading') : t('comment.loadMore')}
                         </Button>
                     )}
                 </Flex>
@@ -322,9 +297,7 @@ const iconBtnBase = css`
     padding: 6px;
     border-radius: 50%;
     transition: background 0.15s;
-    &:hover {
-        background: ${themedPalette.bg_element3};
-    }
+    &:hover { background: ${themedPalette.bg_element3}; }
 `
 
 const MenuWrap = styled.div`
@@ -358,12 +331,9 @@ const MenuItem = styled.button<{ danger?: boolean }>`
     text-align: left;
     font-size: 0.85rem;
     font-weight: 500;
-    color: ${({ danger }) =>
-        danger ? themedPalette.destructive1 : themedPalette.text1};
+    color: ${({ danger }) => (danger ? themedPalette.destructive1 : themedPalette.text1)};
     cursor: pointer;
-    &:hover {
-        background: ${themedPalette.bg_element3};
-    }
+    &:hover { background: ${themedPalette.bg_element3}; }
 `
 
 const LoadingText = styled.p`

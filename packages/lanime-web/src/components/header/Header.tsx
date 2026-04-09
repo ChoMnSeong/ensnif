@@ -12,8 +12,11 @@ import Text from '@components/common/Text'
 import Icon from '@components/common/Icon'
 import routers from '@libs/constants/routers'
 import Flex from '@components/common/Flex'
+import LanguageSwitcher from '@components/header/LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 
 const Header: React.FC = () => {
+    const { t } = useTranslation()
     const profile = useSelector((state: RootState) => state.userProfile)
     const { pathname } = useLocation()
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -38,6 +41,7 @@ const Header: React.FC = () => {
                         </DesktopNav>
                     </Left>
                     <Right align="center" gap="60px" style={{ position: 'relative' }}>
+                        <LanguageSwitcher />
                         {profile.avatarUrl ? (
                             <Flex
                                 align="center"
@@ -70,7 +74,7 @@ const Header: React.FC = () => {
                         ) : (
                             <DesktopOnly>
                                 <LoginLink to="/auth/mail" state={{ from: pathname }}>
-                                    로그인/가입
+                                    {t('header.login')}
                                 </LoginLink>
                             </DesktopOnly>
                         )}
@@ -81,7 +85,7 @@ const Header: React.FC = () => {
                             justify="center"
                             onClick={() => setIsMobileMenuOpen((v) => !v)}
                             aria-label={
-                                isMobileMenuOpen ? '메뉴 닫기' : '메뉴 열기'
+                                isMobileMenuOpen ? t('header.menuClose') : t('header.menuOpen')
                             }
                         >
                             <Icon
@@ -111,7 +115,7 @@ const Header: React.FC = () => {
                 <Flex direction="column" gap="0.25rem" padding="0.25rem 0.5rem">
                     {!profile.avatarUrl && (
                         <LoginLink to="/auth/mail" state={{ from: pathname }}>
-                            로그인/가입
+                            {t('header.login')}
                         </LoginLink>
                     )}
                 </Flex>
@@ -131,7 +135,7 @@ const HeaderBlock = styled.div<{ url: string }>`
     background-color: ${themedPalette.bg_page1};
     top: 0;
     z-index: 10;
-    width: 100vw;
+    width: 100%;
     height: 4rem;
 `
 

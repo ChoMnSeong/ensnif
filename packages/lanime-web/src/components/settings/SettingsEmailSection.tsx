@@ -5,6 +5,7 @@ import Flex from '@components/common/Flex'
 import Text from '@components/common/Text'
 import Input from '@components/common/Input'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 interface SettingsEmailSectionProps {
     currentEmail?: string
@@ -21,6 +22,7 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
     isSending,
     isVerifying,
 }) => {
+    const { t } = useTranslation()
     const [newEmail, setNewEmail] = useState('')
     const [code, setCode] = useState('')
     const [codeSent, setCodeSent] = useState(false)
@@ -38,31 +40,21 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
 
     return (
         <Flex direction="column" gap="1rem">
-            <SectionTitle>이메일 변경</SectionTitle>
+            <SectionTitle>{t('settings.changeEmail')}</SectionTitle>
             {currentEmail && (
                 <Text sz="smCt" color={themedPalette.text3}>
-                    현재 이메일:{' '}
+                    {t('settings.currentEmail')}:{' '}
                     <strong style={{ color: themedPalette.text2 }}>
                         {currentEmail}
                     </strong>
                 </Text>
             )}
-            <Flex
-                direction="column"
-                gap="1.25rem"
-                width="100%"
-                align="flex-start"
-            >
-                <Flex
-                    direction="column"
-                    gap="0.5rem"
-                    width="100%"
-                    align="flex-start"
-                >
+            <Flex direction="column" gap="1.25rem" width="100%" align="flex-start">
+                <Flex direction="column" gap="0.5rem" width="100%" align="flex-start">
                     <Flex gap="0.75rem" align="flex-end" width="100%">
                         <Flex flex={1} style={{ minWidth: 0 }}>
                             <Input
-                                label="새 이메일"
+                                label={t('settings.newEmail')}
                                 type="email"
                                 value={newEmail}
                                 onChange={(e) => {
@@ -70,7 +62,7 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                                     setCodeSent(false)
                                     setCode('')
                                 }}
-                                placeholder="새 이메일을 입력해주세요"
+                                placeholder={t('settings.newEmailPlaceholder')}
                             />
                         </Flex>
                         <Button
@@ -81,28 +73,19 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                             style={{ flexShrink: 0 }}
                         >
                             {isSending
-                                ? '전송 중...'
+                                ? t('settings.sending')
                                 : codeSent
-                                  ? '재전송'
-                                  : '인증 코드 전송'}
+                                  ? t('settings.resend')
+                                  : t('settings.sendCode')}
                         </Button>
                     </Flex>
                 </Flex>
 
                 {codeSent && (
-                    <Flex
-                        direction="column"
-                        gap="0.5rem"
-                        width="100%"
-                        align="flex-start"
-                    >
-                        <Flex
-                            width="100%"
-                            justify="space-between"
-                            align="center"
-                        >
+                    <Flex direction="column" gap="0.5rem" width="100%" align="flex-start">
+                        <Flex width="100%" justify="space-between" align="center">
                             <Text sz="smCt" color={themedPalette.text4}>
-                                인증 코드
+                                {t('settings.verificationCode')}
                             </Text>
                             <Button
                                 fullWidth
@@ -111,17 +94,14 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                                 onClick={handleSend}
                                 disabled={isSending}
                                 type="button"
-                                style={{
-                                    color: themedPalette.primary2,
-                                    padding: '0',
-                                }}
+                                style={{ color: themedPalette.primary2, padding: '0' }}
                             >
-                                {isSending ? '전송 중...' : '재전송'}
+                                {isSending ? t('settings.sending') : t('settings.resend')}
                             </Button>
                         </Flex>
                         <Input
                             type="text"
-                            placeholder="이메일로 받은 코드를 입력해주세요"
+                            placeholder={t('settings.verificationCodePlaceholder')}
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
                             onKeyDown={(e) => {
@@ -134,7 +114,7 @@ const SettingsEmailSection: React.FC<SettingsEmailSectionProps> = ({
                             onClick={handleVerify}
                             disabled={!code || isVerifying}
                         >
-                            {isVerifying ? '확인 중...' : '이메일 변경'}
+                            {isVerifying ? t('settings.verifying') : t('settings.changeEmail')}
                         </Button>
                     </Flex>
                 )}

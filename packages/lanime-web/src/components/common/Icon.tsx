@@ -20,6 +20,10 @@ import {
     MdMoreVert,
     MdExpandMore,
     MdExpandLess,
+    MdFavorite,
+    MdFavoriteBorder,
+    MdSearch,
+    MdLanguage,
 } from 'react-icons/md'
 
 const iconMap = {
@@ -43,6 +47,10 @@ const iconMap = {
     moreVert: MdMoreVert,
     expandMore: MdExpandMore,
     expandLess: MdExpandLess,
+    favorite: MdFavorite,
+    favoriteBorder: MdFavoriteBorder,
+    search: MdSearch,
+    language: MdLanguage,
 } as const satisfies Record<string, IconType>
 
 export type IconName = keyof typeof iconMap

@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { toast } from 'sonner'
 import { themedPalette } from '@libs/style/theme'
 import { useImageMutation } from '@libs/apis/images'
+import { useTranslation } from 'react-i18next'
 
 interface ProfileImageUploadProps {
     avatarUrl: string
@@ -15,6 +16,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
     onChange,
     size = 100,
 }) => {
+    const { t } = useTranslation()
     const fileInputRef = useRef<HTMLInputElement>(null)
     const { mutate: uploadImage, isPending: isUploading } = useImageMutation()
 
@@ -30,11 +32,11 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
             onSuccess: (res) => {
                 if (res.success && res.data) {
                     onChange(res.data)
-                    toast.success('이미지가 업로드되었습니다.')
+                    toast.success(t('image.uploadSuccess'))
                 }
             },
             onError: () => {
-                toast.error('이미지 업로드에 실패했습니다.')
+                toast.error(t('image.uploadFailed'))
             },
         })
     }
@@ -48,7 +50,7 @@ const ProfileImageUpload: React.FC<ProfileImageUploadProps> = ({
                     style={{ opacity: isUploading ? 0.5 : 1 }}
                 />
                 <EditOverlay>
-                    {isUploading ? '업로드 중...' : '수정'}
+                    {isUploading ? t('image.uploading') : t('common.edit')}
                 </EditOverlay>
             </ImageWrapper>
             <input

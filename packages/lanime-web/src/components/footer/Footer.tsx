@@ -16,7 +16,7 @@ const Footer = () => {
 export default Footer
 
 const FooterContainer = styled.div`
-    width: 100vw;
+    width: 100%;
     background-color: ${themedPalette.bg_page1};
     border-top: 1px solid ${themedPalette.border2};
 `

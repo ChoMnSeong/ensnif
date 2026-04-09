@@ -3,6 +3,7 @@ import Flex from '@components/common/Flex'
 import Textarea from '@components/common/Textarea'
 import Image from '@components/common/Image'
 import Button from '@components/common/Button'
+import { useTranslation } from 'react-i18next'
 
 interface CommentInputProps {
     value: string
@@ -19,6 +20,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
     isLoading,
     avatarUrl,
 }) => {
+    const { t } = useTranslation()
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
             onSubmit()
@@ -31,7 +34,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                 <AvatarWrap margin="2px 0 0 0">
                     <Image
                         src={avatarUrl}
-                        alt="프로필"
+                        alt="profile"
                         width="40px"
                         height="40px"
                         borderRadius="50%"
@@ -40,7 +43,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             )}
             <Flex flex={1} direction="column" gap="0.5rem">
                 <Textarea
-                    placeholder="댓글을 입력하세요... (Ctrl+Enter로 제출)"
+                    placeholder={t('comment.placeholder')}
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -55,7 +58,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
                         disabled={!value.trim() || isLoading}
                         onClick={onSubmit}
                     >
-                        댓글 작성
+                        {t('comment.submit')}
                     </Button>
                 </Flex>
             </Flex>
@@ -68,4 +71,3 @@ export default CommentInput
 const AvatarWrap = styled(Flex)`
     flex-shrink: 0;
 `
-
