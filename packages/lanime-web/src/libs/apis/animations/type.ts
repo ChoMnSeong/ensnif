@@ -52,6 +52,7 @@ export interface AnimationDetailResponse {
     genres: string[]
     ageRating: string
     status: AnimeStatus
+    isFavorite: boolean
 }
 
 export interface Review {
@@ -87,4 +88,35 @@ export interface EpisodeResponse {
     duration: number | null
     lastWatchedSecond: number
     isFinished: boolean
+}
+
+export interface SearchAnimationItem {
+    id: string
+    title: string
+    thumbnailUrl: string
+    type: AnimeType
+    genres: string[]
+    ageRating: string
+    status: AnimeStatus
+    airDay: string
+    releasedAt: string
+}
+
+export interface AnimationGenre {
+    genreId: string
+    name: string
+}
+
+export interface AnimationType {
+    typeId: string
+    name: string
+}
+
+export interface SearchParams {
+    query?: string
+    typeIds?: string[]
+    statuses?: string[]
+    genreIds?: string[]
+    startYear?: number
+    endYear?: number
 }

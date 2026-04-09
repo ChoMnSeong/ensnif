@@ -103,6 +103,7 @@ export const useProfilesQuery = () => {
         queryKey: ['profiles'],
         queryFn: fetchProfiles,
         enabled: !!customCookie.get.accessToken(),
+        staleTime: 1000 * 60 * 5, // 5분
     })
 }
 

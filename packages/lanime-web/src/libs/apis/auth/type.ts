@@ -4,6 +4,7 @@ export interface IUserProfile {
     pin?: string
     name: string
     avatarUrl: string
+    age?: number
     isOwner: boolean
     createdAt: string
     updatedAt: string
@@ -35,7 +36,7 @@ export interface ISigninRequest {
 
 export interface IEmailCheckResponse {
     email: string
-    registered: boolean
+    isRegistered: boolean
 }
 
 export interface IAuthResponse {
@@ -58,11 +59,12 @@ export interface IProfilePinRequest {
 export interface IProfileUpdateRequest {
     name?: string
     avatarUrl?: string
+    age?: number
     pin?: string
 }
 
 export interface IProfileAccessResponse {
-    passwordRequired: boolean
+    isPasswordRequired: boolean
     profileToken?: string
 }
 
