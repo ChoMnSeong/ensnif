@@ -1,10 +1,13 @@
 import { useState, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useParams, Link } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
-import { Plus, Pencil, Trash2, Upload, ArrowLeft, RefreshCw, Loader2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, Upload, ArrowLeft, RefreshCw, Loader2, Languages } from 'lucide-react'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
+import { Textarea } from '@components/ui/textarea'
 import { Label } from '@components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/ui/select'
 import {
     Dialog,
     DialogContent,
@@ -27,9 +30,12 @@ import {
     useUpdateEpisode,
     useDeleteEpisode,
     useEncodingStatus,
+    useUpsertEpisodeTranslation,
     uploadEpisodeVideo,
 } from '@libs/apis/admin'
 import type { IAdminEpisode, IEpisodeCreateRequest } from '@libs/apis/admin/type'
+
+const LOCALE_KEYS = ['ko', 'en', 'ja'] as const
 
 const defaultForm: IEpisodeCreateRequest = {
     episodeNumber: 1,
@@ -40,6 +46,7 @@ const defaultForm: IEpisodeCreateRequest = {
 }
 
 function EncodingStatus({ episodeId }: { episodeId: string }) {
+    const { t } = useTranslation()
     const { data, refetch, isFetching } = useEncodingStatus(episodeId)
 
     if (!data) return <Badge variant="secondary">미업로드</Badge>
@@ -48,26 +55,28 @@ function EncodingStatus({ episodeId }: { episodeId: string }) {
         case 'PENDING':
             return (
                 <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
-                    대기중
+                    {t('encodingStatus.PENDING')}
                 </Badge>
             )
         case 'ENCODING':
             return (
                 <div className="flex items-center gap-2">
                     <Badge className="bg-blue-500 hover:bg-blue-600 text-white border-none">
-                        인코딩중 {data.progress !== null ? `${data.progress}%` : ''}
+                        {t('encodingStatus.ENCODING')} {data.progress !== null ? `${data.progress}%` : ''}
                     </Badge>
                     <Loader2 className="h-3 w-3 animate-spin text-blue-500" />
                 </div>
             )
         case 'COMPLETED':
             return (
-                <Badge className="bg-green-500 hover:bg-green-600 text-white border-none">완료</Badge>
+                <Badge className="bg-green-500 hover:bg-green-600 text-white border-none">
+                    {t('encodingStatus.COMPLETED')}
+                </Badge>
             )
         case 'FAILED':
             return (
                 <div className="flex items-center gap-1">
-                    <Badge variant="destructive">실패</Badge>
+                    <Badge variant="destructive">{t('encodingStatus.FAILED')}</Badge>
                     <Button
                         variant="ghost"
                         size="icon"
@@ -97,10 +106,17 @@ export default function EpisodesContainer() {
     const [uploading, setUploading] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
 
+    // Translation
+    const [translationTarget, setTranslationTarget] = useState<IAdminEpisode | null>(null)
+    const [translationLocale, setTranslationLocale] = useState<typeof LOCALE_KEYS[number]>('ko')
+    const [translationTitle, setTranslationTitle] = useState('')
+    const [translationDesc, setTranslationDesc] = useState('')
+
     const { data: episodes = [], isLoading } = useEpisodes(animationId)
     const createMutation = useCreateEpisode(animationId)
     const updateMutation = useUpdateEpisode(animationId)
     const deleteMutation = useDeleteEpisode(animationId)
+    const translationMutation = useUpsertEpisodeTranslation()
 
     const handleUpload = async (episodeId: string, file: File) => {
         setUploading(true)
@@ -165,6 +181,26 @@ export default function EpisodesContainer() {
             handleUpload(uploadTarget.episodeId, file)
         }
         e.target.value = ''
+    }
+
+    const openTranslation = (ep: IAdminEpisode) => {
+        setTranslationTarget(ep)
+        setTranslationLocale('ko')
+        setTranslationTitle('')
+        setTranslationDesc('')
+    }
+
+    const handleTranslationSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!translationTarget) return
+        translationMutation.mutate(
+            {
+                episodeId: translationTarget.episodeId,
+                locale: translationLocale,
+                data: { title: translationTitle, description: translationDesc || undefined },
+            },
+            { onSuccess: () => setTranslationTarget(null) },
+        )
     }
 
     const isSaving = createMutation.isPending || updateMutation.isPending
@@ -236,6 +272,14 @@ export default function EpisodesContainer() {
                                                 disabled={uploading}
                                             >
                                                 <Upload className="h-4 w-4" />
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                title="번역 관리"
+                                                onClick={() => openTranslation(ep)}
+                                            >
+                                                <Languages className="h-4 w-4" />
                                             </Button>
                                             <Button
                                                 variant="ghost"
@@ -357,6 +401,61 @@ export default function EpisodesContainer() {
                             </Button>
                             <Button type="submit" disabled={isSaving}>
                                 {isSaving ? '저장 중...' : '저장'}
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Translation Dialog */}
+            <Dialog open={!!translationTarget} onOpenChange={() => setTranslationTarget(null)}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>번역 관리 — {translationTarget?.title}</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleTranslationSubmit} className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-1.5">
+                            <Label>언어</Label>
+                            <Select
+                                value={translationLocale}
+                                onValueChange={(v) => setTranslationLocale(v as typeof LOCALE_KEYS[number])}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {LOCALE_KEYS.map((l) => (
+                                        <SelectItem key={l} value={l}>
+                                            {l === 'ko' ? '한국어' : l === 'en' ? 'English' : '日本語'}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <Label>제목</Label>
+                            <Input
+                                value={translationTitle}
+                                onChange={(e) => setTranslationTitle(e.target.value)}
+                                placeholder="번역된 에피소드 제목"
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <Label>설명 (선택)</Label>
+                            <Textarea
+                                value={translationDesc}
+                                onChange={(e) => setTranslationDesc(e.target.value)}
+                                placeholder="번역된 설명"
+                                className="resize-none"
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button type="button" variant="outline" onClick={() => setTranslationTarget(null)}>
+                                취소
+                            </Button>
+                            <Button type="submit" disabled={translationMutation.isPending}>
+                                {translationMutation.isPending ? '저장 중...' : '저장'}
                             </Button>
                         </DialogFooter>
                     </form>
