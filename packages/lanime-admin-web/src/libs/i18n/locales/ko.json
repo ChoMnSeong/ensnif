@@ -1,0 +1,46 @@
+{
+    "animationStatus": {
+        "UPCOMING": "방영 예정",
+        "ONGOING": "방영중",
+        "FINISHED": "완결"
+    },
+    "airDay": {
+        "MONDAY": "월요일",
+        "TUESDAY": "화요일",
+        "WEDNESDAY": "수요일",
+        "THURSDAY": "목요일",
+        "FRIDAY": "금요일",
+        "SATURDAY": "토요일",
+        "SUNDAY": "일요일"
+    },
+    "rankingType": {
+        "REALTIME": "실시간",
+        "Q1": "1분기",
+        "Q2": "2분기",
+        "Q3": "3분기",
+        "Q4": "4분기",
+        "LAST_YEAR": "전년도",
+        "ALL": "역대"
+    },
+    "encodingStatus": {
+        "PENDING": "인코딩 대기",
+        "ENCODING": "인코딩 중",
+        "COMPLETED": "인코딩 완료",
+        "FAILED": "인코딩 실패"
+    },
+    "genre": {
+        "YURI": "백합"
+    },
+    "animationType": {
+        "TVA": "TVA",
+        "OVA": "OVA",
+        "ONA": "ONA",
+        "MOVIE": "극장판"
+    },
+    "ageRating": {
+        "ALL": "전체",
+        "12": "12세",
+        "15": "15세",
+        "19": "19세"
+    }
+}
