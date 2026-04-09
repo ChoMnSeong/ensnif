@@ -4,6 +4,7 @@ export interface UserProfileState {
     avatarUrl: string | null
     nickname: string | null
     profileId: string | null
+    age: number | null
 }
 
 export interface SetUserProfileAction {

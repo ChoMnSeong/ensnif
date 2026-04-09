@@ -13,23 +13,25 @@ const DefaultLayout: React.FC = () => {
     useScrollToTop()
 
     return (
-        <Flex direction="column" width="100vw">
-            <Flex direction="column" width="100%">
-                <Header />
-                <FloatingHeader />
-                <Main isPlayerPage={isPlayerPage}>
-                    <Outlet />
-                </Main>
-                <Footer />
-            </Flex>
-        </Flex>
+        <LayoutWrapper direction="column" width="100%">
+            <Header />
+            <FloatingHeader />
+            <Main isPlayerPage={isPlayerPage}>
+                <Outlet />
+            </Main>
+            <Footer />
+        </LayoutWrapper>
     )
 }
 
 export default DefaultLayout
 
+const LayoutWrapper = styled(Flex)`
+    min-height: 100vh;
+`
+
 const Main = styled.main<{ isPlayerPage: boolean }>`
     width: 100%;
-    height: auto;
+    flex: 1;
     padding-top: ${({ isPlayerPage }) => (isPlayerPage ? '0' : '4rem')};
 `

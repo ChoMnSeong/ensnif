@@ -26,6 +26,8 @@ const PlayerPage = () => {
                             <VideoPlayerContainer
                                 src={`${env.BASE_URL}/stream/${currentEpisode.episodeId}/index.m3u8`}
                                 poster={currentEpisode.thumbnailUrl}
+                                episodeId={currentEpisode.episodeId}
+                                initialTime={currentEpisode.lastWatchedSecond}
                             />
                         )}
                     </Flex>

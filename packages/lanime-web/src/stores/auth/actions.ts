@@ -9,5 +9,6 @@ export const action = {
         state.avatarUrl = action.payload.avatarUrl
         state.nickname = action.payload.nickname
         state.profileId = action.payload.profileId
+        state.age = action.payload.age
     },
 }

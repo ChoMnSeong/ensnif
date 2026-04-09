@@ -1,11 +1,11 @@
 const routers = [
   {
     path: "/search",
-    title: "태그별",
+    titleKey: "nav.search",
   },
   {
     path: "/weekly",
-    title: "요일별신작",
+    titleKey: "nav.weekly",
   },
 ];
 

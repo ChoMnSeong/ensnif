@@ -6,6 +6,7 @@ const initialState: UserProfileState = {
     nickname: null,
     profileId: null,
     avatarUrl: null,
+    age: null,
 }
 
 const userProfileSlice = createSlice({
