@@ -88,3 +88,22 @@ export interface IBannerCreateRequest {
 }
 
 export type IBannerUpdateRequest = Partial<IBannerCreateRequest>
+
+export interface ITranslationRequest {
+    title: string
+    description?: string
+}
+
+export interface IMalImportRequest {
+    malId: number
+}
+
+export interface ISeasonImportRequest {
+    season?: 'WINTER' | 'SPRING' | 'SUMMER' | 'FALL'
+    year?: number
+}
+
+export interface IBulkResetImportRequest {
+    startYear?: number
+    endYear?: number
+}

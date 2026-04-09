@@ -13,6 +13,10 @@ import type {
     IAdBanner,
     IBannerCreateRequest,
     IBannerUpdateRequest,
+    ITranslationRequest,
+    IMalImportRequest,
+    ISeasonImportRequest,
+    IBulkResetImportRequest,
 } from '@libs/apis/admin/type'
 
 interface IApiResponse<T> {
@@ -139,6 +143,60 @@ export const useUpdateAnimation = () => {
     })
 }
 
+export const useImportAnimation = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: IMalImportRequest) => {
+            await instance.post('/admin/animations/import', data)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'animations'] })
+        },
+    })
+}
+
+export const useImportSeason = () => {
+    const queryClient = useQueryClient()
+    return useMutation({
+        mutationFn: async (data: ISeasonImportRequest) => {
+            const params = new URLSearchParams()
+            if (data.season) params.append('season', data.season)
+            if (data.year) params.append('year', String(data.year))
+            const query = params.toString()
+            await instance.post(`/admin/animations/import/season${query ? `?${query}` : ''}`)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['admin', 'animations'] })
+        },
+    })
+}
+
+export const useBulkResetImport = () =>
+    useMutation({
+        mutationFn: async ({ startYear, endYear }: IBulkResetImportRequest) => {
+            const params = new URLSearchParams()
+            if (startYear) params.append('startYear', String(startYear))
+            if (endYear) params.append('endYear', String(endYear))
+            const query = params.toString()
+            await instance.post(`/admin/animations/import/bulk-reset${query ? `?${query}` : ''}`)
+        },
+    })
+
+export const useUpsertAnimationTranslation = () =>
+    useMutation({
+        mutationFn: async ({
+            animationId,
+            locale,
+            data,
+        }: {
+            animationId: string
+            locale: string
+            data: ITranslationRequest
+        }) => {
+            await instance.put(`/admin/animations/${animationId}/translations/${locale}`, data)
+        },
+    })
+
 export const useDeleteAnimation = () => {
     const queryClient = useQueryClient()
     return useMutation({
@@ -188,6 +246,21 @@ export const useUpdateEpisode = (animationId: string | undefined) => {
         },
     })
 }
+
+export const useUpsertEpisodeTranslation = () =>
+    useMutation({
+        mutationFn: async ({
+            episodeId,
+            locale,
+            data,
+        }: {
+            episodeId: string
+            locale: string
+            data: ITranslationRequest
+        }) => {
+            await instance.put(`/admin/episodes/${episodeId}/translations/${locale}`, data)
+        },
+    })
 
 export const useDeleteEpisode = (animationId: string | undefined) => {
     const queryClient = useQueryClient()

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Plus, Pencil, Trash2, Video, ChevronRight, Settings2, Loader2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
+import { Plus, Pencil, Trash2, Video, ChevronRight, Settings2, Loader2, Download, Languages } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { Button } from '@components/ui/button'
 import { Badge } from '@components/ui/badge'
@@ -31,34 +32,20 @@ import {
     useDeleteAnimation,
     useCreateAnimationType,
     useCreateAnimationGenre,
+    useImportAnimation,
+    useImportSeason,
+    useBulkResetImport,
+    useUpsertAnimationTranslation,
     fetchAnimationDetail,
 } from '@libs/apis/admin'
 import type { IAdminAnimation, IAnimationCreateRequest } from '@libs/apis/admin/type'
 
-const STATUS_MAP: Record<string, string> = {
-    airing: '방영중',
-    finished: '완결',
-    upcoming: '방영예정',
-}
+const SEASON_KEYS = ['WINTER', 'SPRING', 'SUMMER', 'FALL'] as const
+const LOCALE_KEYS = ['ko', 'en', 'ja'] as const
 
-const RATING_MAP: Record<string, string> = {
-    ALL: '전체',
-    '12': '12세',
-    '15': '15세',
-    '19': '19세',
-}
-
-const AIR_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-const AIR_DAY_LABELS: Record<string, string> = {
-    Monday: '월',
-    Tuesday: '화',
-    Wednesday: '수',
-    Thursday: '목',
-    Friday: '금',
-    Saturday: '토',
-    Sunday: '일',
-}
+const STATUS_KEYS = ['ONGOING', 'FINISHED', 'UPCOMING'] as const
+const AIR_DAY_KEYS = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'] as const
+const RATING_KEYS = ['ALL', '12', '15', '19'] as const
 
 const defaultForm: IAnimationCreateRequest = {
     typeId: '',
@@ -66,22 +53,35 @@ const defaultForm: IAnimationCreateRequest = {
     description: '',
     thumbnailUrl: '',
     rating: 'ALL',
-    status: 'airing',
+    status: 'ONGOING',
     airDay: '',
     releasedAt: '',
     genreIds: [],
 }
 
 export default function AnimationsContainer() {
+    const { t } = useTranslation()
     const [search, setSearch] = useState('')
     const [dialogOpen, setDialogOpen] = useState(false)
     const [metaDialogOpen, setMetaDialogOpen] = useState(false)
+    const [importDialogOpen, setImportDialogOpen] = useState(false)
     const [deleteTarget, setDeleteTarget] = useState<IAdminAnimation | null>(null)
     const [editing, setEditing] = useState<IAdminAnimation | null>(null)
     const [form, setForm] = useState<IAnimationCreateRequest>(defaultForm)
     const [isFetchingDetail, setIsFetchingDetail] = useState(false)
     const [newTypeName, setNewTypeName] = useState('')
     const [newGenreName, setNewGenreName] = useState('')
+
+    // MAL import
+    const [malId, setMalId] = useState('')
+    const [seasonImportSeason, setSeasonImportSeason] = useState<typeof SEASON_KEYS[number]>('SPRING')
+    const [seasonImportYear, setSeasonImportYear] = useState(new Date().getFullYear())
+
+    // Translation
+    const [translationTarget, setTranslationTarget] = useState<IAdminAnimation | null>(null)
+    const [translationLocale, setTranslationLocale] = useState<typeof LOCALE_KEYS[number]>('ko')
+    const [translationTitle, setTranslationTitle] = useState('')
+    const [translationDesc, setTranslationDesc] = useState('')
 
     const { data: animations = [], isLoading } = useAdminAnimations()
     const { data: types = [] } = useAnimationTypes()
@@ -92,6 +92,15 @@ export default function AnimationsContainer() {
     const deleteMutation = useDeleteAnimation()
     const createTypeMutation = useCreateAnimationType()
     const createGenreMutation = useCreateAnimationGenre()
+    const [bulkResetConfirm, setBulkResetConfirm] = useState(false)
+
+    const importMutation = useImportAnimation()
+    const importSeasonMutation = useImportSeason()
+    const bulkResetMutation = useBulkResetImport()
+    const translationMutation = useUpsertAnimationTranslation()
+
+    const [bulkResetStartYear, setBulkResetStartYear] = useState(new Date().getFullYear())
+    const [bulkResetEndYear, setBulkResetEndYear] = useState(2000)
 
     useEffect(() => {
         if (!editing && !form.typeId && types.length > 0) {
@@ -178,6 +187,54 @@ export default function AnimationsContainer() {
         }))
     }
 
+    const openTranslation = (anim: IAdminAnimation) => {
+        setTranslationTarget(anim)
+        setTranslationLocale('ko')
+        setTranslationTitle('')
+        setTranslationDesc('')
+    }
+
+    const handleTranslationSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!translationTarget) return
+        translationMutation.mutate(
+            {
+                animationId: translationTarget.id,
+                locale: translationLocale,
+                data: { title: translationTitle, description: translationDesc || undefined },
+            },
+            {
+                onSuccess: () => {
+                    setTranslationTarget(null)
+                },
+            },
+        )
+    }
+
+    const handleMalImport = (e: React.FormEvent) => {
+        e.preventDefault()
+        const id = Number(malId)
+        if (!id) return
+        importMutation.mutate(
+            { malId: id },
+            {
+                onSuccess: () => {
+                    setMalId('')
+                    setImportDialogOpen(false)
+                },
+            },
+        )
+    }
+
+    const handleSeasonImport = () => {
+        importSeasonMutation.mutate(
+            { season: seasonImportSeason, year: seasonImportYear },
+            {
+                onSuccess: () => setImportDialogOpen(false),
+            },
+        )
+    }
+
     const isSaving = createMutation.isPending || updateMutation.isPending
 
     return (
@@ -191,6 +248,10 @@ export default function AnimationsContainer() {
                     <Button variant="outline" onClick={() => setMetaDialogOpen(true)}>
                         <Settings2 className="mr-2 h-4 w-4" />
                         메타데이터 관리
+                    </Button>
+                    <Button variant="outline" onClick={() => setImportDialogOpen(true)}>
+                        <Download className="mr-2 h-4 w-4" />
+                        MAL 임포트
                     </Button>
                     <Button onClick={openCreate}>
                         <Plus className="mr-2 h-4 w-4" />
@@ -248,21 +309,33 @@ export default function AnimationsContainer() {
                                     </TableCell>
                                     <TableCell>
                                         <Badge
-                                            variant={anim.status === 'airing' ? 'default' : 'secondary'}
+                                            variant={anim.status === 'ONGOING' ? 'default' : 'secondary'}
                                         >
-                                            {STATUS_MAP[anim.status] ?? anim.status}
+                                            {t(`animationStatus.${anim.status}`, { defaultValue: anim.status })}
                                         </Badge>
                                     </TableCell>
                                     <TableCell>
-                                        {anim.airDay ? AIR_DAY_LABELS[anim.airDay] ?? anim.airDay : '-'}
+                                        {anim.airDay
+                                            ? t(`airDay.${anim.airDay}`, { defaultValue: anim.airDay })
+                                            : '-'}
                                     </TableCell>
-                                    <TableCell>{RATING_MAP[anim.ageRating] ?? anim.ageRating}</TableCell>
+                                    <TableCell>
+                                        {t(`ageRating.${anim.ageRating}`, { defaultValue: anim.ageRating })}
+                                    </TableCell>
                                     <TableCell>
                                         <div className="flex items-center justify-end gap-2">
                                             <Button variant="ghost" size="icon" asChild>
                                                 <Link to={`/animations/${anim.id}/episodes`}>
                                                     <Video className="h-4 w-4" />
                                                 </Link>
+                                            </Button>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                title="번역 관리"
+                                                onClick={() => openTranslation(anim)}
+                                            >
+                                                <Languages className="h-4 w-4" />
                                             </Button>
                                             <Button
                                                 variant="ghost"
@@ -361,9 +434,11 @@ export default function AnimationsContainer() {
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="airing">방영중</SelectItem>
-                                            <SelectItem value="finished">완결</SelectItem>
-                                            <SelectItem value="upcoming">방영예정</SelectItem>
+                                            {STATUS_KEYS.map((key) => (
+                                                <SelectItem key={key} value={key}>
+                                                    {t(`animationStatus.${key}`)}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -377,10 +452,11 @@ export default function AnimationsContainer() {
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="ALL">전체</SelectItem>
-                                            <SelectItem value="12">12세</SelectItem>
-                                            <SelectItem value="15">15세</SelectItem>
-                                            <SelectItem value="19">19세</SelectItem>
+                                            {RATING_KEYS.map((key) => (
+                                                <SelectItem key={key} value={key}>
+                                                    {t(`ageRating.${key}`)}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
@@ -396,9 +472,9 @@ export default function AnimationsContainer() {
                                             <SelectValue placeholder="없음" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {AIR_DAYS.map((d) => (
-                                                <SelectItem key={d} value={d}>
-                                                    {AIR_DAY_LABELS[d]}요일
+                                            {AIR_DAY_KEYS.map((key) => (
+                                                <SelectItem key={key} value={key}>
+                                                    {t(`airDay.${key}`)}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -425,7 +501,7 @@ export default function AnimationsContainer() {
                                             className="cursor-pointer"
                                             onClick={() => toggleGenre(g.genreId)}
                                         >
-                                            {g.name}
+                                            {t(`genre.${g.name}`, { defaultValue: g.name })}
                                         </Badge>
                                     ))}
                                 </div>
@@ -474,9 +550,9 @@ export default function AnimationsContainer() {
                                 </Button>
                             </div>
                             <div className="flex flex-wrap gap-2">
-                                {types.map((t) => (
-                                    <Badge key={t.typeId} variant="secondary">
-                                        {t.name}
+                                {types.map((type) => (
+                                    <Badge key={type.typeId} variant="secondary">
+                                        {t(`animationType.${type.name}`, { defaultValue: type.name })}
                                     </Badge>
                                 ))}
                             </div>
@@ -503,12 +579,236 @@ export default function AnimationsContainer() {
                             <div className="flex flex-wrap gap-2">
                                 {genres.map((g) => (
                                     <Badge key={g.genreId} variant="secondary">
-                                        {g.name}
+                                        {t(`genre.${g.name}`, { defaultValue: g.name })}
                                     </Badge>
                                 ))}
                             </div>
                         </div>
                     </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* MAL Import Dialog */}
+            <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>MAL 임포트</DialogTitle>
+                    </DialogHeader>
+                    <div className="flex flex-col gap-6">
+                        {/* 단건 임포트 */}
+                        <form onSubmit={handleMalImport} className="flex flex-col gap-3">
+                            <Label>MAL ID로 단건 임포트</Label>
+                            <p className="text-xs text-muted-foreground">
+                                MyAnimeList ID를 입력하면 제목, 설명, 장르, 에피소드가 자동으로 저장됩니다.
+                            </p>
+                            <div className="flex gap-2">
+                                <Input
+                                    type="number"
+                                    min={1}
+                                    placeholder="예: 21"
+                                    value={malId}
+                                    onChange={(e) => setMalId(e.target.value)}
+                                />
+                                <Button
+                                    type="submit"
+                                    disabled={!malId || importMutation.isPending}
+                                >
+                                    {importMutation.isPending ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : '임포트'}
+                                </Button>
+                            </div>
+                            {importMutation.isError && (
+                                <p className="text-xs text-destructive">
+                                    임포트 실패. 이미 등록된 MAL ID이거나 존재하지 않는 ID입니다.
+                                </p>
+                            )}
+                        </form>
+
+                        <div className="border-t pt-4 flex flex-col gap-3">
+                            <Label>시즌 일괄 임포트</Label>
+                            <p className="text-xs text-muted-foreground">
+                                특정 시즌의 애니메이션을 일괄 임포트합니다. 이미 등록된 항목은 자동으로 건너뜁니다.
+                            </p>
+                            <div className="flex gap-2">
+                                <Select
+                                    value={seasonImportSeason}
+                                    onValueChange={(v) => setSeasonImportSeason(v as typeof SEASON_KEYS[number])}
+                                >
+                                    <SelectTrigger className="w-32">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {SEASON_KEYS.map((s) => (
+                                            <SelectItem key={s} value={s}>{s}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                <Input
+                                    type="number"
+                                    min={2000}
+                                    max={2099}
+                                    value={seasonImportYear}
+                                    onChange={(e) => setSeasonImportYear(Number(e.target.value))}
+                                    className="w-24"
+                                />
+                                <Button
+                                    onClick={handleSeasonImport}
+                                    disabled={importSeasonMutation.isPending}
+                                >
+                                    {importSeasonMutation.isPending ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : '임포트'}
+                                </Button>
+                            </div>
+                            {importSeasonMutation.isError && (
+                                <p className="text-xs text-destructive">시즌 임포트에 실패했습니다.</p>
+                            )}
+                        </div>
+
+                        <div className="border-t pt-4 flex flex-col gap-3">
+                            <Label className="text-destructive">전체 초기화 후 재임포트</Label>
+                            <p className="text-xs text-muted-foreground">
+                                기존 데이터를 <span className="font-semibold text-destructive">전체 삭제</span> 후
+                                지정 연도 범위 내의 애니메이션을 임포트합니다.
+                                백그라운드에서 실행되며 진행 상황은 서버 로그에서 확인할 수 있습니다.
+                            </p>
+                            <div className="flex flex-col gap-2">
+                                <div className="flex gap-2 items-center">
+                                    <Label className="shrink-0 text-sm">시작 연도</Label>
+                                    <Input
+                                        type="number"
+                                        min={1990}
+                                        max={2099}
+                                        value={bulkResetStartYear}
+                                        onChange={(e) => {
+                                            setBulkResetStartYear(Number(e.target.value))
+                                            setBulkResetConfirm(false)
+                                        }}
+                                        className="w-24"
+                                    />
+                                </div>
+                                <div className="flex gap-2 items-center">
+                                    <Label className="shrink-0 text-sm">종료 연도</Label>
+                                    <Input
+                                        type="number"
+                                        min={1990}
+                                        max={2099}
+                                        value={bulkResetEndYear}
+                                        onChange={(e) => {
+                                            setBulkResetEndYear(Number(e.target.value))
+                                            setBulkResetConfirm(false)
+                                        }}
+                                        className="w-24"
+                                    />
+                                </div>
+                            </div>
+                            {!bulkResetConfirm ? (
+                                <Button
+                                    variant="destructive"
+                                    onClick={() => setBulkResetConfirm(true)}
+                                >
+                                    전체 초기화 후 재임포트
+                                </Button>
+                            ) : (
+                                <div className="flex flex-col gap-2">
+                                    <p className="text-xs font-semibold text-destructive">
+                                        정말 실행하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                                    </p>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            variant="outline"
+                                            className="flex-1"
+                                            onClick={() => setBulkResetConfirm(false)}
+                                        >
+                                            취소
+                                        </Button>
+                                        <Button
+                                            variant="destructive"
+                                            className="flex-1"
+                                            disabled={bulkResetMutation.isPending}
+                                            onClick={() =>
+                                                bulkResetMutation.mutate(
+                                                    { startYear: bulkResetStartYear, endYear: bulkResetEndYear },
+                                                    {
+                                                        onSuccess: () => {
+                                                            setBulkResetConfirm(false)
+                                                            setImportDialogOpen(false)
+                                                        },
+                                                    },
+                                                )
+                                            }
+                                        >
+                                            {bulkResetMutation.isPending ? (
+                                                <Loader2 className="h-4 w-4 animate-spin" />
+                                            ) : '확인, 실행'}
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                            {bulkResetMutation.isError && (
+                                <p className="text-xs text-destructive">실행에 실패했습니다.</p>
+                            )}
+                            {bulkResetMutation.isSuccess && (
+                                <p className="text-xs text-green-600">백그라운드에서 임포트가 시작되었습니다. 서버 로그를 확인하세요.</p>
+                            )}
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* Translation Dialog */}
+            <Dialog open={!!translationTarget} onOpenChange={() => setTranslationTarget(null)}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>번역 관리 — {translationTarget?.title}</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleTranslationSubmit} className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-1.5">
+                            <Label>언어</Label>
+                            <Select
+                                value={translationLocale}
+                                onValueChange={(v) => setTranslationLocale(v as typeof LOCALE_KEYS[number])}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {LOCALE_KEYS.map((l) => (
+                                        <SelectItem key={l} value={l}>
+                                            {l === 'ko' ? '한국어' : l === 'en' ? 'English' : '日本語'}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <Label>제목</Label>
+                            <Input
+                                value={translationTitle}
+                                onChange={(e) => setTranslationTitle(e.target.value)}
+                                placeholder="번역된 제목"
+                                required
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1.5">
+                            <Label>설명 (선택)</Label>
+                            <Textarea
+                                value={translationDesc}
+                                onChange={(e) => setTranslationDesc(e.target.value)}
+                                placeholder="번역된 설명"
+                                className="resize-none"
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button type="button" variant="outline" onClick={() => setTranslationTarget(null)}>
+                                취소
+                            </Button>
+                            <Button type="submit" disabled={translationMutation.isPending}>
+                                {translationMutation.isPending ? '저장 중...' : '저장'}
+                            </Button>
+                        </DialogFooter>
+                    </form>
                 </DialogContent>
             </Dialog>
 
