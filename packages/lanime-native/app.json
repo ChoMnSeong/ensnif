@@ -1,0 +1,44 @@
+{
+    "expo": {
+        "name": "lanime",
+        "slug": "lanime-native",
+        "version": "0.0.0",
+        "orientation": "portrait",
+        "scheme": "lanime",
+        "userInterfaceStyle": "dark",
+        "newArchEnabled": true,
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.lanime.app",
+            "infoPlist": {
+                "NSAppTransportSecurity": {
+                    "NSAllowsArbitraryLoads": true,
+                    "NSAllowsLocalNetworking": true
+                }
+            }
+        },
+        "android": {
+            "package": "com.lanime.app",
+            "usesCleartextTraffic": true
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "static"
+        },
+        "plugins": [
+            "expo-router",
+            "expo-secure-store",
+            [
+                "expo-video",
+                {
+                    "supportsBackgroundPlayback": true,
+                    "supportsPictureInPicture": true
+                }
+            ]
+        ],
+        "experiments": {
+            "typedRoutes": true,
+            "tsconfigPaths": true
+        }
+    }
+}

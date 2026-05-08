@@ -1,46 +1,234 @@
-# Claude Code
+# ============================================================
+# Claude Code / AI 도구
+# ============================================================
 .claude/*
+.cursor/
+.aider*
+.continue/
 
+# ============================================================
 # Dependencies
+# ============================================================
 node_modules/
+jspm_packages/
+bower_components/
+web_modules/
 
+# ============================================================
+# Package manager
+# ============================================================
 # pnpm
 .pnpm-store/
 pnpm-debug.log*
 
-# Logs
-logs/
-*.log
+# npm
 npm-debug.log*
+.npm/
+
+# yarn
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
-# Environment (local overrides only — .env, .env.development, .env.production can be committed)
+# bun
+bun-debug.log*
+.bun/
+
+# Lerna / Turbo / Nx
+lerna-debug.log*
+.turbo/
+.nx/
+
+# ============================================================
+# Logs
+# ============================================================
+logs/
+*.log
+*.log.*
+pnpm-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# ============================================================
+# Environment / Secrets
+# ============================================================
+# 로컬 오버라이드만 무시. .env, .env.development, .env.production 은 커밋 가능.
 .env.local
 .env.*.local
+.env.development.local
+.env.production.local
+.env.test.local
 
+# 자격증명 / 토큰 관련 파일 (실수 방지)
+*.pem
+*.key
+*.p12
+*.pfx
+.credentials/
+secrets.json
+secrets/
+auth.json
+
+# ============================================================
+# Build / 컴파일 산출물
+# ============================================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.cache/
+.parcel-cache/
+.docusaurus/
+.vitepress/dist/
+.vitepress/cache/
+storybook-static/
+
+# 패키지별 dist
+packages/*/dist/
+packages/*/build/
+packages/*/out/
+
+# ============================================================
 # TypeScript
+# ============================================================
 *.tsbuildinfo
+.tscache/
 
-# OS
+# ============================================================
+# 테스트 / 커버리지
+# ============================================================
+coverage/
+*.lcov
+.nyc_output/
+junit.xml
+test-results/
+playwright-report/
+playwright/.cache/
+
+# ============================================================
+# Vite / Rollup / Webpack 캐시
+# ============================================================
+.vite/
+.rollup.cache/
+.webpack/
+
+# ============================================================
+# 호스팅 / 배포 플랫폼
+# ============================================================
+.vercel/
+.netlify/
+.cloudflare/
+.wrangler/
+.firebase/
+.serverless/
+.amplify/
+.fly/
+
+# ============================================================
+# OS 파일
+# ============================================================
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# Editors
+# ============================================================
+# 에디터 / IDE
+# ============================================================
+# VS Code (일부 공유 파일은 허용)
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.history/
+
+# JetBrains (WebStorm, IntelliJ 등)
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Vim / Neovim
+*.swp
+*.swo
+*.swn
+*.sw?
+.netrwhist
+Session.vim
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Visual Studio
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+*.user
 
+# ============================================================
+# React Native / Expo
+# ============================================================
+.expo/
+.expo-shared/
+*.jks
+*.p8
+*.mobileprovision
+*.orig.*
+ios/Pods/
+ios/build/
+android/build/
+android/app/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/keystores/debug.keystore
+android/app/release/
+*.hprof
+
+# ============================================================
+# 모바일 빌드
+# ============================================================
+*.apk
+*.aab
+*.ipa
+
+# ============================================================
+# 임시 / 백업 파일
+# ============================================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+.history/
+
+# ============================================================
+# 프로젝트별 산출물
+# ============================================================
 packages/common/dist/
-
 packages/lanime-web/docs/
 
+# ============================================================
+# 워크룸 (개인 노트)
+# ============================================================
 .workman/
+notes/
+TODO.md.local
