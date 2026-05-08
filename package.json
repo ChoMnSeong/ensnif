@@ -6,7 +6,12 @@
         "setup:mac": "sh setup.sh",
         "dev:lanime-web": "pnpm --filter lanime-web dev",
         "dev:ssr:lanime-web": "pnpm --filter lanime-web dev:ssr",
-        "dev:lanime-admin-web": "pnpm --filter lanime-admin-web dev"
+        "dev:lanime-admin-web": "pnpm --filter lanime-admin-web dev",
+        "dev:lanime-native": "pnpm --filter lanime-native start",
+        "ios:lanime-native": "pnpm --filter lanime-native ios",
+        "android:lanime-native": "pnpm --filter lanime-native android",
+        "dev:design-system-docs": "pnpm --filter design-system-docs dev",
+        "build:design-system": "pnpm --filter @ensnif/design-system build"
     },
     "devDependencies": {
         "@swc/plugin-emotion": "^9.0.0",

@@ -1,0 +1,80 @@
+{
+    "name": "@ensnif/design-system",
+    "version": "0.1.0",
+    "description": "Multi-style, multi-palette design system: tokens, themes, React provider, and 50+ components for the lanime ecosystem.",
+    "license": "MIT",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        },
+        "./tokens": {
+            "types": "./dist/tokens/index.d.ts",
+            "import": "./dist/tokens/index.js"
+        },
+        "./palettes": {
+            "types": "./dist/palettes/index.d.ts",
+            "import": "./dist/palettes/index.js"
+        },
+        "./variants": {
+            "types": "./dist/variants/index.d.ts",
+            "import": "./dist/variants/index.js"
+        },
+        "./themes": {
+            "types": "./dist/themes/index.d.ts",
+            "import": "./dist/themes/index.js"
+        },
+        "./provider": {
+            "types": "./dist/provider/index.d.ts",
+            "import": "./dist/provider/index.js"
+        },
+        "./components": {
+            "types": "./dist/components/index.d.ts",
+            "import": "./dist/components/index.js"
+        }
+    },
+    "files": [
+        "dist",
+        "README.md"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "clean": "rm -rf dist",
+        "prepublishOnly": "pnpm clean && pnpm build"
+    },
+    "peerDependencies": {
+        "react": ">=18.0.0",
+        "react-dom": ">=18.0.0"
+    },
+    "dependencies": {
+        "react-icons": "^5.6.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.10",
+        "@types/react-dom": "^19.0.4",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "typescript": "^5.8.2"
+    },
+    "keywords": [
+        "design-system",
+        "tokens",
+        "theme",
+        "palette",
+        "variants",
+        "css-variables",
+        "react",
+        "components",
+        "ui",
+        "ui-library"
+    ],
+    "sideEffects": false,
+    "publishConfig": {
+        "access": "public"
+    }
+}
