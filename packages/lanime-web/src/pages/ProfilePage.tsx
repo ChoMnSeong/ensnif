@@ -4,11 +4,8 @@ import Flex from '@components/common/Flex'
 import HeaderLogo from '@components/header/HeaderLogo'
 import ProfileContainer from '@containers/auth/ProfileContainer'
 import { themedPalette } from '@libs/style/theme'
-import useTheme from '@hooks/useTheme'
 
 const ProfilePage: React.FC = () => {
-    const { theme } = useTheme()
-
     return (
         <PageWrapper
             direction="column"
@@ -16,7 +13,7 @@ const ProfilePage: React.FC = () => {
             justifyContent="center"
         >
             <LogoWrapper>
-                <HeaderLogo theme={theme} />
+                <HeaderLogo />
             </LogoWrapper>
             <ProfileContainer />
         </PageWrapper>
