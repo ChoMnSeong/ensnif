@@ -1,0 +1,28 @@
+{
+    "name": "image-to-3d-web",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --mode development",
+        "build": "tsc -b && vite build",
+        "preview": "vite preview",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.0",
+        "@ensnif/design-system": "^0.1.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "three": "^0.169.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.0.0",
+        "@types/react-dom": "^19.0.0",
+        "@types/three": "^0.169.0",
+        "@vitejs/plugin-react": "^4.3.4",
+        "typescript": "^5.8.2",
+        "vite": "^6.0.0"
+    }
+}
