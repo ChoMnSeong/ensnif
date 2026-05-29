@@ -26,4 +26,6 @@ export {
     MdRemove as IconMinus,
     MdMoreHoriz as IconMoreHorizontal,
     MdMoreVert as IconMoreVertical,
+    MdVisibility as IconEye,
+    MdVisibilityOff as IconEyeOff,
 } from 'react-icons/md'
