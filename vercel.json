@@ -1,0 +1,8 @@
+{
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "framework": "vite",
+    "installCommand": "pnpm install --frozen-lockfile=false",
+    "buildCommand": "pnpm --filter design-system-docs exec vite build",
+    "outputDirectory": "packages/design-system-docs/dist",
+    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}

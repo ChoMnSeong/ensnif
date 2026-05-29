@@ -232,3 +232,4 @@ packages/lanime-web/docs/
 .workman/
 notes/
 TODO.md.local
+.vercel
