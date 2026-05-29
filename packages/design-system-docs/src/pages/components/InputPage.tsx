@@ -14,7 +14,7 @@ export const InputPage = () => {
             <PageHeader
                 eyebrow="Component"
                 title="Input"
-                description="텍스트 입력. 4가지 variant (outlined / underline / filled / ghost), 3 size, prefix/suffix, invalid 상태."
+                description="텍스트 입력. 4가지 variant (outlined / underline / filled / ghost), 3 size, prefix/suffix, invalid 상태, password 보이기/숨기기 토글, 전체 지우기(clearable)."
             />
 
             <ComponentPreview
@@ -161,6 +161,35 @@ export const InputPage = () => {
                         </span>
                     )}
                 </div>
+            </ComponentPreview>
+
+            <ComponentPreview
+                title="Password reveal"
+                description="type='password' 이면 보이기/숨기기 토글 버튼이 자동으로 노출된다. revealable={false}로 끌 수 있다."
+                code={`<Input type="password" defaultValue="s3cr3t!" />`}
+            >
+                <Input
+                    type="password"
+                    defaultValue="s3cr3t!"
+                    style={{ minWidth: '280px' }}
+                />
+            </ComponentPreview>
+
+            <ComponentPreview
+                title="Clearable"
+                description="clearable 를 켜면 입력값이 있을 때 전체 지우기 버튼이 나타난다."
+                code={`<Input
+    clearable
+    placeholder="검색어 입력"
+    prefix={<IconSearch size={14} />}
+/>`}
+            >
+                <Input
+                    clearable
+                    defaultValue="지울 수 있는 텍스트"
+                    prefix={<IconSearch size={14} />}
+                    style={{ minWidth: '280px' }}
+                />
             </ComponentPreview>
         </>
     )
