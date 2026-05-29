@@ -170,6 +170,7 @@ export const ThemeDrawer = ({ open, onClose }: Props) => {
                 </header>
 
                 <div
+                    data-ds-scrollbar=""
                     style={{
                         flex: 1,
                         overflowY: 'auto',

@@ -118,6 +118,7 @@ export const CodeBlock = ({
                 </div>
             )}
             <pre
+                data-ds-scrollbar=""
                 style={{
                     margin: 0,
                     padding: '14px 16px',

@@ -214,6 +214,7 @@ export const ComboBox = ({
                     </div>
 
                     <div
+                        data-ds-scrollbar=""
                         style={{
                             maxHeight: '240px',
                             overflowY: 'auto',

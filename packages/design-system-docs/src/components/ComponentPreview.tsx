@@ -130,6 +130,7 @@ export const ComponentPreview = ({
                     </div>
                 ) : (
                     <pre
+                        data-ds-scrollbar=""
                         style={{
                             margin: 0,
                             padding: '20px 24px',

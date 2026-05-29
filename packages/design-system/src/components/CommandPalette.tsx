@@ -191,6 +191,7 @@ export const CommandPalette = ({
                     />
                 </div>
                 <div
+                    data-ds-scrollbar=""
                     style={{
                         flex: 1,
                         overflowY: 'auto',

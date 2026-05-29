@@ -19,6 +19,7 @@ export const Sidebar = ({ current, onSelect }: Props) => {
 
     return (
         <aside
+            data-ds-scrollbar=""
             style={{
                 position: 'sticky',
                 top: '57px',

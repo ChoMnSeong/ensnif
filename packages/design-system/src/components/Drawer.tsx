@@ -179,6 +179,7 @@ export const Drawer = ({
                     </header>
                 )}
                 <div
+                    data-ds-scrollbar=""
                     style={{
                         flex: 1,
                         overflowY: 'auto',
