@@ -31,6 +31,43 @@ input[type=number][data-ds-numberinput] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+[data-ds-scrollbar],
+html[data-ds-mode],
+html[data-ds-mode] body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ds-color-border-default) transparent;
+}
+[data-ds-scrollbar]::-webkit-scrollbar,
+html[data-ds-mode]::-webkit-scrollbar,
+html[data-ds-mode] body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+[data-ds-scrollbar]::-webkit-scrollbar-track,
+html[data-ds-mode]::-webkit-scrollbar-track,
+html[data-ds-mode] body::-webkit-scrollbar-track {
+    background: transparent;
+}
+[data-ds-scrollbar]::-webkit-scrollbar-thumb,
+html[data-ds-mode]::-webkit-scrollbar-thumb,
+html[data-ds-mode] body::-webkit-scrollbar-thumb {
+    background: var(--ds-color-border-default);
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background 160ms ease;
+}
+[data-ds-scrollbar]:hover::-webkit-scrollbar-thumb,
+html[data-ds-mode]:hover::-webkit-scrollbar-thumb,
+html[data-ds-mode] body:hover::-webkit-scrollbar-thumb {
+    background: var(--ds-color-border-strong);
+    background-clip: padding-box;
+}
+[data-ds-scrollbar]::-webkit-scrollbar-corner,
+html[data-ds-mode]::-webkit-scrollbar-corner,
+html[data-ds-mode] body::-webkit-scrollbar-corner {
+    background: transparent;
+}
 `.trim()
 
 export const FocusStyles = () => (

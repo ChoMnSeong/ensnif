@@ -1,28 +1,6 @@
 import type { CSSProperties, HTMLAttributes, Ref } from 'react'
 import { mergeStyles } from './types.js'
 
-const STYLE_ID = 'ds-scrollarea-style'
-const SCROLL_CSS = `
-[data-ds-scrollarea] {
-    scrollbar-width: thin;
-    scrollbar-color: var(--ds-color-border-default) transparent;
-}
-[data-ds-scrollarea]::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-[data-ds-scrollarea]::-webkit-scrollbar-track {
-    background: transparent;
-}
-[data-ds-scrollarea]::-webkit-scrollbar-thumb {
-    background: var(--ds-color-border-default);
-    border-radius: 4px;
-}
-[data-ds-scrollarea]:hover::-webkit-scrollbar-thumb {
-    background: var(--ds-color-border-strong);
-}
-`.trim()
-
 export type ScrollAreaProps = {
     maxHeight?: number | string
     direction?: 'vertical' | 'horizontal' | 'both'
@@ -45,25 +23,22 @@ export const ScrollArea = ({
               : { overflowY: 'auto', overflowX: 'hidden' }
 
     return (
-        <>
-            <style id={STYLE_ID}>{SCROLL_CSS}</style>
-            <div
-                ref={ref}
-                data-ds-scrollarea=""
-                style={mergeStyles(
-                    {
-                        maxHeight:
-                            typeof maxHeight === 'number'
-                                ? `${maxHeight}px`
-                                : maxHeight,
-                        ...overflow,
-                    },
-                    style,
-                )}
-                {...rest}
-            >
-                {children}
-            </div>
-        </>
+        <div
+            ref={ref}
+            data-ds-scrollbar=""
+            style={mergeStyles(
+                {
+                    maxHeight:
+                        typeof maxHeight === 'number'
+                            ? `${maxHeight}px`
+                            : maxHeight,
+                    ...overflow,
+                },
+                style,
+            )}
+            {...rest}
+        >
+            {children}
+        </div>
     )
 }
