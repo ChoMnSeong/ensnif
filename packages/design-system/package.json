@@ -1,6 +1,6 @@
 {
     "name": "@ensnif/design-system",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Multi-style, multi-palette design system: tokens, themes, React provider, and 50+ components for the lanime ecosystem.",
     "license": "MIT",
     "type": "module",
