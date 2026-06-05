@@ -11,7 +11,10 @@
         "ios:lanime-native": "pnpm --filter lanime-native ios",
         "android:lanime-native": "pnpm --filter lanime-native android",
         "dev:design-system-docs": "pnpm --filter design-system-docs dev",
-        "build:design-system": "pnpm --filter @ensnif/design-system build"
+        "build:design-system": "pnpm --filter @ensnif/design-system build",
+        "dev:poker-server": "pnpm --filter poker-server dev",
+        "dev:poker-web": "pnpm --filter poker-web dev",
+        "test:poker-engine": "pnpm --filter @ensnif/poker-engine test"
     },
     "devDependencies": {
         "@swc/plugin-emotion": "^9.0.0",
