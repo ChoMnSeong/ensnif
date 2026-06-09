@@ -12,7 +12,7 @@ export const env = {
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean),
-    databasePath: process.env.DATABASE_PATH ?? './data/poker.db',
+    databaseUrl: process.env.DATABASE_URL ?? 'postgresql://postgres:postgres@localhost:5432/poker',
     startingChips: num(process.env.STARTING_CHIPS, 10000),
     turnSeconds: num(process.env.TURN_SECONDS, 30),
 }

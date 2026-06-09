@@ -19,7 +19,7 @@ export class TableManager {
             this.tables.set(
                 config.id,
                 new Table(config, {
-                    adjustChips: (userId, delta, reason) => db.adjustChips(userId, delta, reason, Date.now()),
+                    adjustChips: (userId, delta, reason) => db.adjustChips(userId, delta, reason),
                     getChips: (userId) => db.getChips(userId),
                     turnSeconds,
                     onLobbyChanged: () => this.broadcastLobby(),
@@ -30,6 +30,11 @@ export class TableManager {
 
     get(id: string): Table | undefined {
         return this.tables.get(id)
+    }
+
+    /** Warm a user's bankroll cache before they take a synchronous chip action. */
+    ensureChipsLoaded(userId: string): Promise<number> {
+        return this.db.loadChips(userId)
     }
 
     /** The table where this user is currently seated, if any. */

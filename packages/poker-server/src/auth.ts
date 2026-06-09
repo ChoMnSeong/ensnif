@@ -41,11 +41,11 @@ export class AuthService {
 
     async register(rawUsername: string, password: string): Promise<{ token: string; user: PublicUser }> {
         const { username, password: pw } = credentialsSchema.parse({ username: rawUsername, password })
-        if (this.db.getUserByUsername(username)) {
+        if (await this.db.getUserByUsername(username)) {
             throw new HttpError(409, '이미 사용 중인 아이디입니다')
         }
         const hash = await bcrypt.hash(pw, 10)
-        const row = this.db.createUser(username, hash, env.startingChips, Date.now())
+        const row = await this.db.createUser(username, hash, env.startingChips, Date.now())
         return { token: signToken({ userId: row.id, username: row.username }), user: toPublicUser(row) }
     }
 
@@ -53,7 +53,7 @@ export class AuthService {
         const parsed = credentialsSchema.safeParse({ username: rawUsername, password })
         // Use a generic error on login to avoid leaking which field was wrong.
         const username = parsed.success ? parsed.data.username : rawUsername.trim()
-        const row = this.db.getUserByUsername(username)
+        const row = await this.db.getUserByUsername(username)
         if (!row || !(await bcrypt.compare(password, row.password_hash))) {
             throw new HttpError(401, '아이디 또는 비밀번호가 올바르지 않습니다')
         }

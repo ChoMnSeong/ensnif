@@ -9,7 +9,7 @@ import { attachSocket } from './socket'
 import { TableManager } from './game/TableManager'
 import type { AppServer } from './ioTypes'
 
-const db = new Database(env.databasePath)
+const db = new Database(env.databaseUrl)
 
 const app = express()
 app.use(cors({ origin: env.clientOrigins, credentials: true }))
@@ -27,15 +27,24 @@ const io: AppServer = new Server(httpServer, {
 const manager = new TableManager(db, io, env.turnSeconds)
 attachSocket(io, manager)
 
-httpServer.listen(env.port, () => {
-    console.log(`♠ poker-server listening on http://localhost:${env.port}`)
-    console.log(`  allowed origins: ${env.clientOrigins.join(', ')}`)
+async function main() {
+    await db.init()
+    httpServer.listen(env.port, () => {
+        console.log(`♠ poker-server listening on http://localhost:${env.port}`)
+        console.log(`  allowed origins: ${env.clientOrigins.join(', ')}`)
+    })
+}
+
+main().catch((err) => {
+    console.error('failed to start poker-server:', err)
+    process.exit(1)
 })
 
 function shutdown() {
     console.log('\nshutting down…')
     manager.dispose()
     io.close()
+    void db.close()
     httpServer.close(() => process.exit(0))
     setTimeout(() => process.exit(0), 2000)
 }

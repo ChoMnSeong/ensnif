@@ -39,7 +39,7 @@ export function attachSocket(io: AppServer, manager: TableManager): void {
             void socket.leave(LOBBY_ROOM)
         })
 
-        socket.on('table:join', (req, ack: (res: AckResponse) => void) => {
+        socket.on('table:join', async (req, ack: (res: AckResponse) => void) => {
             const table = manager.get(req.tableId)
             if (!table) return ack?.({ ok: false, error: '테이블을 찾을 수 없습니다' })
             const other = manager.findTableOfUser(userId)
@@ -47,6 +47,8 @@ export function attachSocket(io: AppServer, manager: TableManager): void {
                 return ack?.({ ok: false, error: '이미 다른 테이블에 앉아 있습니다' })
             }
             try {
+                // Warm the bankroll cache so the synchronous buy-in below is safe.
+                await manager.ensureChipsLoaded(userId)
                 table.join(socket, userId, username, req.buyIn, req.seat)
                 ack?.({ ok: true })
             } catch (err) {

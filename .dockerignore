@@ -23,6 +23,15 @@ package-lock.json
 *.log
 tests/
 
+# 환경변수/로컬 DB/배포 메타 (런타임에 주입되므로 이미지에 포함하지 않음)
+**/.env
+**/.env.*
+!**/.env.example
+**/data/
+*.db
+*.db-*
+.vercel/
+
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases

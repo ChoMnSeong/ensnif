@@ -1,0 +1,28 @@
+# Render Blueprint for the poker backend (Express + Socket.IO).
+# Deploy: Render Dashboard → New → Blueprint → pick this repo.
+# DATABASE_URL is left unset here (sync: false) — paste your Neon connection
+# string in the Render dashboard after the service is created.
+services:
+  - type: web
+    name: ensnif-poker-server
+    runtime: docker
+    plan: free
+    region: singapore
+    # Poker code currently lives on this branch, not main.
+    branch: feat/poker-web
+    dockerfilePath: ./packages/poker-server/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      # PORT is provided by Render automatically — do not set it.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_ORIGIN
+        value: https://ensnif-poker-web.vercel.app
+      - key: STARTING_CHIPS
+        value: "10000"
+      - key: TURN_SECONDS
+        value: "30"
+      - key: DATABASE_URL
+        sync: false

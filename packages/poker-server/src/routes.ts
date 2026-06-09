@@ -66,8 +66,11 @@ export function createApiRouter(db: Database): Router {
         '/me',
         requireAuth,
         handle(async (req: AuthedRequest, res) => {
-            const row = db.getUserById(req.userId!)
+            const row = await db.getUserById(req.userId!)
             if (!row) throw new HttpError(404, '사용자를 찾을 수 없습니다')
+            // Prefer the live cached bankroll over the persisted value, which may
+            // lag behind queued chip writes for a seated player.
+            row.chips = await db.loadChips(row.id)
             res.json({ user: toPublicUser(row) satisfies PublicUser })
         }),
     )
