@@ -81,13 +81,19 @@ export const Checkbox = ({
                 ? 'var(--ds-color-accent-border)'
                 : '1px solid var(--ds-color-border-default)',
         borderRadius: 'var(--ds-radius-xs)',
-        transition: 'all 120ms ease',
+        transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+        transitionDuration: '120ms',
+        transitionTimingFunction: 'ease',
         boxShadow: checked ? 'var(--ds-color-accent-shadow)' : 'none',
         opacity: disabled ? 0.5 : 1,
     }
 
     return (
-        <label style={mergeStyles(wrapperStyle, style)}>
+        <label
+            data-ds-interactive="control"
+            data-ds-disabled={disabled ? '' : undefined}
+            style={mergeStyles(wrapperStyle, style)}
+        >
             <input
                 {...rest}
                 ref={setRef}
@@ -144,9 +150,7 @@ export const Checkbox = ({
                     </svg>
                 ) : null}
             </span>
-            {label && (
-                <span style={{ lineHeight: 1.4 }}>{label}</span>
-            )}
+            {label && <span style={{ lineHeight: 1.4 }}>{label}</span>}
         </label>
     )
 }

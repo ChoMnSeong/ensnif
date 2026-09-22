@@ -186,6 +186,7 @@ export const Input = ({
             />
             {showClear && (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Clear"
                     onClick={handleClear}
@@ -197,6 +198,7 @@ export const Input = ({
             )}
             {showReveal && (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label={revealed ? 'Hide password' : 'Show password'}
                     aria-pressed={revealed}

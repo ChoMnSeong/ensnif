@@ -45,7 +45,9 @@ const dotBaseStyle = (
                   ? 'var(--ds-color-accent-background)'
                   : 'var(--ds-color-border-subtle)'
           }`,
-    transition: 'all 160ms ease',
+    transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+    transitionDuration: '160ms',
+    transitionTimingFunction: 'ease',
     position: 'relative',
     zIndex: 1,
 })

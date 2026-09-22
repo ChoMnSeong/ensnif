@@ -135,6 +135,7 @@ export const AccordionItem = ({
             {...rest}
         >
             <button
+                data-ds-interactive="subtle"
                 type="button"
                 onClick={() => ctx.toggle(value)}
                 aria-expanded={isOpen}

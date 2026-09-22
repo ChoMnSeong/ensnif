@@ -105,13 +105,16 @@ export const Tab = ({ value, children, disabled, style, ...rest }: TabProps) => 
             ctx.variant === 'pill' ? 'var(--ds-radius-sm)' : 0,
         boxShadow:
             active && ctx.variant === 'pill'
-                ? '0 1px 2px rgba(0, 0, 0, 0.06)'
+                ? 'var(--ds-shadow-xs)'
                 : 'none',
         position: 'relative',
-        transition: 'all 120ms ease',
+        transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+        transitionDuration: '120ms',
+        transitionTimingFunction: 'ease',
     }
     return (
         <button
+            data-ds-interactive="subtle"
             role="tab"
             type="button"
             aria-selected={active}

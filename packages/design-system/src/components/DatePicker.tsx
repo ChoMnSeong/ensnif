@@ -118,6 +118,7 @@ export const DatePicker = ({
     return (
         <div style={{ display: 'inline-block', ...style }}>
             <button
+                data-ds-interactive="outline"
                 ref={triggerRef}
                 type="button"
                 disabled={disabled}
@@ -180,6 +181,7 @@ export const DatePicker = ({
                         }}
                     >
                         <button
+                            data-ds-interactive="subtle"
                             type="button"
                             onClick={() =>
                                 setView((v) =>
@@ -203,6 +205,7 @@ export const DatePicker = ({
                             {monthLabel}
                         </div>
                         <button
+                            data-ds-interactive="subtle"
                             type="button"
                             onClick={() =>
                                 setView((v) =>
@@ -255,6 +258,7 @@ export const DatePicker = ({
                             const isToday = iso === todayKey
                             return (
                                 <button
+                                    data-ds-interactive="subtle"
                                     key={iso}
                                     type="button"
                                     onClick={() => select(d)}
@@ -276,7 +280,9 @@ export const DatePicker = ({
                                         borderRadius: 'var(--ds-radius-sm)',
                                         cursor: 'pointer',
                                         fontFamily: 'inherit',
-                                        transition: 'all 80ms ease',
+                                        transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+                                        transitionDuration: '80ms',
+                                        transitionTimingFunction: 'ease',
                                     }}
                                 >
                                     {d.getDate()}

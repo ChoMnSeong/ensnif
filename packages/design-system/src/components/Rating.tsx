@@ -129,8 +129,11 @@ export const Rating = ({
                     !readOnly
                 return (
                     <button
+                        data-ds-interactive="subtle"
                         key={i}
                         type="button"
+                        role="radio"
+                        aria-checked={Math.ceil(display) === i + 1}
                         disabled={readOnly}
                         onClick={(e) => set(computeStarValue(i, e))}
                         onMouseMove={(e) => {

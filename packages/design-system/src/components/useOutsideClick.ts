@@ -21,7 +21,8 @@ export const useOutsideClick = (
             onOutside()
         }
         document.addEventListener('mousedown', handler)
-        document.addEventListener('touchstart', handler)
+        // passive: 바깥 클릭 감지만 하고 기본 동작을 막지 않으므로 터치 스크롤을 지연시키지 않는다.
+        document.addEventListener('touchstart', handler, { passive: true })
         return () => {
             document.removeEventListener('mousedown', handler)
             document.removeEventListener('touchstart', handler)

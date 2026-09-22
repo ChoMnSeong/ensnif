@@ -104,6 +104,7 @@ export const NumberInput = ({
         >
             <style>{HIDE_SPINNERS}</style>
             <button
+                data-ds-interactive="subtle"
                 type="button"
                 onClick={() => setValue(value - step)}
                 disabled={disabled}
@@ -117,6 +118,7 @@ export const NumberInput = ({
             </button>
             <input
                 type="number"
+                    data-ds-numeric=""
                 inputMode="numeric"
                 min={min}
                 max={max}
@@ -135,13 +137,14 @@ export const NumberInput = ({
                     outline: 'none',
                     textAlign: 'center',
                     fontSize: sizeText[size],
-                    fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                    fontFamily: 'var(--ds-typography-font-family-mono)',
                     color: 'var(--ds-color-foreground-primary)',
                     minWidth: '60px',
                     padding: 0,
                 }}
             />
             <button
+                data-ds-interactive="subtle"
                 type="button"
                 onClick={() => setValue(value + step)}
                 disabled={disabled}

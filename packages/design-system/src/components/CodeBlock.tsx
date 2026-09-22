@@ -45,7 +45,7 @@ export const CodeBlock = ({
                     borderRadius: 'var(--ds-radius-md)',
                     overflow: 'hidden',
                     background: 'var(--ds-color-background-inset)',
-                    fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                    fontFamily: 'var(--ds-typography-font-family-mono)',
                 },
                 style,
             )}
@@ -70,7 +70,7 @@ export const CodeBlock = ({
                             gap: '8px',
                             color: 'var(--ds-color-foreground-tertiary)',
                             fontFamily:
-                                'var(--ds-typography-fontFamily-mono)',
+                                'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         {fileName && <span>{fileName}</span>}
@@ -92,6 +92,7 @@ export const CodeBlock = ({
                     </span>
                     {showCopy && (
                         <button
+                            data-ds-interactive="subtle"
                             type="button"
                             onClick={onCopy}
                             style={{
@@ -118,6 +119,7 @@ export const CodeBlock = ({
                 </div>
             )}
             <pre
+                translate="no"
                 data-ds-scrollbar=""
                 style={{
                     margin: 0,

@@ -17,10 +17,12 @@ export type ImageProps = {
     radius?: string
     fallback?: ReactNode
     placeholder?: ReactNode
+    /** 기본 'lazy'. 첫 화면에 보이는 이미지에만 'eager' 를 준다. */
+    loading?: 'lazy' | 'eager'
     ref?: Ref<HTMLDivElement>
 } & Omit<
     ImgHTMLAttributes<HTMLImageElement>,
-    'width' | 'height' | 'src' | 'alt'
+    'width' | 'height' | 'src' | 'alt' | 'loading'
 >
 
 const dim = (v: number | string | undefined) =>
@@ -36,12 +38,16 @@ export const Image = ({
     radius,
     fallback,
     placeholder,
+    loading = 'lazy',
     style,
     ref,
     ...rest
 }: ImageProps) => {
     const [loaded, setLoaded] = useState(false)
     const [errored, setErrored] = useState(false)
+    // 숫자 크기는 HTML 속성으로도 넘긴다. 브라우저가 로드 전에 자리를 잡아 CLS 를 막는다.
+    const intrinsicWidth = typeof width === 'number' ? width : undefined
+    const intrinsicHeight = typeof height === 'number' ? height : undefined
 
     const containerStyle: CSSProperties = {
         position: 'relative',
@@ -98,6 +104,10 @@ export const Image = ({
             <img
                 src={src}
                 alt={alt}
+                width={intrinsicWidth}
+                height={intrinsicHeight}
+                loading={loading}
+                decoding="async"
                 onLoad={() => setLoaded(true)}
                 onError={() => setErrored(true)}
                 style={{

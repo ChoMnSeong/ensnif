@@ -53,7 +53,7 @@ export const tooltipBoxStyle: CSSProperties = {
     borderRadius: 'var(--ds-radius-md)',
     fontSize: '11px',
     fontWeight: 600,
-    boxShadow: '0 6px 20px rgba(0,0,0,0.18)',
+    boxShadow: 'var(--ds-shadow-lg)',
     whiteSpace: 'nowrap',
     pointerEvents: 'none',
 }

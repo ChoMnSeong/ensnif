@@ -76,7 +76,7 @@ export const Dialog = ({
             style={{
                 position: 'fixed',
                 inset: 0,
-                zIndex: 1000,
+                zIndex: 'var(--ds-z-index-modal)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -88,7 +88,7 @@ export const Dialog = ({
                 style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(15, 18, 24, 0.6)',
+                    background: 'var(--ds-color-background-scrim)',
                     backdropFilter: 'blur(2px)',
                     animation: 'ds-fade-in 160ms ease',
                 }}
@@ -181,6 +181,7 @@ export const Dialog = ({
                     </footer>
                 )}
                 <button
+                    data-ds-interactive="subtle"
                     onClick={onClose}
                     aria-label="Close"
                     style={{

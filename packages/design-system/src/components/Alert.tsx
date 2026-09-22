@@ -132,6 +132,7 @@ export const Alert = ({
             </div>
             {onClose && (
                 <button
+                    data-ds-interactive="subtle"
                     onClick={onClose}
                     aria-label="Close"
                     style={{

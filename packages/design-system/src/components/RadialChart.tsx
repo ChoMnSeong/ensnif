@@ -310,7 +310,7 @@ export const RadialChart = ({
                             borderRadius: 'var(--ds-radius-md)',
                             fontSize: '11px',
                             fontWeight: 600,
-                            boxShadow: '0 6px 20px rgba(0,0,0,0.18)',
+                            boxShadow: 'var(--ds-shadow-lg)',
                             whiteSpace: 'nowrap',
                             pointerEvents: 'none',
                         }}
@@ -321,7 +321,7 @@ export const RadialChart = ({
                         <span
                             style={{
                                 fontFamily:
-                                    'var(--ds-typography-fontFamily-mono)',
+                                    'var(--ds-typography-font-family-mono)',
                                 fontWeight: 700,
                                 fontSize: '13px',
                             }}
@@ -390,7 +390,7 @@ export const RadialChart = ({
                                     style={{
                                         color: 'var(--ds-color-foreground-primary)',
                                         fontFamily:
-                                            'var(--ds-typography-fontFamily-mono)',
+                                            'var(--ds-typography-font-family-mono)',
                                         fontSize: '12px',
                                         fontWeight: 700,
                                     }}

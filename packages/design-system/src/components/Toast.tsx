@@ -166,7 +166,7 @@ const ToastViewport = ({
             onMouseLeave={() => setExpanded(false)}
             style={{
                 position: 'fixed',
-                zIndex: 9999,
+                zIndex: 'var(--ds-z-index-toast)',
                 width: '380px',
                 maxWidth: 'calc(100vw - 32px)',
                 pointerEvents: 'none',
@@ -300,6 +300,7 @@ const ToastItemView = ({
                 )}
                 {item.action && (
                     <button
+                        data-ds-interactive="subtle"
                         type="button"
                         onClick={() => {
                             item.action?.onClick()
@@ -323,6 +324,7 @@ const ToastItemView = ({
                 )}
             </div>
             <button
+                data-ds-interactive="subtle"
                 type="button"
                 aria-label="Close"
                 onClick={() => onDismiss(item.id)}

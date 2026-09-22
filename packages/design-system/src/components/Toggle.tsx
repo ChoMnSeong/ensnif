@@ -26,7 +26,9 @@ const baseStyle: CSSProperties = {
     fontWeight: 600,
     cursor: 'pointer',
     borderRadius: 'var(--ds-radius-md)',
-    transition: 'all 120ms ease',
+    transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+    transitionDuration: '120ms',
+    transitionTimingFunction: 'ease',
     lineHeight: 1,
     border: '1px solid transparent',
 }
@@ -61,6 +63,7 @@ export const Toggle = ({
 
     return (
         <button
+            data-ds-interactive="subtle"
             ref={ref}
             type="button"
             aria-pressed={pressed}

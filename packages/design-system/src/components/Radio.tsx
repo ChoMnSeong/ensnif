@@ -87,6 +87,8 @@ export const Radio = ({
 
     return (
         <label
+            data-ds-disabled={disabled ? '' : undefined}
+            data-ds-interactive="control"
             style={mergeStyles(
                 {
                     display: 'inline-flex',
@@ -140,7 +142,9 @@ export const Radio = ({
                         ? `2px solid var(--ds-color-accent-background)`
                         : '1px solid var(--ds-color-border-default)',
                     borderRadius: '50%',
-                    transition: 'all 120ms ease',
+                    transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+                    transitionDuration: '120ms',
+                    transitionTimingFunction: 'ease',
                     opacity: disabled ? 0.5 : 1,
                     display: 'inline-block',
                 }}

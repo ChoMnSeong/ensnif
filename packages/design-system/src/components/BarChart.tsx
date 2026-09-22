@@ -133,7 +133,7 @@ export const BarChart = ({
                                         textAnchor="end"
                                         fontSize="10"
                                         fill={labelColor}
-                                        fontFamily='"JetBrains Mono", monospace'
+                                        fontFamily="var(--ds-typography-font-family-mono)"
                                     >
                                         {formatValue(t)}
                                     </text>
@@ -248,7 +248,7 @@ export const BarChart = ({
                                     textAnchor="middle"
                                     fontSize="10"
                                     fill={labelColor}
-                                    fontFamily='"JetBrains Mono", monospace'
+                                    fontFamily="var(--ds-typography-font-family-mono)"
                                     fontWeight={isHover ? 700 : 400}
                                 >
                                     {d.label}
@@ -262,7 +262,7 @@ export const BarChart = ({
                                     fontSize="10"
                                     fontWeight="700"
                                     fill="#ffffff"
-                                    fontFamily='"JetBrains Mono", monospace'
+                                    fontFamily="var(--ds-typography-font-family-mono)"
                                     style={{
                                         pointerEvents: 'none',
                                         paintOrder: 'stroke',
@@ -294,7 +294,7 @@ export const BarChart = ({
                     <span
                         style={{
                             fontFamily:
-                                'var(--ds-typography-fontFamily-mono)',
+                                'var(--ds-typography-font-family-mono)',
                             fontWeight: 700,
                             fontSize: '13px',
                         }}
@@ -378,7 +378,7 @@ const HorizontalBarChart = ({
                                     fontSize="11"
                                     fontWeight="700"
                                     fill="var(--ds-color-foreground-primary)"
-                                    fontFamily='"JetBrains Mono", monospace'
+                                    fontFamily="var(--ds-typography-font-family-mono)"
                                 >
                                     {formatValue(d.value)}
                                 </text>

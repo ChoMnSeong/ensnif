@@ -142,7 +142,7 @@ export const AreaChart = ({
                                         textAnchor="end"
                                         fontSize="10"
                                         fill={labelColor}
-                                        fontFamily='"JetBrains Mono", monospace'
+                                        fontFamily="var(--ds-typography-font-family-mono)"
                                     >
                                         {formatValue(t)}
                                     </text>
@@ -213,7 +213,7 @@ export const AreaChart = ({
                             textAnchor="middle"
                             fontSize="10"
                             fill={labelColor}
-                            fontFamily='"JetBrains Mono", monospace'
+                            fontFamily="var(--ds-typography-font-family-mono)"
                         >
                             {lbl}
                         </text>
@@ -243,7 +243,7 @@ export const AreaChart = ({
                         color: 'var(--ds-color-background-page)',
                         borderRadius: 'var(--ds-radius-md)',
                         fontSize: '11px',
-                        boxShadow: '0 6px 20px rgba(0,0,0,0.18)',
+                        boxShadow: 'var(--ds-shadow-lg)',
                         whiteSpace: 'nowrap',
                         pointerEvents: 'none',
                         display: 'flex',
@@ -289,7 +289,7 @@ export const AreaChart = ({
                                     style={{
                                         marginLeft: 'auto',
                                         fontFamily:
-                                            'var(--ds-typography-fontFamily-mono)',
+                                            'var(--ds-typography-font-family-mono)',
                                         fontWeight: 700,
                                         fontSize: '12px',
                                     }}

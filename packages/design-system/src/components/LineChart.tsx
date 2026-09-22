@@ -160,7 +160,7 @@ export const LineChart = ({
                                         textAnchor={yLabelAnchor}
                                         fontSize="10"
                                         fill={labelColor}
-                                        fontFamily='"JetBrains Mono", monospace'
+                                        fontFamily="var(--ds-typography-font-family-mono)"
                                     >
                                         {formatValue(t)}
                                     </text>
@@ -281,7 +281,7 @@ export const LineChart = ({
                             fontSize="10"
                             fontWeight="700"
                             fill={color}
-                            fontFamily='"JetBrains Mono", monospace'
+                            fontFamily="var(--ds-typography-font-family-mono)"
                         >
                             {formatValue(d.value)}
                         </text>
@@ -297,7 +297,7 @@ export const LineChart = ({
                             textAnchor="middle"
                             fontSize="10"
                             fill={labelColor}
-                            fontFamily='"JetBrains Mono", monospace'
+                            fontFamily="var(--ds-typography-font-family-mono)"
                         >
                             {d.label}
                         </text>
@@ -332,7 +332,7 @@ export const LineChart = ({
                     <span
                         style={{
                             fontFamily:
-                                'var(--ds-typography-fontFamily-mono)',
+                                'var(--ds-typography-font-family-mono)',
                             fontWeight: 700,
                             fontSize: '13px',
                         }}
@@ -345,7 +345,7 @@ export const LineChart = ({
                                 opacity: 0.7,
                                 fontSize: '11px',
                                 fontFamily:
-                                    'var(--ds-typography-fontFamily-mono)',
+                                    'var(--ds-typography-font-family-mono)',
                             }}
                         >
                             {compareLabel ?? '비교'}:{' '}

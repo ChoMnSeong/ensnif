@@ -102,7 +102,7 @@ export const HoverCard = ({
                 offset={8}
                 placement={side}
                 align={align}
-                zIndex={1500}
+                zIndex="var(--ds-z-index-popover)"
             >
                 <div
                     ref={cardRef}

@@ -82,13 +82,41 @@ const TreeItem = ({
     const isOpen = expanded.has(node.id)
     const isSelected = selectedId === node.id
     const hasChildren = !!node.children && node.children.length > 0
+    const activate = () => {
+        if (hasChildren) onToggle(node.id)
+        onSelect?.(node.id)
+    }
+
+    // ARIA tree 패턴상 포커스와 키 조작은 treeitem 이 받아야 한다.
+    // treeitem 은 자식 그룹까지 감싸므로 포커스 링은 data-ds-focus-row 로 행에 그린다.
     return (
-        <div role="treeitem" aria-expanded={hasChildren ? isOpen : undefined}>
+        <div
+            role="treeitem"
+            aria-expanded={hasChildren ? isOpen : undefined}
+            aria-selected={isSelected}
+            tabIndex={0}
+            data-ds-focus-row=""
+            onClick={(e) => {
+                e.stopPropagation()
+                activate()
+            }}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    activate()
+                } else if (e.key === 'ArrowRight' && hasChildren && !isOpen) {
+                    e.stopPropagation()
+                    onToggle(node.id)
+                } else if (e.key === 'ArrowLeft' && hasChildren && isOpen) {
+                    e.stopPropagation()
+                    onToggle(node.id)
+                }
+            }}
+        >
             <div
-                onClick={() => {
-                    if (hasChildren) onToggle(node.id)
-                    onSelect?.(node.id)
-                }}
+                data-ds-interactive="subtle"
+                data-ds-focus-visual=""
                 style={{
                     display: 'flex',
                     alignItems: 'center',

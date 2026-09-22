@@ -80,7 +80,7 @@ export const TimePicker = ({
         outline: 'none',
         textAlign: 'center',
         fontSize: '13px',
-        fontFamily: 'var(--ds-typography-fontFamily-mono)',
+        fontFamily: 'var(--ds-typography-font-family-mono)',
         color: 'var(--ds-color-foreground-primary)',
         padding: 0,
         margin: 0,

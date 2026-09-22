@@ -174,6 +174,7 @@ const NavItemRow = ({
                 </a>
             ) : (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     onClick={() => {
                         if (hasChildren) onToggle(item.id)

@@ -94,14 +94,14 @@ export const Drawer = ({
     const sz = typeof size === 'number' ? `${size}px` : size
 
     const node = (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 1000 }}>
+        <div style={{ position: 'fixed', inset: 0, zIndex: 'var(--ds-z-index-modal)' }}>
             <style>{KEYFRAMES}</style>
             <div
                 onClick={() => closeOnBackdrop && onClose()}
                 style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(15, 18, 24, 0.6)',
+                    background: 'var(--ds-color-background-scrim)',
                     backdropFilter: 'blur(2px)',
                     animation: 'ds-drawer-fade 200ms ease',
                 }}
@@ -158,6 +158,7 @@ export const Drawer = ({
                             )}
                         </div>
                         <button
+                            data-ds-interactive="subtle"
                             onClick={onClose}
                             aria-label="Close"
                             style={{
@@ -182,6 +183,7 @@ export const Drawer = ({
                     data-ds-scrollbar=""
                     style={{
                         flex: 1,
+                        overscrollBehavior: 'contain',
                         overflowY: 'auto',
                         padding: '20px 24px',
                     }}

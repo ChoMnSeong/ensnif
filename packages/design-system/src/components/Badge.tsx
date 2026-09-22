@@ -1,5 +1,5 @@
 import type { CSSProperties, HTMLAttributes, Ref } from 'react'
-import { mergeStyles, toneColor, type Tone } from './types.js'
+import { mergeStyles, onToneColor, toneColor, type Tone } from './types.js'
 import type { BorderVariant } from './borderVariant.js'
 import { useBorderVariant } from '../provider/useDesignSystem.js'
 
@@ -44,7 +44,7 @@ const computeAppearance = (
                 : toneColor(tone as Tone),
             color: isDefault
                 ? 'var(--ds-color-foreground-primary)'
-                : '#ffffff',
+                : onToneColor(tone as Tone),
             border: 'none',
             borderRadius: 'var(--ds-radius-full)',
         }
@@ -87,9 +87,7 @@ const computeAppearance = (
                     : 'transparent',
                 color: fg,
                 border: `1px solid ${
-                    isDefault
-                        ? 'var(--ds-color-border-subtle)'
-                        : accentColor
+                    isDefault ? 'var(--ds-color-border-subtle)' : accentColor
                 }`,
                 borderRadius: 'var(--ds-radius-full)',
             }
@@ -114,12 +112,7 @@ export const Badge = ({
     return (
         <span
             ref={ref}
-            style={mergeStyles(
-                baseStyle,
-                sizeStyles[size],
-                appearance,
-                style,
-            )}
+            style={mergeStyles(baseStyle, sizeStyles[size], appearance, style)}
             {...rest}
         >
             {dot && (
@@ -130,7 +123,7 @@ export const Badge = ({
                         height: '6px',
                         borderRadius: '50%',
                         background: solid
-                            ? '#ffffff'
+                            ? 'currentColor'
                             : isDefault
                               ? 'var(--ds-color-foreground-tertiary)'
                               : toneColor(tone as Tone),

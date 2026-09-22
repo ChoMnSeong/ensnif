@@ -13,13 +13,14 @@ const sizeStyles = {
 
 export const Kbd = ({ size = 'md', children, style, ref, ...rest }: KbdProps) => (
     <kbd
+        translate="no"
         ref={ref}
         style={mergeStyles(
             {
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                fontFamily: 'var(--ds-typography-font-family-mono)',
                 fontWeight: 600,
                 background: 'var(--ds-color-background-inset)',
                 color: 'var(--ds-color-foreground-secondary)',

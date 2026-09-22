@@ -94,7 +94,7 @@ export const Tooltip = ({
                 offset={6}
                 align={align}
                 placement={side}
-                zIndex={2000}
+                zIndex="var(--ds-z-index-tooltip)"
             >
                 <div
                     role="tooltip"

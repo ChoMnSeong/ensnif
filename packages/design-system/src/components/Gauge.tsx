@@ -30,8 +30,17 @@ export const Gauge = ({
     const cx = size / 2
     const cy = size / 2
 
+    const valueText = formatValue
+        ? formatValue(value, max)
+        : `${Math.round(pct * 100)}%`
+
     return (
         <div
+            role="meter"
+            aria-valuenow={value}
+            aria-valuemin={0}
+            aria-valuemax={max}
+            aria-valuetext={valueText}
             style={{
                 position: 'relative',
                 display: 'inline-block',
@@ -41,6 +50,7 @@ export const Gauge = ({
             }}
         >
             <svg
+                aria-hidden
                 width={size}
                 height={size}
                 viewBox={`0 0 ${size} ${size}`}
@@ -83,6 +93,7 @@ export const Gauge = ({
                 }}
             >
                 <span
+                    data-ds-numeric=""
                     style={{
                         fontSize: '22px',
                         fontWeight: 700,
@@ -90,7 +101,7 @@ export const Gauge = ({
                         color: 'var(--ds-color-foreground-primary)',
                     }}
                 >
-                    {formatValue ? formatValue(value, max) : `${Math.round(pct * 100)}%`}
+                    {valueText}
                 </span>
                 {label && (
                     <span

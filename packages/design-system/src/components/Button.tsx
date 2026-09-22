@@ -34,15 +34,13 @@ const baseStyle: CSSProperties = {
     fontWeight: 600,
     cursor: 'pointer',
     borderRadius: 'var(--ds-radius-md)',
-    transition: 'all 120ms ease',
+    transition:
+        'background var(--ds-motion-duration-fast) var(--ds-motion-easing-ease-out), border-color var(--ds-motion-duration-fast) var(--ds-motion-easing-ease-out), color var(--ds-motion-duration-fast) var(--ds-motion-easing-ease-out)',
     lineHeight: 1,
     whiteSpace: 'nowrap',
 }
 
-const variantStyle = (
-    v: ButtonVariant,
-    disabled: boolean,
-): CSSProperties => {
+const variantStyle = (v: ButtonVariant, disabled: boolean): CSSProperties => {
     if (disabled) {
         return {
             background: 'var(--ds-color-state-disabled)',
@@ -75,22 +73,32 @@ const variantStyle = (
         case 'success':
             return {
                 background: 'var(--ds-color-state-success)',
-                color: '#ffffff',
+                color: 'var(--ds-color-foreground-on-success)',
                 border: 'none',
             }
         case 'warning':
             return {
                 background: 'var(--ds-color-state-warning)',
-                color: '#ffffff',
+                color: 'var(--ds-color-foreground-on-warning)',
                 border: 'none',
             }
         case 'danger':
             return {
                 background: 'var(--ds-color-state-danger)',
-                color: '#ffffff',
+                color: 'var(--ds-color-foreground-on-danger)',
                 border: 'none',
             }
     }
+}
+
+/** variant 별로 인터랙션 레이어가 쓸 tone. InteractionStyles 의 선택자와 짝이다. */
+const interactiveTone: Record<ButtonVariant, string> = {
+    primary: 'accent',
+    secondary: 'outline',
+    ghost: 'subtle',
+    success: 'success',
+    warning: 'warning',
+    danger: 'danger',
 }
 
 const iconWrap: CSSProperties = {
@@ -103,6 +111,7 @@ const iconWrap: CSSProperties = {
 const Spinner = () => (
     <span
         aria-hidden
+        data-ds-spinner=""
         style={{
             width: '12px',
             height: '12px',
@@ -130,39 +139,33 @@ export const Button = ({
 }: ButtonProps) => {
     const isDisabled = disabled || loading
     return (
-        <>
-            <style>
-                {`@keyframes ds-spin { to { transform: rotate(360deg); } }`}
-            </style>
-            <button
-                ref={ref}
-                disabled={isDisabled}
-                data-ds-focusable=""
-                style={mergeStyles(
-                    baseStyle,
-                    {
-                        height: sizeHeight[size],
-                        padding: `0 ${sizePadX[size]}`,
-                        fontSize: sizeText[size],
-                    },
-                    variantStyle(variant, !!isDisabled),
-                    fullWidth ? { width: '100%' } : null,
-                    style,
-                )}
-                {...rest}
-            >
-                {loading ? (
-                    <span style={iconWrap}>
-                        <Spinner />
-                    </span>
-                ) : iconLeft ? (
-                    <span style={iconWrap}>{iconLeft}</span>
-                ) : null}
-                {children}
-                {!loading && iconRight && (
-                    <span style={iconWrap}>{iconRight}</span>
-                )}
-            </button>
-        </>
+        <button
+            ref={ref}
+            disabled={isDisabled}
+            data-ds-focusable=""
+            data-ds-interactive={interactiveTone[variant]}
+            style={mergeStyles(
+                baseStyle,
+                {
+                    height: sizeHeight[size],
+                    padding: `0 ${sizePadX[size]}`,
+                    fontSize: sizeText[size],
+                },
+                variantStyle(variant, !!isDisabled),
+                fullWidth ? { width: '100%' } : null,
+                style,
+            )}
+            {...rest}
+        >
+            {loading ? (
+                <span style={iconWrap}>
+                    <Spinner />
+                </span>
+            ) : iconLeft ? (
+                <span style={iconWrap}>{iconLeft}</span>
+            ) : null}
+            {children}
+            {!loading && iconRight && <span style={iconWrap}>{iconRight}</span>}
+        </button>
     )
 }

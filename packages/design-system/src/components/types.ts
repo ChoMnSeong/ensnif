@@ -41,6 +41,25 @@ export const sizeHeight: Record<Size, string> = {
     lg: '44px',
 }
 
+/** solid 배경으로 toneColor 를 썼을 때 그 위에 얹을 글자색. */
+export const onToneColor = (tone: Tone): string => {
+    switch (tone) {
+        case 'accent':
+            return 'var(--ds-color-foreground-on-primary)'
+        case 'success':
+            return 'var(--ds-color-foreground-on-success)'
+        case 'warning':
+            return 'var(--ds-color-foreground-on-warning)'
+        case 'danger':
+            return 'var(--ds-color-foreground-on-danger)'
+        case 'info':
+            return 'var(--ds-color-foreground-on-info)'
+        case 'neutral':
+        default:
+            return 'var(--ds-color-background-page)'
+    }
+}
+
 export const toneColor = (tone: Tone): string => {
     switch (tone) {
         case 'accent':

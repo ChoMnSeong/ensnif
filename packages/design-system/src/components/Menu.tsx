@@ -113,6 +113,7 @@ export const MenuItem = ({
     ...rest
 }: MenuItemProps) => (
     <button
+        data-ds-interactive="subtle"
         type="button"
         role="menuitem"
         disabled={disabled}
@@ -169,7 +170,7 @@ export const MenuItem = ({
                 style={{
                     fontSize: '11px',
                     color: 'var(--ds-color-foreground-tertiary)',
-                    fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                    fontFamily: 'var(--ds-typography-font-family-mono)',
                 }}
             >
                 {shortcut}

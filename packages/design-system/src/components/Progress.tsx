@@ -64,7 +64,7 @@ export const Progress = ({
                             justifyContent: 'space-between',
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         <span>{Math.round(pct)}%</span>

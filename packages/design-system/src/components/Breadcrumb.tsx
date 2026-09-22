@@ -50,6 +50,7 @@ export const Breadcrumb = ({
                     </a>
                 ) : item.onClick && !isLast ? (
                     <button
+                        data-ds-interactive="subtle"
                         type="button"
                         onClick={item.onClick}
                         style={linkStyle(false)}

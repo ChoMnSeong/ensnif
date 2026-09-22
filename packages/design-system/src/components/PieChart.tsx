@@ -144,7 +144,7 @@ export const PieChart = ({
                                     'transform 200ms ease, opacity 160ms ease',
                                 cursor: 'pointer',
                                 filter: isHover
-                                    ? 'drop-shadow(0 4px 12px rgba(0,0,0,0.18))'
+                                    ? 'drop-shadow(0 4px 12px var(--ds-color-shadow-strong))'
                                     : 'none',
                             }}
                         />
@@ -169,7 +169,7 @@ export const PieChart = ({
                                 fontSize="11"
                                 fontWeight="700"
                                 fill="#ffffff"
-                                fontFamily='"JetBrains Mono", monospace'
+                                fontFamily="var(--ds-typography-font-family-mono)"
                                 style={{
                                     pointerEvents: 'none',
                                     paintOrder: 'stroke',
@@ -236,7 +236,7 @@ export const PieChart = ({
                                     style={{
                                         color: 'var(--ds-color-foreground-primary)',
                                         fontFamily:
-                                            'var(--ds-typography-fontFamily-mono)',
+                                            'var(--ds-typography-font-family-mono)',
                                         fontSize: '11px',
                                         fontWeight: 600,
                                         marginLeft: 'auto',

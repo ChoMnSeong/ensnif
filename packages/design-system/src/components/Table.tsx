@@ -64,6 +64,7 @@ export const Table = ({
     return (
         <div style={wrapperStyle(variant)}>
             <table
+                data-ds-numeric=""
                 ref={ref}
                 style={mergeStyles(
                     {

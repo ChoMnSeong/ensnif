@@ -108,6 +108,7 @@ export const Calendar = ({
                 }}
             >
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Previous month"
                     onClick={() =>
@@ -132,6 +133,7 @@ export const Calendar = ({
                     {monthLabel}
                 </div>
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Next month"
                     onClick={() =>
@@ -190,6 +192,7 @@ export const Calendar = ({
                         (maxDate && iso > maxDate)
                     return (
                         <button
+                            data-ds-interactive="subtle"
                             key={iso}
                             type="button"
                             disabled={!!isDisabled}
@@ -216,7 +219,9 @@ export const Calendar = ({
                                 cursor: isDisabled ? 'not-allowed' : 'pointer',
                                 fontFamily: 'inherit',
                                 opacity: isDisabled ? 0.4 : 1,
-                                transition: 'all 80ms ease',
+                                transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+                                transitionDuration: '80ms',
+                                transitionTimingFunction: 'ease',
                             }}
                         >
                             {d.getDate()}

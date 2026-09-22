@@ -32,7 +32,7 @@ export const CommandPalette = ({
     open,
     onClose,
     items,
-    placeholder = '명령어 또는 검색어 입력...',
+    placeholder = '명령어 또는 검색어 입력…',
     emptyMessage = '결과 없음',
 }: CommandPaletteProps) => {
     const [query, setQuery] = useState('')
@@ -120,7 +120,7 @@ export const CommandPalette = ({
             style={{
                 position: 'fixed',
                 inset: 0,
-                zIndex: 2000,
+                zIndex: 'var(--ds-z-index-modal)',
                 display: 'flex',
                 alignItems: 'flex-start',
                 justifyContent: 'center',
@@ -132,7 +132,7 @@ export const CommandPalette = ({
                 style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(15, 18, 24, 0.6)',
+                    background: 'var(--ds-color-background-scrim)',
                     backdropFilter: 'blur(2px)',
                     animation: 'ds-fade-in 160ms ease',
                 }}
@@ -178,6 +178,10 @@ export const CommandPalette = ({
                         onChange={(e) => setQuery(e.target.value)}
                         onKeyDown={onKey}
                         placeholder={placeholder}
+                        aria-label={placeholder}
+                        autoComplete="off"
+                        spellCheck={false}
+                        data-ds-focusable=""
                         style={{
                             flex: 1,
                             background: 'transparent',
@@ -194,6 +198,7 @@ export const CommandPalette = ({
                     data-ds-scrollbar=""
                     style={{
                         flex: 1,
+                        overscrollBehavior: 'contain',
                         overflowY: 'auto',
                         padding: '6px',
                     }}
@@ -231,6 +236,12 @@ export const CommandPalette = ({
                                     const isActive = idx === highlight
                                     return (
                                         <button
+                                            data-ds-interactive="subtle"
+                                            data-ds-list-item={
+                                                filtered.length > 50
+                                                    ? ''
+                                                    : undefined
+                                            }
                                             key={it.id}
                                             type="button"
                                             onClick={() => {
@@ -297,7 +308,7 @@ export const CommandPalette = ({
                                                         fontSize: '11px',
                                                         color: 'var(--ds-color-foreground-tertiary)',
                                                         fontFamily:
-                                                            'var(--ds-typography-fontFamily-mono)',
+                                                            'var(--ds-typography-font-family-mono)',
                                                     }}
                                                 >
                                                     {it.shortcut}
@@ -318,7 +329,7 @@ export const CommandPalette = ({
                         gap: '14px',
                         fontSize: '11px',
                         color: 'var(--ds-color-foreground-tertiary)',
-                        fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                        fontFamily: 'var(--ds-typography-font-family-mono)',
                     }}
                 >
                     <span>↑↓ 이동</span>

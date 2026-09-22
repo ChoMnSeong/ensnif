@@ -63,7 +63,7 @@ export const Slider = ({
                         justifyContent: 'space-between',
                         fontSize: '11px',
                         color: 'var(--ds-color-foreground-tertiary)',
-                        fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                        fontFamily: 'var(--ds-typography-font-family-mono)',
                     }}
                 >
                     <span>{formatValue(min)}</span>
@@ -87,7 +87,7 @@ export const Slider = ({
                         right: 0,
                         height: '4px',
                         background: 'var(--ds-color-background-inset)',
-                        borderRadius: '9999px',
+                        borderRadius: 'var(--ds-radius-full)',
                         transform: 'translateY(-50%)',
                     }}
                 />
@@ -99,7 +99,7 @@ export const Slider = ({
                         height: '4px',
                         width: `${pct}%`,
                         background: 'var(--ds-color-accent-background)',
-                        borderRadius: '9999px',
+                        borderRadius: 'var(--ds-radius-full)',
                         transform: 'translateY(-50%)',
                     }}
                 />

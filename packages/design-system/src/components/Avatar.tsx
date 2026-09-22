@@ -73,6 +73,10 @@ export const Avatar = ({
                 <img
                     src={src}
                     alt={alt ?? name ?? ''}
+                    width={box}
+                    height={box}
+                    loading="lazy"
+                    decoding="async"
                     onError={() => setErrored(true)}
                     style={{
                         width: '100%',

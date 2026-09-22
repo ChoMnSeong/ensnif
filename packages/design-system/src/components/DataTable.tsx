@@ -117,6 +117,7 @@ const FilterButton = ({
     return (
         <>
             <button
+                data-ds-interactive="subtle"
                 ref={triggerRef}
                 type="button"
                 onClick={(e) => {
@@ -195,12 +196,12 @@ const FilterButton = ({
                                 onChange(v)
                                 setOpen(false)
                             }}
-                            placeholder={filter.placeholder ?? '선택...'}
+                            placeholder={filter.placeholder ?? '선택…'}
                             width="100%"
                         />
                     ) : (
                         <Input
-                            placeholder={filter.placeholder ?? '값 입력...'}
+                            placeholder={filter.placeholder ?? '값 입력…'}
                             value={value}
                             onChange={(e) => onChange(e.target.value)}
                             fullWidth
@@ -209,6 +210,7 @@ const FilterButton = ({
                     )}
                     {active && (
                         <button
+                            data-ds-interactive="subtle"
                             type="button"
                             onClick={() => {
                                 onChange('')
@@ -244,7 +246,7 @@ export function DataTable<T>({
     data,
     pageSize = 10,
     showSearch = true,
-    searchPlaceholder = '검색...',
+    searchPlaceholder = '검색…',
     searchKeys,
     emptyState,
     rowKey,
@@ -327,6 +329,7 @@ export function DataTable<T>({
 
     return (
         <div
+            data-ds-numeric=""
             style={mergeStyles(
                 {
                     display: 'flex',
@@ -358,6 +361,7 @@ export function DataTable<T>({
                     />
                     {activeFilterCount > 0 && (
                         <button
+                            data-ds-interactive="subtle"
                             type="button"
                             onClick={() => setFilters({})}
                             style={{
@@ -526,7 +530,7 @@ export function DataTable<T>({
                             fontSize: '12px',
                             color: 'var(--ds-color-foreground-tertiary)',
                             fontFamily:
-                                'var(--ds-typography-fontFamily-mono)',
+                                'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         {start + 1}-

@@ -105,7 +105,9 @@ const pageButton = (
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            transition: 'all 100ms ease',
+            transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+            transitionDuration: '100ms',
+            transitionTimingFunction: 'ease',
             ...activeAppearance(variant),
         }
     }
@@ -120,7 +122,9 @@ const pageButton = (
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        transition: 'all 100ms ease',
+        transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+        transitionDuration: '100ms',
+        transitionTimingFunction: 'ease',
         ...inactiveAppearance(variant, disabled),
     }
 }
@@ -161,6 +165,7 @@ export const Pagination = ({
     const range = buildRange(page, pageCount, siblings)
     return (
         <nav
+            data-ds-numeric=""
             aria-label="Pagination"
             style={mergeStyles(
                 {
@@ -174,6 +179,7 @@ export const Pagination = ({
         >
             {showEdges && (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Previous"
                     disabled={page <= 1}
@@ -199,6 +205,7 @@ export const Pagination = ({
                     </span>
                 ) : (
                     <button
+                        data-ds-interactive="subtle"
                         key={item}
                         type="button"
                         onClick={() => onChange(item)}
@@ -212,6 +219,7 @@ export const Pagination = ({
             )}
             {showEdges && (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Next"
                     disabled={page >= pageCount}

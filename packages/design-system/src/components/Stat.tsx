@@ -88,6 +88,7 @@ export const Stat = ({
             )}
         </div>
         <div
+            data-ds-numeric=""
             style={{
                 fontSize: '28px',
                 fontWeight: 700,

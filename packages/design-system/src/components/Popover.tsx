@@ -18,7 +18,7 @@ export type PopoverProps = {
     matchTriggerWidth?: boolean
     minWidth?: number
     style?: CSSProperties
-    zIndex?: number
+    zIndex?: number | string
 }
 
 type Pos = {
@@ -38,7 +38,7 @@ export const Popover = ({
     matchTriggerWidth,
     minWidth,
     style,
-    zIndex = 1000,
+    zIndex = 'var(--ds-z-index-popover)',
 }: PopoverProps) => {
     const [pos, setPos] = useState<Pos | null>(null)
 
@@ -75,10 +75,12 @@ export const Popover = ({
             setPos({ top, left, width: triggerWidth, placement: resolvedPlacement })
         }
         update()
-        window.addEventListener('scroll', update, true)
-        window.addEventListener('resize', update)
+        // passive: 핸들러가 preventDefault 를 쓰지 않으므로 브라우저가 스크롤을 기다리지 않게 한다.
+        const scrollOpts = { capture: true, passive: true } as const
+        window.addEventListener('scroll', update, scrollOpts)
+        window.addEventListener('resize', update, { passive: true })
         return () => {
-            window.removeEventListener('scroll', update, true)
+            window.removeEventListener('scroll', update, scrollOpts)
             window.removeEventListener('resize', update)
         }
     }, [open, triggerRef, offset, align, placement])

@@ -33,7 +33,7 @@ export const Switch = ({
         border: checked
             ? 'var(--ds-color-accent-border)'
             : '1px solid var(--ds-color-border-default)',
-        borderRadius: '9999px',
+        borderRadius: 'var(--ds-radius-full)',
         transition: 'background 160ms ease',
         opacity: disabled ? 0.5 : 1,
         flexShrink: 0,
@@ -51,11 +51,13 @@ export const Switch = ({
         background: checked
             ? 'var(--ds-color-accent-color)'
             : 'var(--ds-color-foreground-tertiary)',
-        boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+        boxShadow: 'var(--ds-shadow-xs)',
         transition: 'left 160ms ease, background 160ms ease',
     }
     return (
         <label
+            data-ds-disabled={disabled ? '' : undefined}
+            data-ds-interactive="control"
             style={mergeStyles(
                 {
                     display: 'inline-flex',

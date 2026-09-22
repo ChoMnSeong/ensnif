@@ -41,7 +41,7 @@ export const ComboBox = ({
     value,
     defaultValue,
     onChange,
-    placeholder = 'Select...',
+    placeholder = 'Select…',
     emptyMessage = '결과 없음',
     disabled,
     variant: variantProp,
@@ -120,6 +120,7 @@ export const ComboBox = ({
     return (
         <div style={{ width: widthStyle, ...style }}>
             <button
+                data-ds-interactive="outline"
                 ref={triggerRef}
                 type="button"
                 disabled={disabled}
@@ -198,7 +199,11 @@ export const ComboBox = ({
                                 setHighlight(0)
                             }}
                             onKeyDown={onKey}
-                            placeholder="검색..."
+                            placeholder="검색…"
+                            aria-label="옵션 검색"
+                            autoComplete="off"
+                            spellCheck={false}
+                            data-ds-focusable=""
                             style={{
                                 width: '100%',
                                 padding: '6px 8px',
@@ -217,6 +222,7 @@ export const ComboBox = ({
                         data-ds-scrollbar=""
                         style={{
                             maxHeight: '240px',
+                            overscrollBehavior: 'contain',
                             overflowY: 'auto',
                             padding: '4px',
                         }}
@@ -238,6 +244,12 @@ export const ComboBox = ({
                                 const isHighlighted = idx === highlight
                                 return (
                                     <button
+                                        data-ds-interactive="subtle"
+                                        data-ds-list-item={
+                                            filtered.length > 50
+                                                ? ''
+                                                : undefined
+                                        }
                                         key={opt.value}
                                         type="button"
                                         disabled={opt.disabled}

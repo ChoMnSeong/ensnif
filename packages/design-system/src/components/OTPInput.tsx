@@ -103,7 +103,7 @@ export const OTPInput = ({
         textAlign: 'center',
         fontSize: '18px',
         fontWeight: 700,
-        fontFamily: 'var(--ds-typography-fontFamily-mono)',
+        fontFamily: 'var(--ds-typography-font-family-mono)',
         color: 'var(--ds-color-foreground-primary)',
         outline: 'none',
         ...borderVariantContainerStyle(variant, { surfaceToken: 'inset' }),
@@ -122,12 +122,15 @@ export const OTPInput = ({
         >
             {Array.from({ length }, (_, idx) => (
                 <input
+                    data-ds-numeric=""
                     key={idx}
                     ref={(el) => {
                         refs.current[idx] = el
                     }}
                     type="text"
                     inputMode={type === 'numeric' ? 'numeric' : 'text'}
+                    autoComplete={idx === 0 ? 'one-time-code' : 'off'}
+                    spellCheck={false}
                     maxLength={1}
                     value={value[idx] ?? ''}
                     disabled={disabled}

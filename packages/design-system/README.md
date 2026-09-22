@@ -27,10 +27,10 @@ indigo
 
 | Variant | 어울리는 상황 |
 | --- | --- |
-| `minimal` | SaaS, 관리/설정 페이지, 컨텐츠 중심 — 모든 케이스의 안전한 기본값 |
+| `minimal` | SaaS, 관리/설정 페이지, 컨텐츠 중심. 모든 케이스의 안전한 기본값 |
 | `neumorphism` | 컨트롤 패널, 위젯, 부드러운 입체감 강조 |
 | `glassmorphism` | 비디오 오버레이, 랜딩 hero, macOS·iOS 풍 |
-| `brutalism` | 패션, 아트, 포트폴리오, 브랜드 캠페인 — 강한 정체성 |
+| `brutalism` | 패션, 아트, 포트폴리오, 브랜드 캠페인. 강한 정체성 |
 | `retro` | Y2K, 이벤트·캠페인 페이지, 힙한 브랜딩 |
 
 > 더 둥근 느낌이 필요하면 `minimal` + `tokenOverrides={{ radius: { md: '16px', lg: '20px' } }}`로 즉시 적용 가능합니다.
@@ -233,25 +233,80 @@ const cssText = cssVarsToString(vars)
 
 ## CSS 변수 네임스페이스
 
-모든 변수는 `--ds-` 접두사 사용. 주요 그룹:
+모든 변수는 `--ds-` 접두사 사용. camelCase 경로는 kebab-case 로 변환된다
+(`typography.fontFamily.mono` → `--ds-typography-font-family-mono`).
 
 - `--ds-palette-primary-50 ~ 900`, `--ds-palette-neutral-50 ~ 900`
-- `--ds-color-background-{page,panel,card,overlay,inset,muted}`
-- `--ds-color-foreground-{primary,secondary,tertiary,muted,onAccent}`
-- `--ds-color-accent-{background,color,border,shadow,hoverBackground,activeBackground}`
+- `--ds-color-background-{page,panel,card,overlay,inset,muted,scrim}`
+- `--ds-color-foreground-{primary,secondary,tertiary,muted,on-accent}`
+- `--ds-color-foreground-on-{primary,success,warning,danger,info}`
+  해당 색을 배경으로 깔았을 때 그 위에 얹을 글자색. 흰색과 중립 900 중
+  대비가 높은 쪽이 자동 선택되어 라이트/다크 양쪽에서 WCAG AA 를 맞춘다.
+- `--ds-color-accent-{background,color,border,shadow,hover-background,active-background}`
 - `--ds-color-state-{success,warning,danger,info,disabled}`
+- `--ds-color-shadow-{ambient,key,strong,glow}`
+  팔레트 중립색에서 파생된 그림자 색. `--ds-shadow-*` 가 이 값을 참조하므로
+  그림자가 순수 검정 대신 테마 색조를 따라간다. `glow` 만 primary 기반.
+- `--ds-color-focus-ring`
 - `--ds-surface-{page,panel,card,overlay,inset}-{background,border,radius,shadow,color,backdrop-filter}`
-- `--ds-radius-*`, `--ds-shadow-*`, `--ds-spacing-*`, `--ds-typography-*`, `--ds-motion-*`, `--ds-blur-*`, `--ds-borderWidth-*`
+- `--ds-z-index-{base,raised,dropdown,sticky,overlay,modal,popover,toast,tooltip}`
+- `--ds-radius-*`, `--ds-shadow-*`, `--ds-spacing-*`, `--ds-typography-*`,
+  `--ds-motion-*`, `--ds-blur-*`, `--ds-border-width-*`
+
+## 인터랙션 레이어
+
+컴포넌트는 인라인 `style` 기반이라 `:hover` / `:active` 를 스스로 표현하지 못한다.
+`DesignSystemProvider` 가 주입하는 `InteractionStyles` 가 데이터 어트리뷰트로 이를 대신한다.
+
+| 어트리뷰트 | 쓰는 곳 | hover / active |
+|---|---|---|
+| `data-ds-interactive="accent"` | 주 액션 버튼 | accent hover/active 토큰 + 눌림 |
+| `data-ds-interactive="outline"` | 테두리 트리거 | muted 배경 + 테두리 강조 |
+| `data-ds-interactive="subtle"` | 메뉴/탭/트리/페이지네이션 | muted 배경. 선택된 항목은 배경 유지 |
+| `data-ds-interactive="success\|warning\|danger"` | 의미색 버튼 | `color-mix` 로 명도 이동 |
+| `data-ds-interactive="surface"` | 카드/드롭존 | 그림자 상승 |
+| `data-ds-interactive="control"` | Checkbox/Radio/Switch | 자식 `[data-ds-focus-visual]` 로 전달 |
+| `data-ds-numeric` | 표/지표/차트 | `tabular-nums` 로 숫자 자릿수 고정 |
+| `data-ds-spinner` | 로딩 표시 | reduced-motion 에서도 유지(속도만 완화) |
+| `data-ds-disabled` | label 등 `:disabled` 가 없는 요소 | 인터랙션 제외 |
+
+선언에 `!important` 가 붙어 있다. 인라인 `style` 이 캐스케이드에서 일반 규칙을 이기기 때문이며,
+이 때문에 소비처에서 `style` 로 hover 색을 덮어쓸 수는 없다.
+
+`prefers-reduced-motion` 과 `prefers-reduced-transparency` 대응도 이 레이어에 들어 있다.
+
+## 폰트
+
+`TypographyStyles` 가 DS 루트(`[data-ds-mode]`)에 `--ds-typography-font-family-sans` 를 세운다.
+컴포넌트 대부분이 `font-family: inherit` 이므로 이 값이 상속 사슬의 출발점이 된다.
+`DesignSystemProvider` 의 `fonts` prop 이나 `tokenOverrides.typography.fontFamily` 로 바꾸면
+전체에 반영된다.
+
+**웹폰트는 이 패키지가 받지 않는다.** 라이브러리가 임의로 네트워크 요청을 만들지 않기 위해서다.
+토큰이 기본값으로 지정한 `Inter` / `Pretendard` / `JetBrains Mono` / `Source Serif 4` 를
+쓰려면 앱에서 로드해야 한다. 받지 않아도 폴백 체인이 있어 시스템 폰트로 정상 동작한다.
+
+```html
+<!-- 앱의 index.html -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&family=Source+Serif+4:wght@400;600;700&display=swap" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+```
+
+앱에서 `html`/`body`/`#root` 에 `font-family` 를 직접 지정하면 `#root` 쪽 명시도가 더 높아
+DS 규칙을 덮어쓰고 `fonts` prop 이 먹지 않는다. 지정하지 말 것.
+후자는 glassmorphism variant 의 `backdrop-filter` 를 끄고 표면을 불투명으로 내린다.
 
 ## 구조
 
 ```
 src/
-├── tokens/        radius, shadow, spacing, typography, motion, blur, borderWidth
+├── tokens/        radius, shadow, zIndex, spacing, typography, motion, blur, borderWidth
 ├── palettes/      10개 컬러 프리셋 + neutral + semantic(success/warning/danger/info)
 ├── variants/      5개 시각 스타일 (각 mode/palette 컨텍스트로 surface, accent 빌드)
 ├── themes/        buildTheme, themeToCssVars, themeTokens (CSS 변수 참조)
-├── provider/      DesignSystemProvider, useDesignSystem
+├── provider/      DesignSystemProvider, FocusStyles, InteractionStyles,
+│                  TypographyStyles, useDesignSystem
 ├── components/    Button, Input, Card, Dialog, Drawer, Tabs, Table, DataTable,
 │                  LineChart, BarChart, AreaChart, PieChart, RadarChart,
 │                  RadialChart, DatePicker, ComboBox, ColorPicker, Toast 등 50+

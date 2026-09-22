@@ -1,6 +1,6 @@
 import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from 'react'
 import { IconClose } from './icons.js'
-import { mergeStyles, toneColor, type Tone } from './types.js'
+import { mergeStyles, onToneColor, toneColor, type Tone } from './types.js'
 import type { BorderVariant } from './borderVariant.js'
 import { useBorderVariant } from '../provider/useDesignSystem.js'
 
@@ -36,7 +36,7 @@ const computeAppearance = (
                 : toneColor(tone as Tone),
             color: isDefault
                 ? 'var(--ds-color-foreground-primary)'
-                : '#ffffff',
+                : onToneColor(tone as Tone),
             border: 'none',
             borderRadius: 'var(--ds-radius-md)',
         }
@@ -126,6 +126,7 @@ export const Tag = ({
             <span>{children}</span>
             {onClose && (
                 <button
+                    data-ds-interactive="subtle"
                     type="button"
                     aria-label="Remove"
                     onClick={(e) => {

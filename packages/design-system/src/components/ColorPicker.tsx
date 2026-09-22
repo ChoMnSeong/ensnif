@@ -70,6 +70,7 @@ export const ColorPicker = ({
     return (
         <div style={{ display: 'inline-block', ...style }}>
             <button
+                data-ds-interactive="outline"
                 ref={triggerRef}
                 type="button"
                 disabled={disabled}
@@ -107,7 +108,7 @@ export const ColorPicker = ({
                 />
                 <span
                     style={{
-                        fontFamily: 'var(--ds-typography-fontFamily-mono)',
+                        fontFamily: 'var(--ds-typography-font-family-mono)',
                         fontSize: '12px',
                     }}
                 >
@@ -140,6 +141,7 @@ export const ColorPicker = ({
                             const isSelected = c.toLowerCase() === value.toLowerCase()
                             return (
                                 <button
+                                    data-ds-interactive="subtle"
                                     key={c}
                                     type="button"
                                     onClick={() => {
@@ -192,6 +194,10 @@ export const ColorPicker = ({
                             value={draft}
                             onChange={(e) => setDraft(e.target.value)}
                             onBlur={() => apply(draft)}
+                            aria-label="색상 hex 값"
+                            autoComplete="off"
+                            spellCheck={false}
+                            data-ds-focusable=""
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') apply(draft)
                             }}
@@ -206,7 +212,7 @@ export const ColorPicker = ({
                                 color: 'var(--ds-color-foreground-primary)',
                                 fontSize: '12px',
                                 fontFamily:
-                                    'var(--ds-typography-fontFamily-mono)',
+                                    'var(--ds-typography-font-family-mono)',
                                 outline: 'none',
                             }}
                         />

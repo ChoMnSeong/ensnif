@@ -76,6 +76,8 @@ export const FileUpload = ({
     return (
         <div style={mergeStyles({ width: '100%' }, style)}>
             <div
+                data-ds-interactive="surface"
+                data-ds-disabled={disabled ? '' : undefined}
                 onClick={() => !disabled && inputRef.current?.click()}
                 onDragOver={(e) => {
                     e.preventDefault()
@@ -99,7 +101,9 @@ export const FileUpload = ({
                         : '2px dashed var(--ds-color-border-subtle)',
                     borderRadius: 'var(--ds-radius-md)',
                     cursor: disabled ? 'not-allowed' : 'pointer',
-                    transition: 'all 120ms ease',
+                    transitionProperty: 'background, background-color, border-color, color, box-shadow, opacity',
+                    transitionDuration: '120ms',
+                    transitionTimingFunction: 'ease',
                     color: 'var(--ds-color-foreground-secondary)',
                     textAlign: 'center',
                     opacity: disabled ? 0.5 : 1,
@@ -185,7 +189,7 @@ export const FileUpload = ({
                             <span
                                 style={{
                                     fontFamily:
-                                        'var(--ds-typography-fontFamily-mono)',
+                                        'var(--ds-typography-font-family-mono)',
                                     color: 'var(--ds-color-foreground-tertiary)',
                                     fontSize: '11px',
                                 }}
