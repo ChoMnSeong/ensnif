@@ -5,7 +5,9 @@ import {
     useRef,
     useState,
     type CSSProperties,
+    type Dispatch,
     type ReactNode,
+    type SetStateAction,
 } from 'react'
 import { buildTheme } from '../themes/buildTheme.js'
 import { themeToCssVars } from '../themes/cssVariables.js'
@@ -15,15 +17,13 @@ import type {
     ResolvedTheme,
 } from '../themes/types.js'
 import type { Mode, VariantName } from '../variants/types.js'
-import type {
-    CustomPalette,
-    Palette,
-    PaletteName,
-} from '../palettes/types.js'
+import type { CustomPalette, Palette, PaletteName } from '../palettes/types.js'
 import type { BaseTokens } from '../tokens/types.js'
 import type { BorderVariant } from '../components/borderVariant.js'
 import { DesignSystemContext } from './context.js'
 import { FocusStyles } from './FocusStyles.js'
+import { InteractionStyles } from './InteractionStyles.js'
+import { TypographyStyles } from './TypographyStyles.js'
 
 export type FontFamilyOverrides = {
     sans?: string
@@ -51,6 +51,27 @@ const DEFAULT_PALETTE: PaletteName = 'lavender'
 const DEFAULT_VARIANT: VariantName = 'minimal'
 const DEFAULT_MODE: Mode = 'light'
 const DEFAULT_BORDER_VARIANT: BorderVariant = 'outlined'
+
+/**
+ * prop 을 초기값 겸 재정의 신호로 쓰는 상태.
+ * prop 이 바뀌면 그 값으로 되돌리고, 그 사이에는 반환된 setter(컨텍스트의 setPalette 등)로
+ * 자유롭게 바꿀 수 있다.
+ *
+ * useEffect 로 맞추면 이전 값으로 한 번 커밋해 화면에 그린 뒤 다시 그려서 테마가 깜빡인다.
+ * 렌더 중에 맞추면 React 가 커밋 전에 즉시 다시 렌더하므로 깜빡임이 없다.
+ */
+const usePropSyncedState = <T,>(
+    prop: T | undefined,
+    fallback: T,
+): readonly [T, Dispatch<SetStateAction<T>>] => {
+    const [value, setValue] = useState<T>(prop ?? fallback)
+    const [prevProp, setPrevProp] = useState(prop)
+    if (prop !== undefined && prop !== prevProp) {
+        setPrevProp(prop)
+        setValue(prop)
+    }
+    return [value, setValue] as const
+}
 
 const applyVarsToElement = (
     element: HTMLElement | null,
@@ -87,12 +108,15 @@ export const DesignSystemProvider = ({
     const [fonts, setFontsState] = useState<FontFamilyOverrides | undefined>(
         fontsProp,
     )
-
-    useEffect(() => {
+    const [prevFontsProp, setPrevFontsProp] = useState(fontsProp)
+    if (fontsProp !== prevFontsProp) {
+        setPrevFontsProp(fontsProp)
         setFontsState(fontsProp)
-    }, [fontsProp])
+    }
 
-    const mergedTokenOverrides = useMemo<Partial<BaseTokens> | undefined>(() => {
+    const mergedTokenOverrides = useMemo<
+        Partial<BaseTokens> | undefined
+    >(() => {
         if (!fonts || Object.keys(fonts).length === 0) return tokenOverrides
         const fontFamily: Record<string, string> = {}
         if (fonts.sans) fontFamily.sans = fonts.sans
@@ -111,29 +135,19 @@ export const DesignSystemProvider = ({
         }
     }, [fonts, tokenOverrides])
 
-    const [palette, setPaletteState] = useState<
+    const [palette, setPaletteState] = usePropSyncedState<
         PaletteName | Palette | CustomPalette
-    >(paletteProp ?? DEFAULT_PALETTE)
-    const [variant, setVariantState] = useState<VariantName>(
-        variantProp ?? DEFAULT_VARIANT,
+    >(paletteProp, DEFAULT_PALETTE)
+    const [variant, setVariantState] = usePropSyncedState<VariantName>(
+        variantProp,
+        DEFAULT_VARIANT,
     )
-    const [mode, setModeState] = useState<Mode>(modeProp ?? DEFAULT_MODE)
-    const [borderVariant, setBorderVariantState] = useState<BorderVariant>(
-        borderVariantProp ?? DEFAULT_BORDER_VARIANT,
-    )
-
-    useEffect(() => {
-        if (paletteProp !== undefined) setPaletteState(paletteProp)
-    }, [paletteProp])
-    useEffect(() => {
-        if (variantProp !== undefined) setVariantState(variantProp)
-    }, [variantProp])
-    useEffect(() => {
-        if (modeProp !== undefined) setModeState(modeProp)
-    }, [modeProp])
-    useEffect(() => {
-        if (borderVariantProp !== undefined) setBorderVariantState(borderVariantProp)
-    }, [borderVariantProp])
+    const [mode, setModeState] = usePropSyncedState<Mode>(modeProp, DEFAULT_MODE)
+    const [borderVariant, setBorderVariantState] =
+        usePropSyncedState<BorderVariant>(
+            borderVariantProp,
+            DEFAULT_BORDER_VARIANT,
+        )
 
     const theme: ResolvedTheme = useMemo(() => {
         const input: BuildThemeInput = {
@@ -161,6 +175,8 @@ export const DesignSystemProvider = ({
         document.documentElement.dataset.dsPalette = theme.paletteName
         document.documentElement.dataset.dsVariant = theme.variantName
         document.documentElement.dataset.dsMode = theme.mode
+        // 네이티브 위젯(스크롤바, select, date 피커)이 모드를 따라오게 한다.
+        document.documentElement.style.colorScheme = theme.mode
         const ssrStyle = document.querySelector('style[data-ds-init="true"]')
         if (ssrStyle && ssrStyle.parentNode) {
             ssrStyle.parentNode.removeChild(ssrStyle)
@@ -169,8 +185,12 @@ export const DesignSystemProvider = ({
 
     const scopeStyle = useMemo<CSSProperties | undefined>(() => {
         if (applyTo !== 'scope') return style
-        return { ...(cssVars as CSSProperties), ...style }
-    }, [applyTo, cssVars, style])
+        return {
+            ...(cssVars as CSSProperties),
+            colorScheme: mode,
+            ...style,
+        }
+    }, [applyTo, cssVars, mode, style])
 
     const setPalette = useCallback(
         (next: string) => setPaletteState(next as PaletteName),
@@ -223,6 +243,8 @@ export const DesignSystemProvider = ({
         return (
             <DesignSystemContext.Provider value={value}>
                 <FocusStyles />
+                <InteractionStyles />
+                <TypographyStyles />
                 <div
                     ref={scopeRef}
                     className={className}
@@ -240,6 +262,8 @@ export const DesignSystemProvider = ({
     return (
         <DesignSystemContext.Provider value={value}>
             <FocusStyles />
+            <InteractionStyles />
+            <TypographyStyles />
             {children}
         </DesignSystemContext.Provider>
     )
