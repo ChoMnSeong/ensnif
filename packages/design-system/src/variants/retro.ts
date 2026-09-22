@@ -3,7 +3,8 @@ import type { VariantSpec } from './types.js'
 export const retro: VariantSpec = {
     name: 'retro',
     label: 'Retro / Y2K',
-    description: '메탈릭과 크롬 느낌. 과감한 색상과 복고 요소를 모던 UI에 결합.',
+    description:
+        '메탈릭과 크롬 느낌. 과감한 색상과 복고 요소를 모던 UI에 결합.',
     preferredMode: 'light',
     tokenOverrides: {
         radius: {
@@ -47,8 +48,8 @@ export const retro: VariantSpec = {
                 border: `2px solid ${isLight ? c.primary300 : c.primary700}`,
                 borderRadius: '12px',
                 shadow: isLight
-                    ? `0 4px 0 ${c.primary300}, 0 8px 16px rgba(0, 0, 0, 0.08)`
-                    : `0 4px 0 ${c.primary800}, 0 8px 16px rgba(0, 0, 0, 0.5)`,
+                    ? `0 4px 0 ${c.primary300}, 0 8px 16px var(--ds-color-shadow-key)`
+                    : `0 4px 0 ${c.primary800}, 0 8px 16px var(--ds-color-shadow-strong)`,
                 color: isLight ? c.neutral900 : c.neutral100,
             },
             card: {
@@ -60,7 +61,7 @@ export const retro: VariantSpec = {
                 borderRadius: '16px',
                 shadow: isLight
                     ? `0 6px 0 ${c.primary400}, 0 12px 24px ${c.primary200}`
-                    : `0 6px 0 ${c.primary700}, 0 12px 24px rgba(0, 0, 0, 0.6)`,
+                    : `0 6px 0 ${c.primary700}, 0 12px 24px var(--ds-color-shadow-strong)`,
                 color: isLight ? c.neutral900 : c.neutral100,
             },
             overlay: {
@@ -70,7 +71,7 @@ export const retro: VariantSpec = {
                 backdropFilter: 'none',
                 border: `3px solid ${isLight ? c.primary500 : c.primary500}`,
                 borderRadius: '20px',
-                shadow: '0 20px 50px rgba(0, 0, 0, 0.3)',
+                shadow: `0 20px 50px var(--ds-color-shadow-strong)`,
                 color: isLight ? c.neutral900 : c.neutral100,
             },
             inset: {
@@ -80,7 +81,7 @@ export const retro: VariantSpec = {
                 backdropFilter: 'none',
                 border: `2px solid ${isLight ? c.primary300 : c.primary700}`,
                 borderRadius: '12px',
-                shadow: 'inset 0 2px 4px rgba(0, 0, 0, 0.08)',
+                shadow: `inset 0 2px 4px var(--ds-color-shadow-ambient)`,
                 color: isLight ? c.neutral800 : c.neutral200,
             },
         }
@@ -88,20 +89,15 @@ export const retro: VariantSpec = {
     buildAccent: (mode, c) => {
         const isLight = mode === 'light'
         return {
-            background: isLight
-                ? `linear-gradient(135deg, ${c.primary300} 0%, ${c.primary500} 50%, ${c.primary300} 100%)`
-                : `linear-gradient(135deg, ${c.primary400} 0%, ${c.primary600} 50%, ${c.primary400} 100%)`,
-            color: '#ffffff',
+            // 메탈릭 3-stop 은 유지하되 계열을 내려 흰 글자가 양 끝에서 모두 성립하게 한다.
+            background: `linear-gradient(135deg, ${c.primary600} 0%, ${c.primary800} 50%, ${c.primary600} 100%)`,
+            color: c.readable(c.primary600, c.primary700, c.primary800),
             border: `2px solid ${isLight ? c.primary600 : c.primary300}`,
             shadow: isLight
                 ? `0 4px 0 ${c.primary600}, 0 6px 16px ${c.primary300}`
                 : `0 4px 0 ${c.primary800}, 0 6px 16px ${c.primary700}`,
-            hoverBackground: isLight
-                ? `linear-gradient(135deg, ${c.primary200} 0%, ${c.primary400} 50%, ${c.primary200} 100%)`
-                : `linear-gradient(135deg, ${c.primary300} 0%, ${c.primary500} 50%, ${c.primary300} 100%)`,
-            activeBackground: isLight
-                ? `linear-gradient(135deg, ${c.primary400} 0%, ${c.primary600} 50%, ${c.primary400} 100%)`
-                : `linear-gradient(135deg, ${c.primary500} 0%, ${c.primary700} 50%, ${c.primary500} 100%)`,
+            hoverBackground: `linear-gradient(135deg, ${c.primary700} 0%, ${c.primary900} 50%, ${c.primary700} 100%)`,
+            activeBackground: `linear-gradient(135deg, ${c.primary800} 0%, ${c.primary900} 50%, ${c.primary800} 100%)`,
         }
     },
 }

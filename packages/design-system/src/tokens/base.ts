@@ -3,8 +3,8 @@ import type { BaseTokens } from './types.js'
 export const baseTokens: BaseTokens = {
     radius: {
         none: '0px',
-        xs: '2px',
-        sm: '4px',
+        xs: '4px',
+        sm: '6px',
         md: '8px',
         lg: '12px',
         xl: '16px',
@@ -12,16 +12,29 @@ export const baseTokens: BaseTokens = {
         '3xl': '32px',
         full: '9999px',
     },
+    // 그림자 색은 팔레트 중립색에서 파생된 --ds-color-shadow-* 를 참조한다.
+    // 순수 검정 대신 테마 색조를 머금은 그림자가 되고, 팔레트/모드 전환에 자동으로 따라온다.
     shadow: {
         none: 'none',
-        xs: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        sm: '0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.04)',
-        md: '0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04)',
-        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
-        xl: '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03)',
-        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.20)',
-        inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)',
-        glow: '0 0 20px rgba(0, 0, 0, 0.10)',
+        xs: '0 1px 2px 0 var(--ds-color-shadow-ambient)',
+        sm: '0 1px 3px 0 var(--ds-color-shadow-key), 0 1px 2px 0 var(--ds-color-shadow-ambient)',
+        md: '0 4px 6px -1px var(--ds-color-shadow-key), 0 2px 4px -1px var(--ds-color-shadow-ambient)',
+        lg: '0 10px 15px -3px var(--ds-color-shadow-key), 0 4px 6px -2px var(--ds-color-shadow-ambient)',
+        xl: '0 20px 25px -5px var(--ds-color-shadow-key), 0 10px 10px -5px var(--ds-color-shadow-ambient)',
+        '2xl': '0 25px 50px -12px var(--ds-color-shadow-strong)',
+        inner: 'inset 0 2px 4px 0 var(--ds-color-shadow-ambient)',
+        glow: '0 0 20px var(--ds-color-shadow-glow)',
+    },
+    zIndex: {
+        base: '0',
+        raised: '10',
+        dropdown: '1000',
+        sticky: '1100',
+        overlay: '1200',
+        modal: '1300',
+        popover: '1400',
+        toast: '1500',
+        tooltip: '1600',
     },
     spacing: {
         0: '0px',
@@ -42,7 +55,7 @@ export const baseTokens: BaseTokens = {
     typography: {
         fontFamily: {
             sans: '"Inter", "Pretendard", system-ui, -apple-system, sans-serif',
-            serif: '"Source Serif Pro", Georgia, serif',
+            serif: '"Source Serif 4", "Source Serif Pro", Georgia, serif',
             mono: '"JetBrains Mono", "Fira Code", ui-monospace, monospace',
             display: '"Inter", "Pretendard", system-ui, sans-serif',
         },
@@ -70,9 +83,87 @@ export const baseTokens: BaseTokens = {
             relaxed: '1.75',
         },
         letterSpacing: {
+            // 큰 글자일수록 자간을 더 조인다. tight 하나로는 display 크기를 못 받친다.
+            tighter: '-0.035em',
             tight: '-0.02em',
             normal: '0em',
             wide: '0.05em',
+        },
+        // 크기 스케일만 있으면 쓰는 쪽이 매번 굵기·행간·자간을 다시 고른다.
+        // 역할 단위로 묶어 한 번에 집어 쓰게 한다.
+        role: {
+            'display-lg': {
+                fontSize: '48px',
+                fontWeight: '600',
+                lineHeight: '1.05',
+                letterSpacing: '-0.035em',
+            },
+            'display-md': {
+                fontSize: '36px',
+                fontWeight: '600',
+                lineHeight: '1.1',
+                letterSpacing: '-0.03em',
+            },
+            'display-sm': {
+                fontSize: '30px',
+                fontWeight: '600',
+                lineHeight: '1.15',
+                letterSpacing: '-0.025em',
+            },
+            headline: {
+                fontSize: '24px',
+                fontWeight: '600',
+                lineHeight: '1.25',
+                letterSpacing: '-0.02em',
+            },
+            title: {
+                fontSize: '20px',
+                fontWeight: '600',
+                lineHeight: '1.3',
+                letterSpacing: '-0.015em',
+            },
+            'body-lg': {
+                fontSize: '18px',
+                fontWeight: '400',
+                lineHeight: '1.6',
+                letterSpacing: '-0.005em',
+            },
+            body: {
+                fontSize: '16px',
+                fontWeight: '400',
+                lineHeight: '1.6',
+                letterSpacing: '0em',
+            },
+            'body-sm': {
+                fontSize: '14px',
+                fontWeight: '400',
+                lineHeight: '1.55',
+                letterSpacing: '0em',
+            },
+            caption: {
+                fontSize: '12px',
+                fontWeight: '400',
+                lineHeight: '1.45',
+                letterSpacing: '0em',
+            },
+            label: {
+                fontSize: '12px',
+                fontWeight: '600',
+                lineHeight: '1.3',
+                letterSpacing: '0.04em',
+            },
+            button: {
+                fontSize: '14px',
+                fontWeight: '600',
+                lineHeight: '1.2',
+                letterSpacing: '0em',
+            },
+            mono: {
+                fontSize: '13px',
+                fontWeight: '400',
+                lineHeight: '1.55',
+                letterSpacing: '0em',
+            },
         },
     },
     motion: {

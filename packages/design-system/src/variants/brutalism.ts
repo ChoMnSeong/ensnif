@@ -17,6 +17,22 @@ export const brutalism: VariantSpec = {
             '3xl': '0px',
             full: '0px',
         },
+        // taste-skill 은 브루탈리즘을 "native CSS, monospace, raw borders" 로 규정한다.
+        // 타이포를 재정의하지 않으면 두꺼운 테두리만 얹힌 평범한 페이지로 읽힌다.
+        typography: {
+            fontFamily: {
+                sans: '"JetBrains Mono", ui-monospace, monospace',
+                serif: '"JetBrains Mono", ui-monospace, monospace',
+                mono: '"JetBrains Mono", ui-monospace, monospace',
+                display: '"JetBrains Mono", ui-monospace, monospace',
+            },
+            letterSpacing: {
+                tighter: '-0.02em',
+                tight: '-0.01em',
+                normal: '0em',
+                wide: '0.08em',
+            },
+        },
         borderWidth: {
             none: '0px',
             thin: '2px',
@@ -76,12 +92,12 @@ export const brutalism: VariantSpec = {
         const isLight = mode === 'light'
         const ink = isLight ? '#000000' : '#ffffff'
         return {
-            background: isLight ? c.primary400 : c.primary500,
-            color: ink,
+            background: c.primary600,
+            color: c.readable(c.primary600, c.primary700, c.primary800),
             border: `3px solid ${ink}`,
             shadow: `5px 5px 0 ${ink}`,
-            hoverBackground: isLight ? c.primary300 : c.primary400,
-            activeBackground: isLight ? c.primary500 : c.primary600,
+            hoverBackground: c.primary700,
+            activeBackground: c.primary800,
         }
     },
 }

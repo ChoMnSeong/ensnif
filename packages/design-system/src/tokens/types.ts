@@ -22,6 +22,18 @@ export type ShadowTokens = {
     glow: string
 }
 
+export type ZIndexTokens = {
+    base: string
+    raised: string
+    dropdown: string
+    sticky: string
+    overlay: string
+    modal: string
+    popover: string
+    toast: string
+    tooltip: string
+}
+
 export type SpacingTokens = {
     0: string
     1: string
@@ -37,6 +49,27 @@ export type SpacingTokens = {
     20: string
     24: string
     32: string
+}
+
+export type TypographyRole =
+    | 'display-lg'
+    | 'display-md'
+    | 'display-sm'
+    | 'headline'
+    | 'title'
+    | 'body-lg'
+    | 'body'
+    | 'body-sm'
+    | 'caption'
+    | 'label'
+    | 'button'
+    | 'mono'
+
+export type TypographyRoleSpec = {
+    fontSize: string
+    fontWeight: string
+    lineHeight: string
+    letterSpacing: string
 }
 
 export type TypographyTokens = {
@@ -70,10 +103,16 @@ export type TypographyTokens = {
         relaxed: string
     }
     letterSpacing: {
+        tighter: string
         tight: string
         normal: string
         wide: string
     }
+    /**
+     * 크기·굵기·행간·자간을 묶은 의미 역할.
+     * 크기 스케일만 노출하면 쓰는 쪽에서 매번 조합이 달라진다.
+     */
+    role: Record<TypographyRole, TypographyRoleSpec>
 }
 
 export type MotionTokens = {
@@ -113,6 +152,7 @@ export type BorderWidthTokens = {
 export type BaseTokens = {
     radius: RadiusTokens
     shadow: ShadowTokens
+    zIndex: ZIndexTokens
     spacing: SpacingTokens
     typography: TypographyTokens
     motion: MotionTokens

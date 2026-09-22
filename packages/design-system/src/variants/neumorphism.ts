@@ -6,6 +6,15 @@ export const neumorphism: VariantSpec = {
     description: '배경과 비슷한 색에 안/바깥 그림자로 부드럽게 입체감 표현.',
     preferredMode: 'light',
     tokenOverrides: {
+        // 부드럽게 눌리고 솟은 표면이라 모서리가 둥근 산세리프가 어울린다.
+        typography: {
+            fontFamily: {
+                sans: '"Nunito", "Pretendard", system-ui, sans-serif',
+                serif: '"Source Serif 4", Georgia, serif',
+                mono: '"JetBrains Mono", ui-monospace, monospace',
+                display: '"Nunito", "Pretendard", system-ui, sans-serif',
+            },
+        },
         radius: {
             none: '0px',
             xs: '8px',
@@ -80,13 +89,13 @@ export const neumorphism: VariantSpec = {
         const darkShadow = isLight
             ? `${c.primary800}40`
             : 'rgba(0, 0, 0, 0.7)'
-        const bg = isLight ? c.primary500 : c.primary600
+        const bg = c.primary600
         return {
             background: bg,
-            color: '#ffffff',
+            color: c.readable(bg, c.primary700),
             border: 'none',
             shadow: `6px 6px 12px ${darkShadow}, -6px -6px 12px ${lightShadow}`,
-            hoverBackground: isLight ? c.primary600 : c.primary500,
+            hoverBackground: c.primary700,
             activeBackground: bg,
         }
     },

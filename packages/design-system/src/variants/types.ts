@@ -42,6 +42,18 @@ export type VariantSpec = {
 }
 
 export type VariantContext = {
+    /**
+     * 주어진 배경들 위에서 최악의 경우 대비가 가장 높은 글자색을 돌려준다.
+     *
+     * 배경 하나만 보면 안 된다. accent 는 기본/hover/active 에서 밝기가
+     * 반대쪽으로 넘어가는 variant 가 있어서(뉴모피즘 라이트는 500 -> 600 으로
+     * 어두워지고, 브루탈리즘은 400 -> 300 으로 밝아진다) 기본 배경 기준으로만
+     * 고르면 hover 에서 대비가 무너진다.
+     * 글자색을 상태마다 바꾸면 hover 때 글자가 깜빡이므로 하나로 고정하고,
+     * 세 상태의 최저 대비가 가장 높은 쪽을 고른다.
+     * 그라디언트처럼 단색이 아닌 값은 계산에서 제외한다.
+     */
+    readable: (...backgrounds: string[]) => string
     primary50: string
     primary100: string
     primary200: string

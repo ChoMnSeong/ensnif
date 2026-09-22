@@ -40,6 +40,40 @@ const hexWithAlpha = (hex: string, alpha: number): string => {
     return `${hex}${a}`
 }
 
+const relativeLuminance = (hex: string): number => {
+    const c = hex.replace('#', '')
+    const channels = [0, 2, 4].map((i) => {
+        const v = parseInt(c.slice(i, i + 2), 16) / 255
+        return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+    })
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+}
+
+const contrastRatio = (a: string, b: string): number => {
+    const [hi, lo] = [relativeLuminance(a), relativeLuminance(b)].sort(
+        (x, y) => y - x,
+    )
+    return (hi + 0.05) / (lo + 0.05)
+}
+
+/** 배경 위에서 대비가 더 높은 글자색을 고른다. 흰색 고정은 양쪽 모드를 동시에 만족시키지 못한다. */
+const readableOn = (background: string, dark: string): string => {
+    if (!/^#[0-9a-fA-F]{6}$/.test(background)) return '#ffffff'
+    return contrastRatio('#ffffff', background) >=
+        contrastRatio(dark, background)
+        ? '#ffffff'
+        : dark
+}
+
+/** 여러 배경 위에서 최저 대비가 가장 높은 글자색. 상태가 바뀌어도 대비가 무너지지 않게 한다. */
+const readableAcross = (backgrounds: string[], dark: string): string => {
+    const solids = backgrounds.filter((b) => /^#[0-9a-fA-F]{6}$/.test(b))
+    if (solids.length === 0) return '#ffffff'
+    const worst = (fg: string) =>
+        Math.min(...solids.map((bg) => contrastRatio(fg, bg)))
+    return worst('#ffffff') >= worst(dark) ? '#ffffff' : dark
+}
+
 const mergeScale = (
     base: ColorScale,
     override?: Partial<ColorScale>,
@@ -52,7 +86,12 @@ const resolvePalette = (
     input: PaletteName | Palette | CustomPalette,
     overrides?: PaletteOverrides,
 ): ResolvedPalette => {
-    let base: { name: string; label: string; primary: ColorScale; neutral: ColorScale }
+    let base: {
+        name: string
+        label: string
+        primary: ColorScale
+        neutral: ColorScale
+    }
     if (isPaletteName(input)) {
         const preset = palettes[input]
         base = {
@@ -66,7 +105,10 @@ const resolvePalette = (
             name: input.name,
             label: 'label' in input && input.label ? input.label : input.name,
             primary: input.primary,
-            neutral: 'neutral' in input && input.neutral ? input.neutral : zincNeutral,
+            neutral:
+                'neutral' in input && input.neutral
+                    ? input.neutral
+                    : zincNeutral,
         }
     }
     return {
@@ -82,6 +124,8 @@ const resolvePalette = (
 }
 
 const buildContext = (palette: ResolvedPalette): VariantContext => ({
+    readable: (...backgrounds: string[]) =>
+        readableAcross(backgrounds, palette.neutral[900]),
     primary50: palette.primary[50],
     primary100: palette.primary[100],
     primary200: palette.primary[200],
@@ -115,9 +159,12 @@ export const buildTheme = (input: BuildThemeInput): ResolvedTheme => {
     const ctx = buildContext(palette)
 
     const tokens = deepMerge(
-        deepMerge(baseTokens as unknown as Record<string, unknown>, {
-            ...(variantSpec.tokenOverrides as Partial<BaseTokens>),
-        } as Record<string, unknown>),
+        deepMerge(
+            baseTokens as unknown as Record<string, unknown>,
+            {
+                ...(variantSpec.tokenOverrides as Partial<BaseTokens>),
+            } as Record<string, unknown>,
+        ),
         (input.tokenOverrides ?? {}) as Record<string, unknown>,
     ) as unknown as BaseTokens
 
@@ -133,13 +180,32 @@ export const buildTheme = (input: BuildThemeInput): ResolvedTheme => {
             overlay: surfaces.overlay.background,
             inset: surfaces.inset.background,
             muted: isLight ? palette.neutral[100] : palette.neutral[800],
+            scrim: hexWithAlpha(palette.neutral[900], isLight ? 0.55 : 0.7),
         },
         foreground: {
             primary: isLight ? palette.neutral[900] : palette.neutral[50],
             secondary: isLight ? palette.neutral[700] : palette.neutral[200],
-            tertiary: isLight ? palette.neutral[500] : palette.neutral[400],
+            // neutral[500] 은 흰 배경에서 4.5:1 을 못 넘긴다. 캡션에도 쓰이는 색이라 한 단계 진하게.
+            tertiary: isLight ? palette.neutral[600] : palette.neutral[400],
             muted: isLight ? palette.neutral[400] : palette.neutral[500],
             onAccent: accent.color,
+            onPrimary: readableOn(palette.primary[500], palette.neutral[900]),
+            onSuccess: readableOn(
+                isLight ? palette.success[600] : palette.success[400],
+                palette.neutral[900],
+            ),
+            onWarning: readableOn(
+                isLight ? palette.warning[600] : palette.warning[400],
+                palette.neutral[900],
+            ),
+            onDanger: readableOn(
+                isLight ? palette.danger[600] : palette.danger[400],
+                palette.neutral[900],
+            ),
+            onInfo: readableOn(
+                isLight ? palette.info[600] : palette.info[400],
+                palette.neutral[900],
+            ),
         },
         border: {
             subtle: isLight ? palette.neutral[200] : palette.neutral[800],
@@ -154,10 +220,15 @@ export const buildTheme = (input: BuildThemeInput): ResolvedTheme => {
             info: isLight ? palette.info[600] : palette.info[400],
             disabled: isLight ? palette.neutral[300] : palette.neutral[700],
         },
-        focusRing: hexWithAlpha(
-            palette.primary[500],
-            isLight ? 0.32 : 0.45,
-        ),
+        focusRing: hexWithAlpha(palette.primary[500], isLight ? 0.32 : 0.45),
+        // 순수 검정 대신 팔레트 중립색을 깔아 그림자가 테마 색조를 따라가게 한다.
+        // 다크 모드는 표면 자체가 어두우므로 같은 색을 더 높은 알파로 쓴다.
+        shadow: {
+            ambient: hexWithAlpha(palette.neutral[900], isLight ? 0.04 : 0.32),
+            key: hexWithAlpha(palette.neutral[900], isLight ? 0.08 : 0.44),
+            strong: hexWithAlpha(palette.neutral[900], isLight ? 0.2 : 0.64),
+            glow: hexWithAlpha(palette.primary[500], isLight ? 0.35 : 0.45),
+        },
     }
 
     return {
