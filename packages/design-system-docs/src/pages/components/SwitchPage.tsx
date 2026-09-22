@@ -8,7 +8,6 @@ export const SwitchPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Switch"
                 description="iOS 스타일 토글. on/off 명확한 상태가 필요한 설정 항목에 사용."
             />

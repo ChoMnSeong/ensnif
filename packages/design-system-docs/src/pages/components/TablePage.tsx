@@ -26,7 +26,6 @@ const statusTone = (s: string) => {
 export const TablePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Table"
             description="Table / TableHead / TableBody / TableRow / TableHeaderCell / TableCell 컴포지션."
         />
@@ -82,7 +81,7 @@ export const TablePage = () => (
                                     style={{
                                         textAlign: 'right',
                                         fontFamily:
-                                            '"JetBrains Mono", monospace',
+                                            'var(--ds-typography-font-family-mono)',
                                     }}
                                 >
                                     {r.viewers}

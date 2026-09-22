@@ -7,7 +7,6 @@ const spacings = ['0', '1', '2', '3', '4', '5', '6', '8', '10', '12', '16', '20'
 export const TokensPage = () => (
     <>
         <PageHeader
-            eyebrow="Foundation"
             title="Tokens"
             description="Radius, shadow, spacing 스케일. Variant에 따라 일부가 덮어쓰여집니다."
         />
@@ -44,7 +43,7 @@ export const TokensPage = () => (
                     <div
                         style={{
                             fontSize: '11px',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                             color: 'var(--ds-color-foreground-secondary)',
                             fontWeight: 600,
                         }}
@@ -77,7 +76,7 @@ export const TokensPage = () => (
                         padding: '20px 14px',
                         boxShadow: `var(--ds-shadow-${s})`,
                         fontSize: '11px',
-                        fontFamily: '"JetBrains Mono", monospace',
+                        fontFamily: 'var(--ds-typography-font-family-mono)',
                         color: 'var(--ds-color-foreground-secondary)',
                         textAlign: 'center',
                         fontWeight: 600,
@@ -112,7 +111,7 @@ export const TokensPage = () => (
                     <span
                         style={{
                             fontSize: '11px',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                             width: '40px',
                             color: 'var(--ds-color-foreground-tertiary)',
                             fontWeight: 600,

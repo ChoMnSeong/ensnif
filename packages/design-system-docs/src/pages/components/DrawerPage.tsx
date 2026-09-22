@@ -11,7 +11,6 @@ export const DrawerPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Drawer"
                 description="화면 가장자리에서 슬라이드되는 패널. side(right/left/top/bottom), title/description/footer."
             />

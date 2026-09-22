@@ -11,7 +11,6 @@ export const DialogPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Dialog"
                 description="Portal 기반 모달. ESC, 배경 클릭으로 닫힘. title / description / footer 슬롯."
             />

@@ -12,7 +12,6 @@ export const InputPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Input"
                 description="텍스트 입력. 4가지 variant (outlined / underline / filled / ghost), 3 size, prefix/suffix, invalid 상태, password 보이기/숨기기 토글, 전체 지우기(clearable)."
             />

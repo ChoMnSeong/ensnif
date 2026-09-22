@@ -8,7 +8,6 @@ export const ColorPickerPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="ColorPicker"
                 description="HEX 입력 + native color input + 12 swatch 그리드. 팝오버는 Portal로."
             />
@@ -24,7 +23,7 @@ export const ColorPickerPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         선택: {color}

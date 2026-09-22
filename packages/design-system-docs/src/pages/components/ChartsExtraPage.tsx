@@ -14,7 +14,6 @@ const WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 export const AreaChartPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="AreaChart"
             description="다중 시리즈 + 영역 채움. hover 시 모든 시리즈 값을 한 줄에 표시."
         />
@@ -68,7 +67,6 @@ const RADAR_B = { label: 'B 캐릭터', values: [60, 88, 72, 95, 78, 65] }
 export const RadarChartPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="RadarChart"
             description="다축 비교 (스파이더 차트). primary 단색 톤 기본. fill / showDots / gridShape / gridFilled / axisLabelRender 옵션."
         />
@@ -211,13 +209,12 @@ const RADIAL_DATA = [
 export const RadialChartPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="RadialChart"
             description="여러 진행률을 동심원으로. primary 단색 톤 + hover 툴팁. showInlineLabels / showGrid / cap / centerValue 옵션."
         />
 
         <ComponentPreview
-            title="기본 — hover 시 값 확인"
+            title="기본: hover 시 값 확인"
             description="ring 위에 마우스를 올리면 정확한 값이 툴팁으로. legend도 동기화."
             code={`<RadialChart data={data} />`}
         >
@@ -282,7 +279,7 @@ export const RadialChartPage = () => (
 
         <ComponentPreview
             title="그리드 + sharp + 중앙"
-            description="레퍼런스에서 본 스타일 — grid 위에 sharp 캡 ring + 중앙 텍스트."
+            description="레퍼런스에서 본 스타일. grid 위에 sharp 캡 ring + 중앙 텍스트."
             code={`<RadialChart
     data={data}
     showGrid

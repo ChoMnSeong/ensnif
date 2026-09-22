@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const BadgePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Badge"
             description="작은 라벨/태그. tone(default/accent/success/warning/danger/info), solid 채움, dot 옵션."
         />

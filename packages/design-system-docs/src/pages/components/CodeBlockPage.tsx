@@ -16,7 +16,6 @@ function App() {
 export const CodeBlockPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="CodeBlock"
             description="코드 표시. 파일명/언어 라벨, 복사 버튼, 줄 번호 옵션."
         />

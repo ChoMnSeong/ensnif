@@ -18,7 +18,6 @@ const wrap = (children: React.ReactNode) => (
 export const BarChartPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="BarChart"
             description="SVG 기반 막대 차트. rounded top, 그라데이션, hover 강조 기본. 8개 옵션."
         />

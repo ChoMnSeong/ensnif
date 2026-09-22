@@ -9,7 +9,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const ButtonPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Button"
             description="primary / secondary / ghost / success / warning / danger 6종 + 3 size + 로딩/아이콘 슬롯."
         />

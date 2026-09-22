@@ -46,7 +46,6 @@ const tag = (text: string) => (
 export const MarqueePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Marquee"
             description="끝없이 스크롤되는 텍스트/요소. content가 짧아도 viewport를 가득 채우도록 자동 복제. 5가지 옵션."
         />
@@ -61,7 +60,7 @@ export const MarqueePage = () => (
         </ComponentPreview>
 
         <ComponentPreview
-            title="속도 — 빠르게 (speed=4)"
+            title="속도: 빠르게 (speed=4)"
             description="speed는 한 사이클을 도는 데 걸리는 초. 작을수록 빠름."
             code={`<Marquee speed={4}>...</Marquee>`}
         >
@@ -71,7 +70,7 @@ export const MarqueePage = () => (
         </ComponentPreview>
 
         <ComponentPreview
-            title="속도 — 천천히 (speed=30)"
+            title="속도: 천천히 (speed=30)"
             code={`<Marquee speed={30}>...</Marquee>`}
         >
             <Marquee speed={30} style={bannerStyle}>
@@ -80,7 +79,7 @@ export const MarqueePage = () => (
         </ComponentPreview>
 
         <ComponentPreview
-            title="방향 — 오른쪽 (direction='right')"
+            title="방향: 오른쪽 (direction='right')"
             code={`<Marquee direction="right">...</Marquee>`}
         >
             <Marquee direction="right" style={bannerStyle}>

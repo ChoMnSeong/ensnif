@@ -117,7 +117,6 @@ export const ToastPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Toast"
                 description="ToastProvider + useToast(). 4가지 placement, 최대 4개까지 스택 표시 + hover 펼침."
             />

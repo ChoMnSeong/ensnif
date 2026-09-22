@@ -10,7 +10,6 @@ export const IntroductionPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Foundation"
                 title="Introduction"
                 description="Palette × Variant × Mode 세 축을 독립적으로 조합해 디자인 시스템을 구성합니다. 컴포넌트는 토큰만 참조하므로 모든 조합에 자동으로 반응합니다."
             />
@@ -47,7 +46,7 @@ export const IntroductionPage = () => {
                         padding: '14px 16px',
                         fontSize: '12px',
                         fontFamily:
-                            '"JetBrains Mono", ui-monospace, monospace',
+                            'var(--ds-typography-font-family-mono)',
                         color: 'var(--ds-color-foreground-secondary)',
                         background: 'var(--ds-color-background-inset)',
                         border: '1px solid var(--ds-color-border-subtle)',
@@ -175,7 +174,7 @@ const codeBlockStyle: React.CSSProperties = {
     margin: 0,
     padding: '14px 16px',
     fontSize: '12px',
-    fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+    fontFamily: 'var(--ds-typography-font-family-mono)',
     color: 'var(--ds-color-foreground-secondary)',
     background: 'var(--ds-color-background-inset)',
     border: '1px solid var(--ds-color-border-subtle)',

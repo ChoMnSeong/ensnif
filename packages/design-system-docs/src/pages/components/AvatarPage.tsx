@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const AvatarPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Avatar"
             description="이미지 + 이니셜 폴백. xs/sm/md/lg/xl 5 size, circle/rounded shape, AvatarGroup 지원."
         />

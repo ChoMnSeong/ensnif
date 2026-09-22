@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const TextareaPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Textarea"
             description="여러 줄 입력. Input과 같은 4개 variant + autoResize 옵션."
         />

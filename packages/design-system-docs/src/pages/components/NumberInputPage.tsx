@@ -8,7 +8,6 @@ export const NumberInputPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="NumberInput"
                 description="−/+ 버튼이 붙은 숫자 입력. min/max/step 클램핑."
             />

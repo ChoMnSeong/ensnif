@@ -5,7 +5,6 @@ const LEVELS = ['page', 'panel', 'card', 'overlay', 'inset'] as const
 export const SurfacesPage = () => (
     <>
         <PageHeader
-            eyebrow="Foundation"
             title="Surfaces"
             description="Variant이 정의하는 5단계 표면 스타일. 각 surface는 background / border / borderRadius / boxShadow / backdropFilter / color 토큰을 가집니다."
         />
@@ -74,7 +73,7 @@ export const SurfacesPage = () => (
                 border: '1px solid var(--ds-color-border-subtle)',
                 borderRadius: 'var(--ds-radius-md)',
                 fontSize: '12px',
-                fontFamily: '"JetBrains Mono", monospace',
+                fontFamily: 'var(--ds-typography-font-family-mono)',
                 color: 'var(--ds-color-foreground-secondary)',
                 lineHeight: 1.7,
             }}

@@ -34,7 +34,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const ImagePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Image"
             description="로딩 placeholder + 에러 fallback. width/height/aspectRatio 지원."
         />
@@ -82,7 +81,6 @@ export const ToolbarPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Toolbar"
                 description="가로 액션 그룹. ToolbarGroup, ToolbarSeparator로 구획화."
             />
@@ -141,7 +139,6 @@ export const ToolbarPage = () => {
 export const ScrollAreaPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="ScrollArea"
             description="얇은 커스텀 스크롤바 적용. maxHeight, direction 옵션."
         />
@@ -181,7 +178,6 @@ export const ScrollAreaPage = () => (
 export const FormFieldPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="FormField / Form"
             description="Label + Input + 설명/에러를 한 번에. 폼 보일러플레이트 감소."
         />
@@ -230,7 +226,6 @@ const PIE_DATA = [
 export const PiePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="PieChart / DonutChart"
             description="SVG 기반 원형 차트. legend 자동, custom color 지원."
         />
@@ -264,7 +259,6 @@ export const PiePage = () => (
 export const GaugePage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Gauge"
             description="원형 진행률. value/max, 사이즈, 두께, 색상."
         />
@@ -295,7 +289,6 @@ export const CalendarPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Calendar"
                 description="full month view. markedDates 점 표시, min/maxDate 비활성, weekStartsOn."
             />
@@ -352,7 +345,6 @@ export const TreePage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Tree"
                 description="계층 트리뷰. 폴더/파일 같은 중첩 구조 표시."
             />
@@ -388,7 +380,6 @@ export const CommandPalettePage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="CommandPalette"
                 description="⌘K 검색 메뉴. group 묶음, 키워드, 단축키 표시 지원."
             />
@@ -454,7 +445,6 @@ export const CommandPalettePage = () => {
 export const NavigationMenuPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="NavigationMenu"
             description="앱 사이드바용 계층 네비. 아이콘, 배지, 펼침 지원."
         />

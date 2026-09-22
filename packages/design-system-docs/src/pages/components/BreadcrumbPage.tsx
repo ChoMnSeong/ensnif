@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const BreadcrumbPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Breadcrumb"
             description="계층 위치 표시. 마지막 항목은 자동으로 active 처리."
         />

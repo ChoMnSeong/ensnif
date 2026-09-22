@@ -8,7 +8,6 @@ export const FileUploadPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="FileUpload"
                 description="드래그&드롭 + 클릭 선택. accept, multiple, maxSize 옵션."
             />

@@ -14,7 +14,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const CardPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Card"
             description="Surface 토큰을 사용하는 컨테이너. Header / Title / Description / Body / Footer 슬롯 제공."
         />

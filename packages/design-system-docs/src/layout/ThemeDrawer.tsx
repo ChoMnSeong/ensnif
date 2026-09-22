@@ -53,7 +53,7 @@ const FONT_PRESETS: FontPreset[] = [
     {
         id: 'serif',
         label: 'Serif',
-        sans: '"Source Serif Pro", "Noto Serif KR", Georgia, serif',
+        sans: '"Source Serif 4", "Source Serif Pro", "Noto Serif KR", Georgia, serif',
         mono: '"JetBrains Mono", monospace',
     },
     {
@@ -350,10 +350,21 @@ export const ThemeDrawer = ({ open, onClose }: Props) => {
                         borderTop: '1px solid var(--ds-color-border-subtle)',
                         fontSize: '11px',
                         color: 'var(--ds-color-foreground-tertiary)',
-                        fontFamily: '"JetBrains Mono", monospace',
+                        fontFamily: 'var(--ds-typography-font-family-mono)',
                     }}
                 >
-                    {theme.paletteName} · {theme.variantName} · {theme.mode} · {borderVariant}
+                    <span
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '4px 14px',
+                        }}
+                    >
+                        <span>{theme.paletteName}</span>
+                        <span>{theme.variantName}</span>
+                        <span>{theme.mode}</span>
+                        <span>{borderVariant}</span>
+                    </span>
                 </footer>
             </aside>
         </>

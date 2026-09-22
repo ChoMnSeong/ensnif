@@ -20,7 +20,6 @@ export const ComboBoxPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="ComboBox"
                 description="검색 가능한 드롭다운 셀렉트. 키보드 네비게이션 (↑↓ Enter Esc) 지원."
             />
@@ -48,7 +47,7 @@ export const ComboBoxPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         선택된 값: {value ?? '(없음)'}

@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const TabsPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Tabs"
             description="underline / pill 두 가지 variant. controlled 또는 uncontrolled."
         />

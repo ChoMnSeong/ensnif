@@ -9,7 +9,6 @@ export const DatePickerPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="DatePicker"
                 description="단일 날짜 선택. 월 단위 네비게이션, ISO 형식 (YYYY-MM-DD) 출력."
             />
@@ -31,7 +30,7 @@ export const DatePickerPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         선택된 값: {date ?? '(없음)'}

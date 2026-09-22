@@ -15,7 +15,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const MenuPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Menu / DropdownMenu"
             description="trigger 클릭으로 펼침. MenuItem / MenuSeparator / MenuLabel 컴포지션."
         />

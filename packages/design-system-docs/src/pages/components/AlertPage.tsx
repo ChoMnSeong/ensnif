@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const AlertPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Alert"
             description="상태 메시지 박스. tone(info/success/warning/danger), title + description, 닫기 버튼 옵션."
         />

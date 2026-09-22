@@ -9,7 +9,6 @@ export const RadioPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Radio"
                 description="RadioGroup으로 묶어서 사용. value/onChange 또는 비제어 모드."
             />
@@ -27,11 +26,11 @@ export const RadioPage = () => {
                     value={plan}
                     onChange={setPlan}
                 >
-                    <Radio value="basic" label="Basic — 무료" />
-                    <Radio value="pro" label="Pro — 월 9,900원" />
+                    <Radio value="basic" label="Basic - 무료" />
+                    <Radio value="pro" label="Pro - 월 9,900원" />
                     <Radio
                         value="enterprise"
-                        label="Enterprise — 문의"
+                        label="Enterprise - 문의"
                     />
                 </RadioGroup>
             </ComponentPreview>

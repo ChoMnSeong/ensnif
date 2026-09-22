@@ -16,7 +16,6 @@ export const TogglePage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Toggle"
                 description="버튼 형태의 on/off. Switch와 달리 버튼 그룹(예: 텍스트 서식)에 적합."
             />

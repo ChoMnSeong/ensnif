@@ -102,7 +102,7 @@ export const DataTablePage = () => {
             align: 'right',
             width: 70,
             cell: (r) => (
-                <span style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                <span style={{ fontFamily: 'var(--ds-typography-font-family-mono)' }}>
                     {r.rating.toFixed(1)}
                 </span>
             ),
@@ -114,7 +114,7 @@ export const DataTablePage = () => {
             sortable: true,
             align: 'right',
             cell: (r) => (
-                <span style={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                <span style={{ fontFamily: 'var(--ds-typography-font-family-mono)' }}>
                     {formatNumber(r.viewers)}
                 </span>
             ),
@@ -124,7 +124,6 @@ export const DataTablePage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="DataTable"
                 description="검색·정렬·필터·페이지네이션 통합. columns config + data만 넘기면 자동 처리."
             />

@@ -13,7 +13,6 @@ export const ProgressPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Progress"
                 description="선형 진행 표시. value/max, size, tone, indeterminate."
             />

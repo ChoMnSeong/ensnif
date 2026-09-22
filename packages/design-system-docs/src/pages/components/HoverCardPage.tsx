@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const HoverCardPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="HoverCard"
             description="hover 시 카드 형태의 추가 정보 표시. Tooltip보다 풍부한 컨텐츠."
         />

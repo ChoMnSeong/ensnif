@@ -9,7 +9,6 @@ export const RatingPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Rating"
                 description="별점 선택. primary 색 기본. max, size, allowHalf, readOnly, allowClear 옵션."
             />
@@ -24,7 +23,7 @@ export const RatingPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         {v} / 5
@@ -47,10 +46,10 @@ export const RatingPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
-                        {half.toFixed(1)} / 5 — 별 좌측 클릭 = 0.5, 우측 = 1.0
+                        {half.toFixed(1)} / 5. 별 좌측 클릭 = 0.5, 우측 = 1.0
                     </span>
                 </Stack>
             </ComponentPreview>

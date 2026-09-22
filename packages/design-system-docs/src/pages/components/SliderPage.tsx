@@ -8,7 +8,6 @@ export const SliderPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Slider"
                 description="범위 입력. min/max/step, 라벨 표시, 포맷 함수."
             />

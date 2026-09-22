@@ -29,7 +29,6 @@ const wrap = (children: React.ReactNode) => (
 export const LineChartPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="LineChart"
             description="SVG 기반 라인 차트. smooth 곡선, 영역 채움, hover 툴팁 기본 제공. 9개 옵션."
         />

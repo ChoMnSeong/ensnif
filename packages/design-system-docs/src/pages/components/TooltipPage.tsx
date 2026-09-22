@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const TooltipPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Tooltip"
             description="hover/focus 시 표시되는 짧은 설명. side(top/bottom), align."
         />

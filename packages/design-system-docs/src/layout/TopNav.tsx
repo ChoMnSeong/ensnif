@@ -53,19 +53,6 @@ export const TopNav = ({ onOpenSettings }: Props) => {
                 >
                     @ensnif/design-system
                 </span>
-                <span
-                    style={{
-                        fontSize: '11px',
-                        padding: '2px 8px',
-                        background: 'var(--ds-color-background-inset)',
-                        color: 'var(--ds-color-foreground-tertiary)',
-                        border: '1px solid var(--ds-color-border-subtle)',
-                        borderRadius: '4px',
-                        fontFamily: '"JetBrains Mono", monospace',
-                    }}
-                >
-                    v0.1.0
-                </span>
             </div>
 
             <div

@@ -8,7 +8,6 @@ export const TimePickerPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="TimePicker"
                 description="HH:mm 입력. minuteStep, use24Hours 옵션."
             />
@@ -24,7 +23,7 @@ export const TimePickerPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         {t}

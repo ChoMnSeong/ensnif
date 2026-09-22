@@ -15,7 +15,6 @@ export const StepperPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Stepper"
                 description="다단계 진행 표시. horizontal/vertical."
             />

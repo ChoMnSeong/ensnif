@@ -18,7 +18,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const DividerPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Divider"
             description="섹션 구분선. horizontal/vertical, label 옵션."
         />
@@ -77,7 +76,6 @@ export const DividerPage = () => (
 export const StackPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Stack / Spacer"
             description="VStack(세로) / HStack(가로) 레이아웃 도우미. Spacer로 빈 공간 채움."
         />
@@ -129,7 +127,6 @@ export const StackPage = () => (
 export const SpinnerPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Spinner"
             description="로딩 인디케이터. size, thickness, label 지원."
         />
@@ -159,7 +156,6 @@ export const SpinnerPage = () => (
 export const SkeletonPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Skeleton"
             description="콘텐츠 로딩 플레이스홀더. width/height/circle/lines."
         />
@@ -211,7 +207,6 @@ export const SkeletonPage = () => (
 export const EmptyPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Empty"
             description="비어있는 상태 표시. icon / title / description / action."
         />
@@ -236,7 +231,6 @@ export const EmptyPage = () => (
 export const StatPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Stat"
             description="KPI 표시 카드. label / value / delta / helper."
         />
@@ -276,7 +270,6 @@ export const StatPage = () => (
 export const KbdPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Kbd"
             description="키보드 단축키 표시."
         />

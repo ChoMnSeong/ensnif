@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const LabelPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Label"
             description="폼 입력 위에 표시하는 라벨. required 옵션으로 별표 표시."
         />

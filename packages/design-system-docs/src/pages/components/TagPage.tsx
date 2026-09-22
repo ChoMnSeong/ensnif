@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const TagPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Tag"
             description="Badge보다 넓게, 닫기 가능. tone, solid 옵션, onClose."
         />

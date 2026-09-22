@@ -8,7 +8,6 @@ export const PaginationPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Pagination"
                 description="페이지 네비게이션. page/pageCount, siblings(±N), 자동 ellipsis."
             />
@@ -27,7 +26,7 @@ export const PaginationPage = () => {
                         style={{
                             fontSize: '12px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         page = {page}

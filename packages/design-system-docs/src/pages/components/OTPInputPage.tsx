@@ -8,7 +8,6 @@ export const OTPInputPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="OTPInput"
                 description="N자리 인증번호 입력. 자동 포커스 이동, 붙여넣기 지원, 백스페이스 이전 칸 이동."
             />
@@ -29,7 +28,7 @@ export const OTPInputPage = () => {
                         style={{
                             fontSize: '11px',
                             color: 'var(--ds-color-foreground-tertiary)',
-                            fontFamily: '"JetBrains Mono", monospace',
+                            fontFamily: 'var(--ds-typography-font-family-mono)',
                         }}
                     >
                         {code || '(미입력)'}

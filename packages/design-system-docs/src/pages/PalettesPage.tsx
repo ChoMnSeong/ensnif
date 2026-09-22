@@ -16,9 +16,8 @@ export const PalettesPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Foundation"
                 title="Palettes"
-                description="50–900 step 컬러 스케일. primary는 선택된 팔레트, neutral은 primary 톤에 어울리는 회색조, semantic은 success/warning/danger/info 공통."
+                description="50-900 step 컬러 스케일. primary는 선택된 팔레트, neutral은 primary 톤에 어울리는 회색조, semantic은 success/warning/danger/info 공통."
             />
 
             <div
@@ -62,7 +61,7 @@ export const PalettesPage = () => {
                                         padding: '6px 8px',
                                         fontSize: '10px',
                                         fontFamily:
-                                            '"JetBrains Mono", monospace',
+                                            'var(--ds-typography-font-family-mono)',
                                         color:
                                             step >= 500
                                                 ? 'rgba(255,255,255,0.92)'

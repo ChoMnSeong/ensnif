@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const BoxPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Box"
             description="Surface 토큰을 적용한 단순 div. 'page' | 'panel' | 'card' | 'overlay' | 'inset' | 'none' 중 선택."
         />

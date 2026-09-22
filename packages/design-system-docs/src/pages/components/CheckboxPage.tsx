@@ -18,7 +18,6 @@ export const CheckboxPage = () => {
     return (
         <>
             <PageHeader
-                eyebrow="Component"
                 title="Checkbox"
                 description="단일 선택 체크박스. controlled / uncontrolled, indeterminate, disabled 지원."
             />

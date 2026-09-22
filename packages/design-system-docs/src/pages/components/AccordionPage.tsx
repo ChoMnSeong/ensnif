@@ -5,7 +5,6 @@ import { ComponentPreview } from '../../components/ComponentPreview'
 export const AccordionPage = () => (
     <>
         <PageHeader
-            eyebrow="Component"
             title="Accordion"
             description="single/multiple 선택. type='single'은 한 번에 하나만, 'multiple'은 여러 개 동시."
         />
