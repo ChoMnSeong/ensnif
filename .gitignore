@@ -233,3 +233,6 @@ packages/lanime-web/docs/
 notes/
 TODO.md.local
 .vercel
+
+# Playwright MCP 세션 덤프 (접근성 트리 스냅샷 — 소스 아님)
+.playwright-mcp/
