@@ -117,6 +117,7 @@ export interface SearchParams {
     typeIds?: string[]
     statuses?: string[]
     genreIds?: string[]
+    ageRatings?: string[]
     startYear?: number
     endYear?: number
 }

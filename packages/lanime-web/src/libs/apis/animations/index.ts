@@ -119,6 +119,7 @@ export const useInfiniteSearchAnimations = (params: SearchParams) => {
             params.typeIds,
             params.statuses,
             params.genreIds,
+            params.ageRatings,
             params.startYear,
             params.endYear,
         ],
@@ -136,6 +137,9 @@ export const useInfiniteSearchAnimations = (params: SearchParams) => {
                     }),
                     ...(params.genreIds?.length && {
                         genreIds: params.genreIds.join(','),
+                    }),
+                    ...(params.ageRatings?.length && {
+                        ageRatings: params.ageRatings.join(','),
                     }),
                     ...(params.startYear && { startYear: params.startYear }),
                     ...(params.endYear && { endYear: params.endYear }),

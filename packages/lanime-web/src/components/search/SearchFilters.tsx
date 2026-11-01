@@ -6,6 +6,7 @@ import { useAnimationGenres, useAnimationTypes } from '@libs/apis/animations'
 import { useTranslation } from 'react-i18next'
 
 const STATUS_KEYS = ['UPCOMING', 'ONGOING', 'FINISHED'] as const
+const AGE_RATING_KEYS = ['ALL', '12', '15', '19'] as const
 
 interface SearchFiltersProps {
     params: SearchParams
@@ -41,6 +42,14 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ params, onChange }) => {
         onChange({ statuses: next.length ? next : undefined })
     }
 
+    const toggleAgeRating = (value: string) => {
+        const current = params.ageRatings ?? []
+        const next = current.includes(value)
+            ? current.filter(r => r !== value)
+            : [...current, value]
+        onChange({ ageRatings: next.length ? next : undefined })
+    }
+
     return (
         <Sidebar direction="column" gap="2rem">
             <Section direction="column" gap="0.75rem">
@@ -74,6 +83,18 @@ const SearchFilters: React.FC<SearchFiltersProps> = ({ params, onChange }) => {
                         <Checkbox type="checkbox" checked={params.typeIds?.includes(type.typeId) ?? false} readOnly />
                         <CheckLabel active={params.typeIds?.includes(type.typeId) ?? false}>
                             {t(`animationType.${type.name}`, { defaultValue: type.name })}
+                        </CheckLabel>
+                    </CheckRow>
+                ))}
+            </Section>
+
+            <Section direction="column" gap="0.75rem">
+                <SectionTitle>{t('search.ageRating')}</SectionTitle>
+                {AGE_RATING_KEYS.map((key) => (
+                    <CheckRow key={key} align="center" gap="0.5rem" onClick={() => toggleAgeRating(key)}>
+                        <Checkbox type="checkbox" checked={params.ageRatings?.includes(key) ?? false} readOnly />
+                        <CheckLabel active={params.ageRatings?.includes(key) ?? false}>
+                            {t(`ageRating.${key}`)}
                         </CheckLabel>
                     </CheckRow>
                 ))}

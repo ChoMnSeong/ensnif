@@ -84,6 +84,12 @@
         "PV": "PV",
         "MUSIC": "Music Video"
     },
+    "ageRating": {
+        "ALL": "All",
+        "12": "12+",
+        "15": "15+",
+        "19": "19+"
+    },
     "nav": {
         "search": "By Tag",
         "weekly": "Weekly New"
@@ -269,6 +275,7 @@
         "genre": "Genre",
         "status": "Status",
         "type": "Type",
+        "ageRating": "Age Rating",
         "period": "Period",
         "startYear": "Start Year",
         "endYear": "End Year",

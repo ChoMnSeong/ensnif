@@ -84,6 +84,12 @@
         "PV": "PV",
         "MUSIC": "뮤직비디오"
     },
+    "ageRating": {
+        "ALL": "전체",
+        "12": "12세",
+        "15": "15세",
+        "19": "19세"
+    },
     "nav": {
         "search": "태그별",
         "weekly": "요일별 신작"
@@ -269,6 +275,7 @@
         "genre": "장르",
         "status": "방영",
         "type": "출시타입",
+        "ageRating": "관람등급",
         "period": "기간",
         "startYear": "시작 연도",
         "endYear": "종료 연도",
