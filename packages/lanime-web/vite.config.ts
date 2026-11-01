@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
     plugins: [
         react({
             babel: {
@@ -36,18 +36,24 @@ export default defineConfig({
         target: 'esnext',
         cssCodeSplit: true,
         rollupOptions: {
-            output: {
-                manualChunks: {
-                    'react-vendor': ['react', 'react-dom'],
-                    'emotion-vendor': ['@emotion/react', '@emotion/styled'],
-                    'query-vendor': ['@tanstack/react-query'],
-                    'redux-vendor': ['react-redux', '@reduxjs/toolkit'],
-                    // react-router was previously bundled into the main chunk
-                    'router-vendor': ['react-router-dom'],
-                    // shaka-player is ~4 MB; isolate so it only loads on /player routes
-                    'shaka-vendor': ['shaka-player'],
-                },
-            },
+            // manualChunks splits vendor code for browser caching, but only the
+            // client build bundles these deps. In the SSR build they are
+            // externalized, and rollup forbids putting an external module into a
+            // manual chunk — so apply it only when NOT building for SSR.
+            output: isSsrBuild
+                ? {}
+                : {
+                      manualChunks: {
+                          'react-vendor': ['react', 'react-dom'],
+                          'emotion-vendor': ['@emotion/react', '@emotion/styled'],
+                          'query-vendor': ['@tanstack/react-query'],
+                          'redux-vendor': ['react-redux', '@reduxjs/toolkit'],
+                          // react-router was previously bundled into the main chunk
+                          'router-vendor': ['react-router-dom'],
+                          // shaka-player is ~4 MB; isolate so it only loads on /player routes
+                          'shaka-vendor': ['shaka-player'],
+                      },
+                  },
         },
     },
-})
+}))

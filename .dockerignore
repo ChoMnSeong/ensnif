@@ -1,44 +1,42 @@
-# Node.js 의존성 디렉토리
-node_modules/
+# .dockerignore — trims the build context sent to the Docker daemon.
+# Smaller context = faster builds. Anything an image needs is either copied
+# explicitly by its Dockerfile or reinstalled/rebuilt inside the image.
+#
+# NOTE: this file is shared by EVERY image built from the repo root
+# (lanime-web AND poker-server). So it must NOT exclude any packages/* source —
+# only dependencies, build outputs, secrets, and local junk.
 
-# 빌드 결과물
-dist/
-build/
+# Dependencies — reinstalled inside the image via pnpm
+**/node_modules
 
-package/portfolio-web/
+# Build outputs — rebuilt inside the image (never ship stale host artifacts)
+**/dist
+**/build
+**/.vite
+**/.turbo
+**/.cache
 
-# Git 관련 파일
-.git/
+# VCS / editor / OS junk
+.git
 .gitignore
+.gitattributes
+.editorconfig
+.vscode
+.idea
+**/.DS_Store
 
-# Yarn 잠금 파일 (선택적으로 제외할 수 있음)
-yarn.lock
-package-lock.json
-
-# IDE 설정 파일 (예: Visual Studio Code)
-.vscode/
-.idea/
-
-# 테스트 및 로그 파일
-*.log
-tests/
-
-# 환경변수/로컬 DB/배포 메타 (런타임에 주입되므로 이미지에 포함하지 않음)
+# Secrets & local env — injected at runtime, never baked into an image
 **/.env
 **/.env.*
 !**/.env.example
-**/data/
+
+# Local data / databases / logs
+**/data
 *.db
 *.db-*
-.vercel/
+*.log
 
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-
-node_modules
-
-.pnp.*
+# Platform & tooling metadata not needed to build
+.vercel
+.workman
+.claude

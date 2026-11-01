@@ -12,6 +12,12 @@ const templateHtml = isProduction
 const app = express();
 let vite;
 
+// Lightweight health check for container orchestrators (docker-compose,
+// AWS ALB target groups, ECS). Answers before any SSR work so it stays cheap.
+app.get("/health", (_req, res) => {
+  res.status(200).set({ "Cache-Control": "no-store" }).send("ok");
+});
+
 if (!isProduction) {
   const { createServer } = await import("vite");
   vite = await createServer({
