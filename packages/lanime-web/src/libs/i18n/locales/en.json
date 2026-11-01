@@ -299,7 +299,12 @@
     "player": {
         "loginRequired": "Please log in to use this service.",
         "episodeList": "Episode List",
-        "finished": "Finished"
+        "finished": "Finished",
+        "settings": "Settings",
+        "quality": "Quality",
+        "playbackSpeed": "Playback Speed",
+        "auto": "Auto",
+        "normalSpeed": "Normal"
     },
     "notFound": {
         "goBack": "Go Back"

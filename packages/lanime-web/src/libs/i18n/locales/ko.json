@@ -299,7 +299,12 @@
     "player": {
         "loginRequired": "로그인이 필요한 서비스입니다.",
         "episodeList": "에피소드 목록",
-        "finished": "완료"
+        "finished": "완료",
+        "settings": "설정",
+        "quality": "화질",
+        "playbackSpeed": "재생 속도",
+        "auto": "자동",
+        "normalSpeed": "보통"
     },
     "notFound": {
         "goBack": "돌아가기"

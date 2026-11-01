@@ -299,7 +299,12 @@
     "player": {
         "loginRequired": "このサービスを使用するにはログインが必要です。",
         "episodeList": "エピソードリスト",
-        "finished": "完了"
+        "finished": "完了",
+        "settings": "設定",
+        "quality": "画質",
+        "playbackSpeed": "再生速度",
+        "auto": "自動",
+        "normalSpeed": "標準"
     },
     "notFound": {
         "goBack": "戻る"

@@ -13,6 +13,7 @@ import {
     MdChevronRight,
     MdFullscreen,
     MdFullscreenExit,
+    MdOpenInFull,
     MdMenu,
     MdClose,
     MdThumbUp,
@@ -24,6 +25,8 @@ import {
     MdFavoriteBorder,
     MdSearch,
     MdLanguage,
+    MdSettings,
+    MdCheck,
 } from 'react-icons/md'
 
 const iconMap = {
@@ -40,6 +43,7 @@ const iconMap = {
     chevronRight: MdChevronRight,
     fullscreen: MdFullscreen,
     fullscreenExit: MdFullscreenExit,
+    openInFull: MdOpenInFull,
     menu: MdMenu,
     close: MdClose,
     thumbUp: MdThumbUp,
@@ -51,6 +55,8 @@ const iconMap = {
     favoriteBorder: MdFavoriteBorder,
     search: MdSearch,
     language: MdLanguage,
+    settings: MdSettings,
+    check: MdCheck,
 } as const satisfies Record<string, IconType>
 
 export type IconName = keyof typeof iconMap
