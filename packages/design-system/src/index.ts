@@ -1,7 +1,0 @@
-export * from './tokens/index.js'
-export * from './palettes/index.js'
-export * from './variants/index.js'
-export * from './themes/index.js'
-export * from './provider/index.js'
-export * from './utils/index.js'
-export * from './components/index.js'

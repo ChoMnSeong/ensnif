@@ -17,8 +17,7 @@ Docker + nginx로 로컬에서 프로덕션처럼 띄우는 것**까지 구성�
 | poker-web | SPA(정적) | 빌드하면 그냥 파일 묶음 | Vercel (또는 S3) |
 | lanime-admin-web | SPA(정적) | 〃 | 정적 호스팅 |
 | image-to-3d-web | SPA(정적) | 〃 | 정적 호스팅 |
-| design-system-docs | SPA(정적) | 〃 | Vercel (`vercel.json`) |
-| common / design-system / poker-engine | 라이브러리 | 다른 패키지가 가져다 씀 | 배포 안 함 |
+| common / poker-engine | 라이브러리 | 다른 패키지가 가져다 씀 | 배포 안 함 |
 | lanime-native | 앱 | React Native | 스토어 |
 
 > 핵심: **SPA(정적)** 는 "완성된 파일"이라 창고(S3)에 올리면 끝이지만,

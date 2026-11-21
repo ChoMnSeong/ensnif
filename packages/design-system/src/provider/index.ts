@@ -1,8 +1,0 @@
-export * from './DesignSystemProvider.js'
-export * from './DesignSystemStyle.js'
-export * from './FocusStyles.js'
-export * from './InteractionStyles.js'
-export * from './TypographyStyles.js'
-export * from './useDesignSystem.js'
-export { DesignSystemContext } from './context.js'
-export type { DesignSystemContextValue } from './context.js'

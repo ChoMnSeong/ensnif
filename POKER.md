@@ -19,8 +19,7 @@
 # 1) 의존성 설치 (저장소 루트에서)
 pnpm install
 
-# 2) 디자인 시스템 빌드 (클라이언트가 dist를 사용)
-pnpm build:design-system
+# 2) 디자인 시스템은 npm의 @ensnif/design-system 을 사용 (별도 저장소 ~/Desktop/design-system)
 
 # 3) 서버 환경설정
 cp packages/poker-server/.env.example packages/poker-server/.env
